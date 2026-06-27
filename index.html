@@ -36,6 +36,21 @@
     --font:'avenir-next-lt-pro','Avenir Next','Helvetica Neue',Helvetica,Arial,sans-serif;
     --kenar:2.2vw;
     --ritim:clamp(4rem, 7vw, 6.5rem);   /* bolumler arasi tutarli dikey nefes */
+
+    /* Tip olcegi — dagInIk font-size'lar tek bir sisteme oturtuldu */
+    --fs-micro:.64rem;   /* en kucuk caps: yakinda etiketi, pill etiketler */
+    --fs-label:.74rem;   /* ust etiketler / bolum-baslik / kart etiketi (uppercase) */
+    --fs-sm:.78rem;      /* kucuk yardimci metin / indeks no */
+    --fs-nav:.84rem;     /* nav linkleri, butonlar */
+    --fs-body:.95rem;    /* govde metni */
+    --fs-body-lg:1.05rem;/* iri govde / mobil nav */
+    --fs-lead:1.5rem;    /* one cikan satir */
+    --fs-h3:clamp(1.55rem, 2.6vw, 2.35rem);  /* alt baslik (services) */
+    --fs-display:clamp(2rem, 5vw, 4rem);     /* buyuk baslik */
+
+    /* Bosluk olcegi — 4px taban, tutarli ritim */
+    --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem;
+    --sp-5:1.5rem; --sp-6:2rem; --sp-7:3rem; --sp-8:4rem;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -71,7 +86,7 @@
   }
   .nav-links a{
     position:relative;
-    text-decoration:none;font-size:.84rem;font-weight:500;
+    text-decoration:none;font-size:var(--fs-nav);font-weight:500;
     letter-spacing:.01em;color:var(--siyah);
     transition:color .25s;
   }
@@ -157,13 +172,13 @@
   .tanitim-metin{
     justify-self:end;align-self:start;
     max-width:24rem;text-align:right;
-    font-size:.92rem;line-height:1.6;color:var(--siyah);
+    font-size:var(--fs-body);line-height:1.6;color:var(--siyah);
   }
   .tanitim-metin p{margin:0}
 
   /* ---------- BOLUM BASLIKLARI ---------- */
   .bolum-baslik{
-    font-size:.76rem;font-weight:600;
+    font-size:var(--fs-label);font-weight:600;
     letter-spacing:.2em;text-transform:uppercase;
     color:var(--siyah);
     display:flex;align-items:center;gap:1.1rem;
@@ -222,7 +237,7 @@
     width:46px;height:46px;border-radius:999px;
     border:1px solid var(--siyah);background:transparent;
     color:var(--siyah);
-    font-size:1.5rem;font-weight:400;line-height:1;
+    font-size:var(--fs-lead);font-weight:400;line-height:1;
     font-family:var(--font);
     cursor:pointer;
     display:flex;align-items:center;justify-content:center;
@@ -245,7 +260,7 @@
     padding:0 1vw;
   }
   .isim-listesi li{
-    font-size:.74rem;font-weight:600;
+    font-size:var(--fs-label);font-weight:600;
     letter-spacing:.08em;text-transform:uppercase;
     color:var(--siyah);
     transition:color .3s;
@@ -284,7 +299,7 @@
     position:relative;
     display:flex;align-items:center;gap:.4rem;
     margin-top:.7rem;
-    font-size:.72rem;font-weight:600;
+    font-size:var(--fs-label);font-weight:600;
     letter-spacing:.1em;text-transform:uppercase;
     transition:color .3s,transform .3s cubic-bezier(.2,.7,.2,1);
   }
@@ -309,7 +324,7 @@
   }
   .tum-isler a{
     text-decoration:none;
-    font-size:.8rem;font-weight:600;letter-spacing:.06em;
+    font-size:var(--fs-nav);font-weight:600;letter-spacing:.06em;
     border:1px solid var(--siyah);border-radius:999px;
     padding:.62rem 1.7rem;
     transition:background .25s,color .25s;
@@ -329,19 +344,19 @@
     transition:padding-left .4s cubic-bezier(.2,.7,.2,1);
   }
   .hizmet .no{
-    font-size:.78rem;font-weight:600;letter-spacing:.08em;
+    font-size:var(--fs-sm);font-weight:600;letter-spacing:.08em;
     color:var(--metin-gri);padding-top:.6rem;
   }
   .hizmet .baslik{
     margin:0;
-    font-size:clamp(1.55rem,2.6vw,2.35rem);
+    font-size:var(--fs-h3);
     font-weight:600;line-height:1.06;letter-spacing:-.01em;
     transition:color .3s;
   }
-  .hizmet .aciklama p{margin:0;font-size:.95rem;line-height:1.6;color:var(--metin-gri);max-width:34rem}
+  .hizmet .aciklama p{margin:0;font-size:var(--fs-body);line-height:1.6;color:var(--metin-gri);max-width:34rem}
   .hizmet .etiketler{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.45rem .5rem}
   .hizmet .etiketler span{
-    font-size:.66rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    font-size:var(--fs-micro);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
     color:var(--metin-gri);
     border:1px solid var(--cizgi);border-radius:999px;
     padding:.28rem .72rem;
@@ -363,13 +378,13 @@
   .haber:hover .gorsel{filter:brightness(.96)}
   .haber .ust-satir{
     display:flex;justify-content:space-between;align-items:baseline;
-    font-size:.72rem;font-weight:600;
+    font-size:var(--fs-label);font-weight:600;
     padding-bottom:.55rem;margin-bottom:.55rem;
     border-bottom:1px solid var(--cizgi);
   }
   .haber .tarih{font-weight:500;color:var(--metin-gri)}
   .haber p{
-    font-size:.72rem;line-height:1.6;color:var(--metin-gri);
+    font-size:var(--fs-label);line-height:1.6;color:var(--metin-gri);
   }
   .haber:hover .ust-satir{color:var(--tan)}
 
@@ -435,14 +450,14 @@
     padding-bottom:5.5rem;
   }
   .kapanis-baslik{
-    font-size:clamp(2rem, 5vw, 4rem);
+    font-size:var(--fs-display);
     font-weight:800;letter-spacing:-.025em;line-height:1.05;
     margin-bottom:2rem;
   }
   .kapanis-btn{
     display:inline-block;text-decoration:none;
     background:var(--siyah);color:var(--beyaz);
-    font-size:.92rem;font-weight:500;
+    font-size:var(--fs-body);font-weight:500;
     padding:.95rem 2.2rem;border-radius:999px;
     transition:transform .25s, opacity .25s;
   }
@@ -471,7 +486,7 @@
     gap:1.2rem 2.5rem;
     padding:1.6rem var(--kenar) 2rem;
     border-top:1px solid var(--cizgi);
-    font-size:.72rem;font-weight:500;
+    font-size:var(--fs-label);font-weight:500;
   }
   footer .sol, footer .sag{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:center}
   footer a{text-decoration:none;letter-spacing:.05em;transition:color .25s}
@@ -511,7 +526,7 @@
   }
 
   .is .gorsel .yakinda{
-    font-size:.62rem;font-weight:600;letter-spacing:.22em;
+    font-size:var(--fs-micro);font-weight:600;letter-spacing:.22em;
     text-transform:uppercase;color:#B9B7B1;
     pointer-events:none;user-select:none;
     transition:color .3s;
@@ -561,7 +576,7 @@
     }
     nav.open .nav-links{opacity:1;visibility:visible;transform:none}
     .nav-links a{
-      font-size:1.05rem;font-weight:500;
+      font-size:var(--fs-body-lg);font-weight:500;
       padding:.95rem .2rem;
       border-bottom:1px solid rgba(0,0,0,.06);
     }
