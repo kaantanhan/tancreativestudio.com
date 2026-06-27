@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy — TAN Creative</title>
+<meta name="description" content="Privacy Policy for TAN Creative — Istanbul-based interdisciplinary design studio.">
+<link rel="stylesheet" href="https://use.typekit.net/bef0yub.css">
+<!--
+  NOT (Kaan): Bu sayfa markaya uygun bir BAŞLANGIÇ ŞABLONUDUR.
+  Aşağıdaki metinler genel/temsilîdir — yayına almadan önce gerçek
+  veri işleme pratiklerinize ve hukuki gerekliliklere (KVKK/GDPR) göre
+  bir hukukçuyla gözden geçirip güncelleyin.
+-->
+<style>
+  :root{
+    --siyah:#0B0B0B;--beyaz:#FFFFFF;--tan:#E6C299;
+    --cizgi:#DEDDD9;--metin-gri:#6B6B68;
+    --font:'avenir-next-lt-pro','Avenir Next','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --kenar:2.2vw;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:var(--font);background:var(--beyaz);color:var(--siyah);
+    -webkit-font-smoothing:antialiased;line-height:1.6;
+  }
+  a{color:inherit}
+  ::selection{background:var(--tan);color:var(--siyah)}
+  :focus-visible{outline:2px solid var(--siyah);outline-offset:3px;border-radius:2px}
+
+  /* Ust bant */
+  header.ust{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:1.35rem var(--kenar);
+    border-bottom:1px solid var(--cizgi);
+  }
+  header.ust a{
+    text-decoration:none;font-size:.84rem;font-weight:500;letter-spacing:.01em;
+    position:relative;
+  }
+  header.ust .geri::before{content:"\2190";margin-right:.5rem}
+  header.ust a:not(.contact)::after{
+    content:"";position:absolute;left:0;right:0;bottom:-.35rem;height:1px;background:var(--siyah);
+    transform:scaleX(0);transform-origin:left;transition:transform .32s cubic-bezier(.2,.7,.2,1);
+  }
+  header.ust a:not(.contact):hover::after{transform:scaleX(1)}
+  header.ust .contact{
+    border:1px solid var(--siyah);border-radius:999px;padding:.42rem 1.15rem;
+    transition:background .25s,color .25s;
+  }
+  header.ust .contact:hover{background:var(--siyah);color:var(--beyaz)}
+
+  /* Icerik */
+  main{
+    max-width:46rem;margin:0 auto;
+    padding:clamp(3.5rem,8vw,7rem) var(--kenar) clamp(4rem,9vw,8rem);
+  }
+  .ust-etiket{
+    font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--metin-gri);margin-bottom:1.1rem;
+  }
+  h1{
+    font-size:clamp(2.2rem,6vw,3.4rem);font-weight:600;line-height:1.04;
+    letter-spacing:-.015em;margin-bottom:1rem;
+  }
+  .tarih{color:var(--metin-gri);font-size:.9rem;margin-bottom:3rem;
+    padding-bottom:2rem;border-bottom:1px solid var(--cizgi);}
+  section.blok{padding:2rem 0;border-bottom:1px solid var(--cizgi)}
+  section.blok h2{
+    display:flex;gap:1rem;align-items:baseline;
+    font-size:1.25rem;font-weight:600;letter-spacing:-.01em;margin-bottom:.9rem;
+  }
+  section.blok h2::before{
+    content:attr(data-no);font-size:.78rem;font-weight:600;
+    color:var(--metin-gri);letter-spacing:.08em;flex:0 0 auto;
+  }
+  section.blok p{color:var(--metin-gri);max-width:40rem}
+  section.blok p + p{margin-top:.8rem}
+  section.blok a{color:var(--siyah);text-decoration:underline;text-underline-offset:3px}
+
+  footer{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+    padding:1.6rem var(--kenar);border-top:1px solid var(--cizgi);
+    font-size:.82rem;color:var(--metin-gri);
+  }
+  footer a{text-decoration:none}
+  footer a:hover{color:var(--siyah)}
+
+  @media (max-width:560px){
+    h1{font-size:2rem}
+    section.blok h2{flex-direction:row}
+  }
+</style>
+</head>
+<body>
+
+<header class="ust">
+  <a class="geri" href="index.html">TAN Creative</a>
+  <a class="contact" href="mailto:info@tancreativestudio.com">Contact</a>
+</header>
+
+<main>
+  <p class="ust-etiket">Legal</p>
+  <h1>Privacy Policy</h1>
+  <p class="tarih">Last updated: June 2026</p>
+
+  <section class="blok">
+    <h2 data-no="01">Overview</h2>
+    <p>TAN Creative (“we”, “us”) is an Istanbul-based interdisciplinary design studio. This page explains what information we collect when you visit tancreativestudio.com or get in touch with us, and how we use it. We keep data collection to the minimum needed to run the site and respond to enquiries.</p>
+  </section>
+
+  <section class="blok">
+    <h2 data-no="02">Information We Collect</h2>
+    <p>We do not require you to create an account or submit personal data to browse this site. If you email us at info@tancreativestudio.com, we receive the contact details and message content you choose to share, solely to reply to you.</p>
+    <p>Our hosting provider may keep standard server logs (such as IP address, browser type, and pages requested) for security and performance purposes.</p>
+  </section>
+
+  <section class="blok">
+    <h2 data-no="03">How We Use It</h2>
+    <p>We use the information above only to respond to your enquiries, to maintain and improve the website, and to keep it secure. We do not sell your personal data.</p>
+  </section>
+
+  <section class="blok">
+    <h2 data-no="04">Cookies &amp; Analytics</h2>
+    <p>This site aims to run without non-essential cookies. If analytics or embedded third-party content is added in the future, this section will be updated to describe it and your choices.</p>
+  </section>
+
+  <section class="blok">
+    <h2 data-no="05">Third Parties</h2>
+    <p>We rely on a hosting provider to serve this website and on standard email services to receive your messages. These providers process data on our behalf under their own terms.</p>
+  </section>
+
+  <section class="blok">
+    <h2 data-no="06">Your Rights</h2>
+    <p>You may request access to, correction of, or deletion of any personal data you have shared with us. To make a request, email <a href="mailto:info@tancreativestudio.com">info@tancreativestudio.com</a> and we will respond within a reasonable time frame.</p>
+  </section>
+
+  <section class="blok">
+    <h2 data-no="07">Contact</h2>
+    <p>Questions about this policy? Reach us at <a href="mailto:info@tancreativestudio.com">info@tancreativestudio.com</a>.</p>
+  </section>
+</main>
+
+<footer>
+  <span lang="en">TAN © 2026. All Rights Reserved.</span>
+  <a href="index.html" lang="en">Back to home</a>
+</footer>
+
+</body>
+</html>
