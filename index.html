@@ -920,6 +920,8 @@
   logo.addEventListener('click', ()=>window.scrollTo({top:0, behavior:'smooth'}));
   window.addEventListener('resize', olc);
   window.addEventListener('load', olc);
+  // Web fontu yuklenince intro/tagline yeniden akar; logo konumunu (px0/py0) tazele
+  if(document.fonts && document.fonts.ready){ document.fonts.ready.then(()=>{ olc(); setTimeout(olc, 60); }); }
   olc();
   requestAnimationFrame(dongu);
 
@@ -1102,10 +1104,12 @@
     }
 
     function hedefHesapla(){
-      const yerSvg = document.querySelector('#logoYer svg');
+      // Hedef: GORUNEN statik logonun (#logoSabit) canli TAN kutusu — boylece perde
+      // kalkinca intro TAN tam olarak statik logonun durdugu yere iner (kayma olmaz).
+      const hedefSvg = document.querySelector('#logoSabit svg');
       const tanSvg = tan.querySelector('svg');
-      const r1 = tanHarfKutusu(tanSvg);   // intro TAN'in ekran kutusu (transform'suz an)
-      const r2 = tanHarfKutusu(yerSvg);   // statik logodaki TAN harflerinin ekran kutusu
+      const r1 = tanHarfKutusu(tanSvg);     // intro TAN'in ekran kutusu
+      const r2 = tanHarfKutusu(hedefSvg);   // statik logonun (canli) TAN kutusu
       if(!r1.width || !r2.width) return;
       const olcek = r2.width / r1.width;
       const dx = (r2.left + r2.width/2) - (r1.left + r1.width/2);
