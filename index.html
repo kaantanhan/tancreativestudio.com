@@ -157,9 +157,10 @@
     object-fit:cover;object-position:center;
     z-index:0;display:block;
   }
-  /* Icerik katmani: sabit videonun uzerine kayarak onu orter */
+  /* Icerik katmani (bant/arka-plan YOK; video clip-path maskesi ile kirpilir).
+     Sayfa govdesi zaten beyaz; alt bolumlerde video gorunmez cunku maske keser. */
   .intro, .clients, .works, .services, .press, .kapanis, footer{
-    position:relative;z-index:1;background:var(--beyaz);
+    position:relative;z-index:1;
   }
 
   /* ---------- TANITIM / LOGO BANDI ---------- */
@@ -840,6 +841,28 @@
     if(perde && 'IntersectionObserver' in window){
       new IntersectionObserver(es=>{ es.forEach(e=> e.isIntersecting ? oynat() : v.pause()); }, {threshold:0}).observe(perde);
     }
+  })();
+
+  // Hero videosu maske: TAN/icerik ust sinirindan asagisi clip-path ile kirpilir.
+  // Scroll'da bu sinir yukseldikce video alttan kisilir ve kapanir (bant/arka-plan gerekmez).
+  (function(){
+    const video = document.querySelector('.hero video');
+    const intro = document.querySelector('.intro');
+    if(!video || !intro) return;
+    let videoH = window.innerHeight, introY = 0;
+    function olc(){
+      videoH = video.getBoundingClientRect().height || window.innerHeight;
+      introY = intro.getBoundingClientRect().top + window.scrollY;  // icerigin belge konumu
+    }
+    function kare(){
+      const kes = Math.max(0, Math.min(videoH, introY - window.scrollY)); // gorunur ust bolge
+      video.style.clipPath = 'inset(0px 0px ' + Math.round(videoH - kes) + 'px 0px)';
+      requestAnimationFrame(kare);
+    }
+    window.addEventListener('resize', olc, {passive:true});
+    window.addEventListener('load', ()=>{ olc(); setTimeout(olc, 200); });
+    olc();
+    requestAnimationFrame(kare);
   })();
 
   // Kaydirma ile belirme
