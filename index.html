@@ -1117,18 +1117,27 @@
       tan.style.setProperty('--tan-hedef', `translate(${dx}px, ${dy}px) scale(${olcek})`);
     }
 
-    // 0.35s gecikme + 1.05s acilma = ~1.4s; sonra kisa duraklama, sonra tasinma
+    // 0.35s gecikme + 1.05s acilma = ~1.4s; sonra kisa duraklama, sonra tasinma.
+    // ONEMLI: tasinmadan once FONTLAR yuklensin -> tagline yuksekligi (dolayisiyla
+    // logonun konumu) kesinlessin. Aksi halde intro TAN, font yuklenmeden olculen
+    // (yanlis) konuma iner ve statik logo font yuklenince kayar -> handoff kaymasi.
     const acilmaBitis = 1550;
     const ortadaDur = 550;
-    setTimeout(()=>{
-      hedefHesapla();
-      perde.classList.add('tasin');               // dev TAN koseye kayip kuculur (0.9s)
-      setTimeout(()=>{
-        perde.classList.add('bitti');             // perde acilir
-        document.body.classList.remove('intro-kilit');
-        setTimeout(()=>perde.remove(), 600);
-      }, 900);
-    }, acilmaBitis + ortadaDur);
+    const minBekle = new Promise(r=>setTimeout(r, acilmaBitis + ortadaDur));
+    const fontHazir = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    Promise.all([minBekle, fontHazir]).then(()=>{
+      // Logo konumunu tazele (olc), bir kare bekle (dongu uygulasin), sonra hedefi olc
+      window.dispatchEvent(new Event('resize'));
+      requestAnimationFrame(()=>{
+        hedefHesapla();
+        perde.classList.add('tasin');             // dev TAN koseye kayip kuculur (0.9s)
+        setTimeout(()=>{
+          perde.classList.add('bitti');           // perde acilir
+          document.body.classList.remove('intro-kilit');
+          setTimeout(()=>perde.remove(), 600);
+        }, 1050);   // 0.9s hareket + ~0.15s tampon (tam otursun, sonra perde acilsin)
+      });
+    });
   })();
 </script>
 
