@@ -141,8 +141,9 @@
     min-height:46dvh;
     overflow:hidden;
   }
-  .hero img{
+  .hero img, .hero video{
     width:100%;height:100%;object-fit:cover;object-position:center;
+    display:block;
   }
 
   /* ---------- TANITIM / LOGO BANDI ---------- */
@@ -628,7 +629,11 @@
 <!-- ---------- HERO ---------- -->
 <div class="perde">
 <header class="hero">
-  <img src="images/hero.jpg" width="2400" height="1244" alt="Yeşil-beyaz kumaş üzerine işlenmiş 5 rakamı — TAN Creative işlerinden detay" fetchpriority="high">
+  <video class="hero-medya" muted loop playsinline preload="auto" poster="images/hero.jpg"
+         aria-label="Surveillance-camera view of a gallery — visitors among abstract paintings at an exhibition">
+    <source src="images/hero.mp4" type="video/mp4">
+    <img src="images/hero.jpg" alt="Surveillance-camera view of a gallery — visitors among abstract paintings at an exhibition">
+  </video>
 </header>
 
 <!-- ---------- TANITIM ---------- -->
@@ -807,6 +812,15 @@
     }
   })();
 
+  // Hero videosu: hareket azaltma kapaliysa otomatik oynat (muted gerekli); aciksa poster kalir
+  (function(){
+    const v = document.querySelector('.hero video');
+    if(!v) return;
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const oynat = ()=> v.play().catch(()=>{});
+    if(v.readyState >= 2) oynat(); else v.addEventListener('loadeddata', oynat, {once:true});
+  })();
+
   // Kaydirma ile belirme
   const io = new IntersectionObserver(girisler=>{
     girisler.forEach(g=>{ if(g.isIntersecting){ g.target.classList.add('gorunur'); io.unobserve(g.target);} });
@@ -889,19 +903,22 @@
   if(inceImlec){
     // Hero gorselini kucuk bir tuvale cizip imlecin altindaki parlakligi olcer:
     // cok koyu zeminde yazi beyaza doner, aksi halde siyah kalir.
-    const heroImg = document.querySelector('.hero img');
+    const heroImg = document.querySelector('.hero video');
     const heroEl  = document.querySelector('.hero');
     const tuval = document.createElement('canvas');
     let tctx = null;
+    function cerceveCiz(){ if(tctx) { try{ tctx.drawImage(heroImg, 0, 0, tuval.width, tuval.height); }catch(e){} } }
     function tuvalKur(){
-      if(!heroImg.naturalWidth) return;
-      const olcek = 480 / heroImg.naturalWidth;
+      if(!heroImg.videoWidth) return;
+      const olcek = 480 / heroImg.videoWidth;
       tuval.width = 480;
-      tuval.height = Math.round(heroImg.naturalHeight * olcek);
+      tuval.height = Math.round(heroImg.videoHeight * olcek);
       tctx = tuval.getContext('2d', {willReadFrequently:true});
-      tctx.drawImage(heroImg, 0, 0, tuval.width, tuval.height);
+      cerceveCiz();
     }
-    if(heroImg.complete) tuvalKur(); else heroImg.addEventListener('load', tuvalKur);
+    if(heroImg.readyState >= 2) tuvalKur(); else heroImg.addEventListener('loadeddata', tuvalKur);
+    // Sabit kamera; parlaklik haritasini video oynarken dusuk frekansla tazele
+    setInterval(()=>{ if(!heroImg.paused) cerceveCiz(); }, 400);
 
     let koyuda = false; // histerezis durumu
     function zeminKoyuMu(cx, cy){
