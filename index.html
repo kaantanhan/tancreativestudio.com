@@ -416,6 +416,7 @@
   #introTan{
     width:62vmin;line-height:0;
     will-change:transform;
+    transform-origin:0 0;   /* sol-ust kose: handoff'ta sol kenar birebir hizalansin */
   }
   #introTan svg{width:100%;height:auto;display:block;overflow:visible}
   .harf{will-change:transform;transform-origin:center}
@@ -1114,8 +1115,9 @@
       const r2 = tanHarfKutusu(yerSvg);   // statik logonun (canli) TAN kutusu
       if(!r1.width || !r2.width) return;
       const olcek = r2.width / r1.width;
-      const dx = (r2.left + r2.width/2) - (r1.left + r1.width/2);
-      const dy = (r2.top  + r2.height/2) - (r1.top + r1.height/2);
+      // SOL/UST kenar hizalamasi (transform-origin:0 0 ile): sol kenar birebir denk gelir.
+      const dx = r2.left - r1.left;
+      const dy = r2.top  - r1.top;
       tan.style.setProperty('--tan-hedef', `translate(${dx}px, ${dy}px) scale(${olcek})`);
     }
 
@@ -1132,7 +1134,7 @@
       window.dispatchEvent(new Event('resize'));
       requestAnimationFrame(()=>{
         hedefHesapla();
-        perde.classList.add('tasin');             // dev TAN koseye kayip kuculur (0.9s)
+        perde.classList.add('tasin');             // dev TAN sol-ust kenara hizalanip koseye kayar (0.9s)
         setTimeout(()=>{
           perde.classList.add('bitti');           // perde acilir
           window.__introOK = performance.now();   // CREATIVE/©/tagline yumusakca belirsin
