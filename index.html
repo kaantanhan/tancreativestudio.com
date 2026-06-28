@@ -54,6 +54,9 @@
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
+  /* Scroll bar tamamen gizli (sayfa yine kayar) */
+  html{scrollbar-width:none;-ms-overflow-style:none}
+  html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   body{
     font-family:var(--font);
     background:var(--beyaz);
