@@ -912,8 +912,11 @@
     const dy = ay + (hy - ay)*sp;
     const ds = 1 + (HEDEF_OLCEK - 1)*sp;
     logo.style.transform = `translate(${dx}px, ${dy}px) scale(${ds})`;
-    const yanOp = Math.max(0, 1 - sp*2.2).toFixed(3); // CREATIVE + © slogandan biraz once gider
-    sloganG.style.opacity = Math.max(0, 1 - sp*1.7).toFixed(3);
+    // Intro tamamlanana kadar CREATIVE/©/tagline gizli; sonra ~450ms'de yumusakca belir
+    const ok = window.__introOK;
+    const gor = (ok == null) ? 0 : Math.min(1, (performance.now() - ok) / 450);
+    const yanOp = (gor * Math.max(0, 1 - sp*2.2)).toFixed(3); // CREATIVE + © slogandan biraz once gider
+    sloganG.style.opacity = (gor * Math.max(0, 1 - sp*1.7)).toFixed(3);
     for(const g of yanG) g.style.opacity = yanOp;
     requestAnimationFrame(dongu);
   }
@@ -1078,6 +1081,7 @@
     const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     if(azMotion){
+      window.__introOK = 0;  // hareket azaltma: logo tam gorunur (fade yok)
       setTimeout(()=>{ perde.classList.add('bitti'); document.body.classList.remove('intro-kilit'); setTimeout(()=>perde.remove(),500); }, 300);
       return;
     }
@@ -1102,10 +1106,12 @@
     }
 
     function hedefHesapla(){
-      const yerSvg = document.querySelector('#logoYer svg');
+      // Hedef: GORUNEN statik logonun (#logoSabit) canli TAN kutusu (placeholder degil)
+      // -> perde kalkinca intro TAN tam olarak statik logonun durdugu yere iner.
+      const yerSvg = document.querySelector('#logoSabit svg');
       const tanSvg = tan.querySelector('svg');
-      const r1 = tanHarfKutusu(tanSvg);   // intro TAN'in ekran kutusu (transform'suz an)
-      const r2 = tanHarfKutusu(yerSvg);   // statik logodaki TAN harflerinin ekran kutusu
+      const r1 = tanHarfKutusu(tanSvg);   // intro TAN'in ekran kutusu
+      const r2 = tanHarfKutusu(yerSvg);   // statik logonun (canli) TAN kutusu
       if(!r1.width || !r2.width) return;
       const olcek = r2.width / r1.width;
       const dx = (r2.left + r2.width/2) - (r1.left + r1.width/2);
@@ -1129,9 +1135,10 @@
         perde.classList.add('tasin');             // dev TAN koseye kayip kuculur (0.9s)
         setTimeout(()=>{
           perde.classList.add('bitti');           // perde acilir
+          window.__introOK = performance.now();   // CREATIVE/©/tagline yumusakca belirsin
           document.body.classList.remove('intro-kilit');
           setTimeout(()=>perde.remove(), 600);
-        }, 1050);   // 0.9s hareket + ~0.15s tampon (tam otursun, sonra perde acilsin)
+        }, 1050);   // 0.9s hareket + ~0.15s tampon (TAN tam otursun, sonra perde acilir)
       });
     });
   })();
