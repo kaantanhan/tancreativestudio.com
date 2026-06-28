@@ -206,18 +206,14 @@
     padding-bottom:1.5rem;
     border-bottom:1px solid var(--cizgi);
   }
-  .bolum-baslik::before{
-    content:attr(data-no);
-    font-weight:600;color:var(--metin-gri);
-    letter-spacing:.08em;flex:0 0 auto;
-  }
+  /* bolum numaralari (01..04) kaldirildi */
   .bolum-baslik::after{
     content:"";flex:1;height:1px;background:var(--cizgi);
   }
   .ortali{}
 
   /* ---------- MUSTERILER ---------- */
-  .clients{padding:var(--ritim) var(--kenar)}
+  .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem)}
   .clients h2{margin-bottom:2.4rem}
   .logo-duvari{
     list-style:none;
@@ -225,6 +221,10 @@
     justify-content:center;align-items:center;
     column-gap:clamp(2rem, 4.2vw, 4rem);
     row-gap:2.4rem;
+    /* kapaliyken: yalnizca ilk sira gorunur (tek sira) */
+    max-height:66px;overflow:hidden;
+    /* acilis ve kapanis ayni yumusak perde animasyonu (yukseklik JS'te olculur) */
+    transition:max-height .55s ease;
   }
   .logo-duvari li{
     display:flex;align-items:center;justify-content:center;
@@ -238,21 +238,19 @@
   .logo-duvari li.logo-orta svg{height:46px}
   .logo-duvari li.logo-dikey svg{height:58px}
 
-  /* gizli logolar: acilana kadar gorunmez ve yer kaplamaz */
-  .logo-duvari li.gizli-logo{
-    display:none;
-  }
-  .logo-duvari.acik li.gizli-logo{
-    display:flex;
-    animation:logoBelir .5s ease both;
-  }
+  /* tum logolar akista durur; fazla siralar max-height + overflow ile kirpilir.
+     acilista alt siralar JS ile sirayla (stagger) belirir */
   @keyframes logoBelir{
-    from{opacity:0;transform:translateY(8px)}
+    from{opacity:0;transform:translateY(10px)}
     to{opacity:1;transform:none}
   }
   .logo-daha{
-    display:flex;justify-content:center;
-    margin-top:2.6rem;
+    display:flex;justify-content:center;gap:1rem;
+    margin-top:2rem;
+  }
+  .logo-daha button[hidden]{display:none}
+  .logo-daha .kapat{
+    width:34px;height:34px;font-size:1.15rem;
   }
   .logo-daha button{
     width:46px;height:46px;border-radius:999px;
@@ -267,7 +265,7 @@
   .logo-daha button:hover{background:var(--siyah);color:var(--beyaz)}
   .logo-daha.gizle{display:none}
   @media (prefers-reduced-motion: reduce){
-    .logo-duvari.acik li.gizli-logo{animation:none}
+    .logo-duvari{transition:none}
   }
 
   /* metin halindeki is birlikleri */
@@ -289,7 +287,7 @@
   .isim-listesi li:hover{color:var(--tan)}
 
   /* ---------- SECILMIS ISLER ---------- */
-  .works{padding:var(--ritim) var(--kenar)}
+  .works{padding:clamp(2.2rem, 3.4vw, 3rem) var(--kenar) var(--ritim)}
   .works h2{margin-bottom:2.4rem}
   .is-grid{
     display:grid;
@@ -707,6 +705,7 @@
   </ul>
   <div class="logo-daha">
     <button type="button" id="logoDahaBtn" aria-expanded="false" aria-controls="logoDuvari" aria-label="Daha fazla iş birliği göster">+</button>
+    <button type="button" id="logoKapatBtn" class="kapat" aria-controls="logoDuvari" aria-label="Daha az göster" hidden>&minus;</button>
   </div>
 </section>
 
@@ -1065,13 +1064,53 @@
   // Logo duvari: + butonu gizli logolari acar
   (function(){
     const btn = document.getElementById('logoDahaBtn');
+    const kapat = document.getElementById('logoKapatBtn');
     const duvar = document.getElementById('logoDuvari');
     if(btn && duvar){
+      const KAPALI = '66px';
+      const azHareket = matchMedia('(prefers-reduced-motion: reduce)').matches;
       btn.addEventListener('click', ()=>{
         duvar.classList.add('acik');
+        // yer ac: gercek icerik yuksekligine yumusakca buyu
+        duvar.style.maxHeight = duvar.scrollHeight + 'px';
+        // alt siralardaki logolar sirayla (stagger) belirir
+        if(!azHareket){
+          const lis = [...duvar.querySelectorAll('li')];
+          const ustSira = lis.length ? lis[0].offsetTop : 0;
+          const gelenler = lis.filter(li => li.offsetTop > ustSira + 2);
+          gelenler.forEach(li => { li.style.animation = 'none'; li.style.opacity = '0'; });
+          requestAnimationFrame(()=>{
+            gelenler.forEach((li,i)=>{
+              li.style.opacity = '';
+              li.style.animation = 'logoBelir .45s ease both';
+              li.style.animationDelay = (i*0.045) + 's';
+            });
+          });
+        }
         btn.setAttribute('aria-expanded','true');
-        btn.parentElement.classList.add('gizle');
+        btn.hidden = true;
+        if(kapat) kapat.hidden = false;
       });
+      // acilis bitince dogal yukseklige birak (yeniden boyutlandirmada kirpma olmaz)
+      duvar.addEventListener('transitionend', e=>{
+        if(e.propertyName==='max-height' && duvar.classList.contains('acik')){
+          duvar.style.maxHeight = 'none';
+        }
+      });
+      if(kapat){
+        kapat.addEventListener('click', ()=>{
+          // once mevcut yukseklikten baslat, sonra tek siraya yumusakca kapat
+          duvar.style.maxHeight = duvar.scrollHeight + 'px';
+          requestAnimationFrame(()=>{ duvar.style.maxHeight = KAPALI; });
+          duvar.classList.remove('acik');
+          // stagger stillerini sifirla (yeniden acilista temiz baslar)
+          duvar.querySelectorAll('li').forEach(li=>{ li.style.animation=''; li.style.animationDelay=''; li.style.opacity=''; });
+          btn.setAttribute('aria-expanded','false');
+          kapat.hidden = true;
+          btn.hidden = false;
+          duvar.scrollIntoView({behavior:'smooth', block:'nearest'});
+        });
+      }
     }
   })();
 
