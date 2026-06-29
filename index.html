@@ -28,7 +28,7 @@
 <style>
   :root{
     --siyah:#0B0B0B;
-    --beyaz:#FFFFFF;
+    --beyaz:#FFFFFF;--zemin:#EFEDE9;
     --tgri:#E7E6E3;     /* T. Gray — placeholder yuzeyleri */
     --tan:#E6C299;      /* marka vurgusu — hover */
     --cizgi:#DEDDD9;
@@ -59,7 +59,7 @@
   html::-webkit-scrollbar,body::-webkit-scrollbar{display:none;width:0;height:0}
   body{
     font-family:var(--font);
-    background:var(--beyaz);
+    background:var(--zemin);
     color:var(--siyah);
     line-height:1.55;
     -webkit-font-smoothing:antialiased;
@@ -67,6 +67,20 @@
   img{display:block;max-width:100%}
   a{color:inherit}
   ::selection{background:var(--tan);color:var(--siyah)}
+
+  /* ---------- ZEMIN IZGARASI (sabit teknik grid + kesisimlerde +) ---------- */
+  .izgara{
+    position:fixed;inset:0;z-index:0;pointer-events:none;
+    /* tek SVG tile: merkez dikey+yatay ince cizgiler + tam ortada "+" isareti.
+       tile tekrarlaninca cizgiler surekli grid olur, "+" her kesisime denk gelir */
+    background-image:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='200'%20height='200'%3E%3Cg%20stroke='%230B0B0B'%3E%3Cline%20x1='100'%20y1='0'%20x2='100'%20y2='200'%20stroke-opacity='0.05'/%3E%3Cline%20x1='0'%20y1='100'%20x2='200'%20y2='100'%20stroke-opacity='0.05'/%3E%3Cline%20x1='100'%20y1='93'%20x2='100'%20y2='107'%20stroke-opacity='0.22'/%3E%3Cline%20x1='93'%20y1='100'%20x2='107'%20y2='100'%20stroke-opacity='0.22'/%3E%3C/g%3E%3C/svg%3E");
+    background-size:200px 200px;
+    background-position:center;
+  }
+  @media (max-width:560px){
+    .izgara{background-size:130px 130px}
+  }
+  @media print{ .izgara{display:none} }
 
   /* Erisilebilir, markaya uygun klavye odak halkasi (yalnizca klavye ile gorunur) */
   :focus-visible{outline:2px solid var(--siyah);outline-offset:3px;border-radius:2px}
@@ -112,7 +126,7 @@
 
   /* Koyu zemin: nav beyaza doner */
   nav.koyu-zemin .nav-links a{color:#fff}
-  nav.koyu-zemin .nav-links a.contact:hover{background:#fff;color:#0b0b0b}
+  nav.koyu-zemin .nav-links a.contact:hover{background:var(--zemin);color:#0b0b0b}
 
   /* Hamburger butonu — masaustunde gizli, mobilde gorunur */
   .nav-toggle{
@@ -410,7 +424,7 @@
   /* ---------- GIRIS ANIMASYONU ---------- */
   #introPerde{
     position:fixed;inset:0;z-index:9999;
-    background:var(--beyaz);
+    background:var(--zemin);
     display:flex;align-items:center;justify-content:center;
     overflow:hidden;
   }
@@ -577,7 +591,7 @@
     /* Nav: hero uzerinde her zemin uzerinde okunsun (cam efekti + siyah metin) */
     nav{
       justify-content:flex-end;padding:.55rem var(--kenar);
-      background:rgba(255,255,255,.82);
+      background:rgba(239,237,233,.82);
       -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
       border-bottom:1px solid rgba(0,0,0,.06);
     }
@@ -588,7 +602,7 @@
       position:absolute;top:100%;left:0;right:0;
       flex-direction:column;align-items:stretch;gap:0;
       padding:.2rem var(--kenar) 1.1rem;
-      background:rgba(255,255,255,.94);
+      background:rgba(239,237,233,.94);
       -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
       border-bottom:1px solid rgba(0,0,0,.07);
       opacity:0;visibility:hidden;transform:translateY(-.6rem);
@@ -628,6 +642,9 @@
 </style>
 </head>
 <body>
+<!-- ZEMIN IZGARASI (pasif): aktiflestirmek icin asagidaki satirin yorumunu kaldir.
+     Stil .izgara CSS blogunda hazir duruyor. -->
+<!-- <div class="izgara" aria-hidden="true"></div> -->
 <div id="introPerde" aria-hidden="true">
   <div id="introTan"><svg viewBox="0 32 735 167" fill="#0B0B0B" role="img" aria-label="TAN"><rect class="kareDolgu" x="232.5" y="32" width="269" height="167"/><g class="harf hT"><polygon points="223.02 31.78 0 31.78 0 80.57 66.21 80.57 66.21 198.35 156.81 198.35 156.81 80.57 223.02 80.57 223.02 31.78"/></g><g class="harf hA"><path d="M399.58,31.78h-129.75l-69.93,166.57h95.6l8.13-24.16h60.17l8.13,24.16h97.92L399.58,31.78ZM317.57,129.35l16.03-49.37,16.15,49.37h-32.18Z"/></g><g class="harf hN"><polygon points="563.71 103.33 632.94 198.35 734.69 198.35 734.69 31.78 653.85 31.78 653.85 123.2 586.94 31.78 482.75 31.78 482.75 198.35 563.71 198.35 563.71 103.33"/></g></svg></div>
 </div>
@@ -715,16 +732,16 @@
 
   <div class="is-grid">
     <a class="is kare" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 01</div></a>
-    <a class="is kare" href="work-02.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 02</div></a>
+    <a class="is kare" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 02</div></a>
 
-    <a class="is genis" href="work-03.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 03</div></a>
+    <a class="is genis" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 03</div></a>
 
-    <a class="is kucuk" href="work-04.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 04</div></a>
-    <a class="is kucuk" href="work-05.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 05</div></a>
-    <a class="is kucuk" href="work-06.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 06</div></a>
-    <a class="is kucuk" href="work-07.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 07</div></a>
+    <a class="is kucuk" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 04</div></a>
+    <a class="is kucuk" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 05</div></a>
+    <a class="is kucuk" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 06</div></a>
+    <a class="is kucuk" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 07</div></a>
 
-    <a class="is genis" href="work-08.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 08</div></a>
+    <a class="is genis" href="work-01.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket">Selected Work 08</div></a>
   </div>
 
   <div class="tum-isler">
@@ -773,17 +790,17 @@
       <div class="ust-satir"><span>Lorem Ipsum</span><span class="tarih">01.01.2026</span></div>
       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
     </a>
-    <a class="haber" href="press-02.html">
+    <a class="haber" href="press-01.html">
       <div class="gorsel"></div>
       <div class="ust-satir"><span>Lorem Ipsum</span><span class="tarih">01.01.2026</span></div>
       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
     </a>
-    <a class="haber" href="press-03.html">
+    <a class="haber" href="press-01.html">
       <div class="gorsel"></div>
       <div class="ust-satir"><span>Lorem Ipsum</span><span class="tarih">01.01.2026</span></div>
       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
     </a>
-    <a class="haber" href="press-04.html">
+    <a class="haber" href="press-01.html">
       <div class="gorsel"></div>
       <div class="ust-satir"><span>Lorem Ipsum</span><span class="tarih">01.01.2026</span></div>
       <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
