@@ -23,7 +23,9 @@
 <!-- Favicon: TAN "T" (kucuk gomulu SVG). Isterseniz kendi .ico dosyanizla degistirin. -->
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B0B'/%3E%3Ctext x='50' y='72' font-family='Arial,sans-serif' font-size='74' font-weight='800' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
 
-<link rel="stylesheet" href="https://use.typekit.net/bef0yub.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">
 
 <style>
   :root{
@@ -33,7 +35,8 @@
     --tan:#E6C299;      /* marka vurgusu — hover */
     --cizgi:#DEDDD9;
     --metin-gri:#6B6B68;
-    --font:'avenir-next-lt-pro','Avenir Next','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
     --ritim:clamp(4rem, 7vw, 6.5rem);   /* bolumler arasi tutarli dikey nefes */
 
@@ -42,11 +45,11 @@
     --fs-label:.74rem;   /* ust etiketler / bolum-baslik / kart etiketi (uppercase) */
     --fs-sm:.78rem;      /* kucuk yardimci metin / indeks no */
     --fs-nav:.84rem;     /* nav linkleri, butonlar */
-    --fs-body:.95rem;    /* govde metni */
-    --fs-body-lg:1.05rem;/* iri govde / mobil nav */
+    --fs-body:1rem;      /* govde metni (spec: 16-18px) */
+    --fs-body-lg:1.125rem;/* iri govde / mobil nav (18px) */
     --fs-lead:1.5rem;    /* one cikan satir */
-    --fs-h3:clamp(1.55rem, 2.6vw, 2.35rem);  /* alt baslik (services) */
-    --fs-display:clamp(2rem, 5vw, 4rem);     /* buyuk baslik */
+    --fs-h3:clamp(1.375rem, 1.9vw, 1.75rem); /* alt baslik 22-28px (spec) */
+    --fs-display:clamp(2.75rem, 6vw, 4.5rem); /* buyuk baslik */
 
     /* Bosluk olcegi — 4px taban, tutarli ritim */
     --sp-1:.25rem; --sp-2:.5rem; --sp-3:.75rem; --sp-4:1rem;
@@ -105,8 +108,9 @@
   }
   .nav-links a{
     position:relative;
-    text-decoration:none;font-size:var(--fs-nav);font-weight:600;
-    letter-spacing:.01em;color:var(--siyah);
+    text-decoration:none;font-family:var(--font-mono);
+    font-size:.74rem;font-weight:400;
+    letter-spacing:.02em;color:var(--siyah);
     transition:color .25s;
   }
   /* Soldan buyuyen ince alt cizgi (renk linki takip eder) */
@@ -213,8 +217,8 @@
 
   /* ---------- BOLUM BASLIKLARI ---------- */
   .bolum-baslik{
-    font-size:var(--fs-label);font-weight:600;
-    letter-spacing:.2em;text-transform:uppercase;
+    font-size:clamp(2.25rem, 4vw, 3.5rem);font-weight:700;
+    letter-spacing:-.02em;text-transform:uppercase;line-height:1;
     color:var(--siyah);
     display:flex;align-items:center;gap:1.1rem;
     padding-bottom:1.5rem;
@@ -293,7 +297,8 @@
     padding:0 1vw;
   }
   .isim-listesi li{
-    font-size:var(--fs-label);font-weight:600;
+    font-family:var(--font-mono);
+    font-size:var(--fs-label);font-weight:400;
     letter-spacing:.08em;text-transform:uppercase;
     color:var(--siyah);
     transition:color .3s;
@@ -331,6 +336,7 @@
   .is .etiket{
     position:relative;
     display:flex;align-items:center;gap:.4rem;
+    font-family:var(--font-mono);
     margin-top:.7rem;
     font-size:var(--fs-label);font-weight:600;
     letter-spacing:.1em;text-transform:uppercase;
@@ -357,7 +363,8 @@
   }
   .tum-isler a{
     text-decoration:none;
-    font-size:var(--fs-nav);font-weight:600;letter-spacing:.06em;
+    font-family:var(--font-mono);
+    font-size:.74rem;font-weight:400;letter-spacing:.06em;
     border:1px solid var(--siyah);border-radius:999px;
     padding:.62rem 1.7rem;
     transition:background .25s,color .25s;
@@ -377,19 +384,21 @@
     transition:padding-left .4s cubic-bezier(.2,.7,.2,1);
   }
   .hizmet .no{
-    font-size:var(--fs-sm);font-weight:600;letter-spacing:.08em;
+    font-family:var(--font-mono);
+    font-size:var(--fs-sm);font-weight:400;letter-spacing:.08em;
     color:var(--metin-gri);padding-top:.6rem;
   }
   .hizmet .baslik{
     margin:0;
     font-size:var(--fs-h3);
-    font-weight:600;line-height:1.06;letter-spacing:-.01em;
+    font-weight:500;line-height:1.1;letter-spacing:-.01em;
     transition:color .3s;
   }
   .hizmet .aciklama p{margin:0;font-size:var(--fs-body);line-height:1.6;color:var(--metin-gri);max-width:34rem}
   .hizmet .etiketler{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.45rem .5rem}
   .hizmet .etiketler span{
-    font-size:var(--fs-micro);font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+    font-family:var(--font-mono);
+    font-size:var(--fs-micro);font-weight:400;letter-spacing:.08em;text-transform:uppercase;
     color:var(--metin-gri);
     border:1px solid var(--cizgi);border-radius:999px;
     padding:.28rem .72rem;
@@ -411,13 +420,14 @@
   .haber:hover .gorsel{filter:brightness(.96)}
   .haber .ust-satir{
     display:flex;justify-content:space-between;align-items:baseline;
-    font-size:var(--fs-label);font-weight:600;
+    font-family:var(--font-mono);
+    font-size:.7rem;font-weight:400;
     padding-bottom:.55rem;margin-bottom:.55rem;
     border-bottom:1px solid var(--cizgi);
   }
-  .haber .tarih{font-weight:500;color:var(--metin-gri)}
+  .haber .tarih{color:var(--metin-gri)}
   .haber p{
-    font-size:var(--fs-label);line-height:1.6;color:var(--metin-gri);
+    font-size:var(--fs-body);line-height:1.6;color:var(--metin-gri);
   }
   .haber:hover .ust-satir{color:var(--tan)}
 
@@ -486,7 +496,7 @@
   }
   .kapanis-baslik{
     font-size:var(--fs-display);
-    font-weight:800;letter-spacing:-.025em;line-height:1.05;
+    font-weight:700;letter-spacing:-.02em;line-height:1.05;
     margin-bottom:2rem;
   }
   .kapanis-btn{
@@ -521,7 +531,8 @@
     gap:1.2rem 2.5rem;
     padding:1.6rem var(--kenar) 2rem;
     border-top:1px solid var(--cizgi);
-    font-size:var(--fs-label);font-weight:500;
+    font-family:var(--font-mono);
+    font-size:.7rem;font-weight:400;
   }
   footer .sol, footer .sag{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:center}
   footer a{text-decoration:none;letter-spacing:.05em;transition:color .25s}
@@ -561,7 +572,8 @@
   }
 
   .is .gorsel .yakinda{
-    font-size:var(--fs-micro);font-weight:600;letter-spacing:.22em;
+    font-family:var(--font-mono);
+    font-size:var(--fs-micro);font-weight:400;letter-spacing:.22em;
     text-transform:uppercase;color:#B9B7B1;
     pointer-events:none;user-select:none;
     transition:color .3s;
@@ -655,7 +667,7 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="navLinks">
-    <a href="#works">Works</a>
+    <a href="works.html">Works</a>
     <a href="#services">Services</a>
     <a href="#news">News</a>
     <a href="about.html">About</a>
@@ -746,7 +758,7 @@
   </div>
 
   <div class="tum-isler">
-    <a href="work-01.html" lang="en">ALL WORKS</a>
+    <a href="works.html" lang="en">ALL WORKS</a>
   </div>
 </section>
 

@@ -5,7 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy Policy — TAN Creative</title>
 <meta name="description" content="Privacy Policy for TAN Creative — Istanbul-based interdisciplinary design studio.">
-<link rel="stylesheet" href="https://use.typekit.net/bef0yub.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&family=Space+Mono:wght@400;700&display=swap">
 <!--
   NOT (Kaan): Bu sayfa markaya uygun bir BAŞLANGIÇ ŞABLONUDUR.
   Aşağıdaki metinler genel/temsilîdir — yayına almadan önce gerçek
@@ -16,7 +18,8 @@
   :root{
     --siyah:#0B0B0B;--beyaz:#FFFFFF;--zemin:#EFEDE9;--tan:#E6C299;
     --cizgi:#DEDDD9;--metin-gri:#6B6B68;
-    --font:'avenir-next-lt-pro','Avenir Next','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
+    --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -36,7 +39,7 @@
     border-bottom:1px solid var(--cizgi);
   }
   header.ust a{
-    text-decoration:none;font-size:.84rem;font-weight:500;letter-spacing:.01em;
+    text-decoration:none;font-family:var(--font-mono);font-size:.74rem;font-weight:400;letter-spacing:.02em;
     position:relative;
   }
   header.ust .geri::before{content:"\2190";margin-right:.5rem}
@@ -57,22 +60,23 @@
     padding:clamp(3.5rem,8vw,7rem) var(--kenar) clamp(4rem,9vw,8rem);
   }
   .ust-etiket{
-    font-size:.72rem;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+    font-family:var(--font-mono);
+    font-size:.7rem;font-weight:400;letter-spacing:.2em;text-transform:uppercase;
     color:var(--metin-gri);margin-bottom:1.1rem;
   }
   h1{
-    font-size:clamp(2.2rem,6vw,3.4rem);font-weight:600;line-height:1.04;
-    letter-spacing:-.015em;margin-bottom:1rem;
+    font-size:clamp(2.25rem,5vw,3.5rem);font-weight:700;line-height:1.04;
+    letter-spacing:-.02em;margin-bottom:1rem;
   }
-  .tarih{color:var(--metin-gri);font-size:.9rem;margin-bottom:3rem;
+  .tarih{font-family:var(--font-mono);color:var(--metin-gri);font-size:.78rem;margin-bottom:3rem;
     padding-bottom:2rem;border-bottom:1px solid var(--cizgi);}
   section.blok{padding:2rem 0;border-bottom:1px solid var(--cizgi)}
   section.blok h2{
     display:flex;gap:1rem;align-items:baseline;
-    font-size:1.25rem;font-weight:600;letter-spacing:-.01em;margin-bottom:.9rem;
+    font-size:clamp(1.375rem,1.8vw,1.75rem);font-weight:500;letter-spacing:-.01em;margin-bottom:.9rem;
   }
   section.blok h2::before{
-    content:attr(data-no);font-size:.78rem;font-weight:600;
+    content:attr(data-no);font-family:var(--font-mono);font-size:.72rem;font-weight:400;
     color:var(--metin-gri);letter-spacing:.08em;flex:0 0 auto;
   }
   section.blok p{color:var(--metin-gri);max-width:40rem}
@@ -82,7 +86,8 @@
   footer{
     display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
     padding:1.6rem var(--kenar);border-top:1px solid var(--cizgi);
-    font-size:.82rem;color:var(--metin-gri);
+    font-family:var(--font-mono);
+    font-size:.72rem;color:var(--metin-gri);
   }
   footer a{text-decoration:none}
   footer a:hover{color:var(--siyah)}
