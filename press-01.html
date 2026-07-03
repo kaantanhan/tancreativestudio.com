@@ -45,7 +45,7 @@
   }
   .mini-logo:hover{color:var(--tan)}
   .mini-logo svg{width:124px;height:auto;display:block}
-  .mini-logo .g-slogan{display:none}
+  .mini-logo .g-slogan,.mini-logo .g-yan{display:none}
 
   nav{
     position:absolute;top:0;left:0;right:0;z-index:20;
@@ -55,7 +55,7 @@
   }
   nav a{
     text-decoration:none;font-family:var(--font-mono);
-    font-size:.74rem;font-weight:400;
+    font-size:.74rem;font-weight:500;
     letter-spacing:.02em;color:var(--siyah);
     transition:opacity .25s;
   }
@@ -254,7 +254,7 @@
       pointer-events:none;
       transform:translate(-50%,-50%);
       color:var(--siyah);
-      font-weight:700;font-size:13px;line-height:1;
+      font-family:var(--font);font-weight:500;font-size:13px;line-height:1;
       letter-spacing:.14em;white-space:nowrap;
       opacity:0;transition:opacity .15s, color .18s;
       will-change:transform;
@@ -285,7 +285,7 @@
     .ara-gorsel.ikili{grid-template-columns:1fr}
   }
   @media (max-width: 560px){
-    .mini-logo{display:none}
+    .mini-logo{display:block;z-index:30}
     nav{
       gap:.5rem;padding:.7rem var(--kenar);
       background:rgba(239,237,233,.9);
