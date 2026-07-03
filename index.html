@@ -602,26 +602,32 @@
     .hizmet .aciklama{grid-column:2/-1;margin-top:.5rem}
   }
   @media (max-width: 560px){
-    /* Nav: header bandi YOK (logo zaten opak zemin bandinda duruyor).
-       Hamburger seffaf nav'da, TAN harflerinin hizasina indirilir. */
+    /* ---- MOBIL GIRIS: logo + hamburger ALT banti ----
+       Band ilk ekranin ALTINDA durur. absolute konumlandirma ile belge
+       akisiyla birlikte hareket eder: sayfa kaydikca band, position:fixed
+       (dolayisiyla sabit) videonun uzerinden yukari kayar. kare() maskesi
+       videoyu icerik ust sinirindan (introY) asagi kirptigindan band tam
+       o dikisin uzerinde oturur. --bant-h = band yuksekligi. */
     nav{
-      justify-content:flex-end;
-      padding:29px var(--kenar) .55rem;
+      position:absolute;top:calc(100svh - 72px);height:72px;
+      left:0;right:0;z-index:60;
+      display:flex;align-items:center;justify-content:flex-end;
+      padding:0 var(--kenar);
       background:none;
       -webkit-backdrop-filter:none;backdrop-filter:none;
       border-bottom:0;
     }
     .nav-toggle{display:flex}
 
-    /* Linkler: hamburger ile acilan acilir panel */
+    /* Linkler: band ekranin altinda oldugu icin panel YUKARI acilir */
     .nav-links{
-      position:absolute;top:100%;left:0;right:0;
+      position:absolute;bottom:100%;top:auto;left:0;right:0;
       flex-direction:column;align-items:stretch;gap:0;
-      padding:.2rem var(--kenar) 1.1rem;
+      padding:1.1rem var(--kenar) .2rem;
       background:rgba(239,237,233,.94);
       -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);
-      border-bottom:1px solid rgba(0,0,0,.07);
-      opacity:0;visibility:hidden;transform:translateY(-.6rem);
+      border-top:1px solid rgba(0,0,0,.07);
+      opacity:0;visibility:hidden;transform:translateY(.6rem);
       transition:opacity .28s ease,transform .28s cubic-bezier(.2,.7,.2,1),visibility .28s;
     }
     nav.open .nav-links{opacity:1;visibility:visible;transform:none}
@@ -636,7 +642,7 @@
       padding:.85rem 1.15rem;border-radius:999px;
     }
 
-    /* Ilk ekran (mobil): USTTE logo header + TAM EKRAN hero video */
+    /* Ilk ekran (mobil): TAM EKRAN hero video + altta logo banti */
     .perde{min-height:100svh}
     .hero{flex:0 0 auto;height:100svh;min-height:520px}
     .intro{flex:0 0 auto;align-content:start;padding:1.8rem var(--kenar) 2rem}
@@ -644,18 +650,19 @@
     .tanitim-metin{text-align:left;max-width:none;margin-left:0}
     .slogan{padding-top:0}
 
-    /* Logo: ust HEADER olarak sabit. dongu() JS transform'unu !important ile ez;
-       tam logo (TAN + (r) + tagline) opak zemin bantta durur, hero uzerine biner. */
+    /* Logo bandi: ilk ekranin altinda, video kapanis dikisinin uzerinde.
+       dongu() JS transform'u !important ile ezilir; konum CSS'te (absolute). */
     #logoSabit{
       transform:none !important;
-      top:0;left:0;right:0;
+      position:absolute;top:calc(100svh - 72px);height:72px;
+      left:0;right:0;
+      display:flex;align-items:center;
       background:var(--zemin);
-      padding:18px var(--kenar) 16px;
+      padding:0 var(--kenar);
       box-sizing:border-box;z-index:55;
     }
     #logoSabit svg{width:min(calc(100vw - 2*var(--kenar) - 50px), 660px)}
     .logo-lockup .g-slogan,.logo-lockup .g-yan{opacity:1 !important}
-    nav{z-index:60}                       /* hamburger logonun ustunde kalsin */
 
     .is-grid{grid-template-columns:1fr}
     .is.kare,.is.kucuk{grid-column:1/-1}
