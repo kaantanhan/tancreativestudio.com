@@ -240,8 +240,10 @@
     justify-content:center;align-items:center;
     column-gap:clamp(2rem, 4.2vw, 4rem);
     row-gap:2.4rem;
-    /* kapaliyken: yalnizca ilk sira gorunur (tek sira) */
-    max-height:66px;overflow:hidden;
+    /* kapaliyken: yalnizca ilk sira gorunur (tek sira). Kapali yukseklik
+       degiskeni: mobilde logolar yariya inince bu da kuculur (JS de okur). */
+    --duvar-kapali:66px;
+    max-height:var(--duvar-kapali);overflow:hidden;
     /* acilis ve kapanis ayni yumusak perde animasyonu (yukseklik JS'te olculur) */
     transition:max-height .55s ease;
   }
@@ -339,7 +341,7 @@
     display:flex;align-items:center;gap:.4rem;
     font-family:var(--font-mono);
     margin-top:.7rem;
-    font-size:var(--fs-label);font-weight:600;
+    font-size:var(--fs-label);font-weight:500;
     letter-spacing:.1em;text-transform:uppercase;
     transition:color .3s,transform .3s cubic-bezier(.2,.7,.2,1);
   }
@@ -668,6 +670,13 @@
     .is.kare,.is.kucuk{grid-column:1/-1}
     .press-grid{grid-template-columns:1fr}
     footer{flex-direction:column;align-items:flex-start}
+
+    /* Sponsor logolari: mobilde masaustunun YARISI boyut + kapali sira yuksekligi */
+    .logo-duvari{--duvar-kapali:34px}
+    .logo-duvari li.has-logo:not([class*="logo-"]) svg{height:19px}
+    .logo-duvari li.logo-genis svg{height:9px}
+    .logo-duvari li.logo-orta svg{height:23px}
+    .logo-duvari li.logo-dikey svg{height:29px}
   }
 </style>
 </head>
@@ -898,14 +907,22 @@
   (function(){
     const video = document.querySelector('.hero video');
     const intro = document.querySelector('.intro');
+    const bant  = document.getElementById('logoSabit');
+    const mq = matchMedia('(max-width:560px)');
     if(!video || !intro) return;
-    let videoH = window.innerHeight, introY = 0;
+    let introY = 0;
     function olc(){
-      videoH = video.getBoundingClientRect().height || window.innerHeight;
-      introY = intro.getBoundingClientRect().top + window.scrollY;  // icerigin belge konumu
+      introY = intro.getBoundingClientRect().top + window.scrollY;  // icerigin belge konumu (masaustu)
     }
     function kare(){
-      const kes = Math.max(0, Math.min(videoH, introY - window.scrollY)); // gorunur ust bolge
+      const videoH = video.getBoundingClientRect().height || window.innerHeight;
+      // Mobil: video ALT bandin UST kenarinda kapansin -> band opak zemin, altindan
+      // video sizmaz; band'i her karede canli olctugumuz icin dinamik svh'ye dayanikli.
+      // Masaustu: icerik ust sinirinda kapansin.
+      const kesVP = (mq.matches && bant)
+        ? bant.getBoundingClientRect().top          // band ust kenari (viewport)
+        : introY - window.scrollY;                  // icerik ust kenari (viewport)
+      const kes = Math.max(0, Math.min(videoH, kesVP));
       video.style.clipPath = 'inset(0px 0px ' + Math.round(videoH - kes) + 'px 0px)';
       requestAnimationFrame(kare);
     }
@@ -1114,7 +1131,9 @@
     const kapat = document.getElementById('logoKapatBtn');
     const duvar = document.getElementById('logoDuvari');
     if(btn && duvar){
-      const KAPALI = '66px';
+      // Kapali yukseklik CSS degiskeninden (mobilde yariya iner). Kapatma
+      // aninda canli okunur -> resize/rotasyonda dogru degeri kullanir.
+      const kapaliYukseklik = ()=> (getComputedStyle(duvar).getPropertyValue('--duvar-kapali').trim() || '66px');
       const azHareket = matchMedia('(prefers-reduced-motion: reduce)').matches;
       btn.addEventListener('click', ()=>{
         duvar.classList.add('acik');
@@ -1148,7 +1167,7 @@
         kapat.addEventListener('click', ()=>{
           // once mevcut yukseklikten baslat, sonra tek siraya yumusakca kapat
           duvar.style.maxHeight = duvar.scrollHeight + 'px';
-          requestAnimationFrame(()=>{ duvar.style.maxHeight = KAPALI; });
+          requestAnimationFrame(()=>{ duvar.style.maxHeight = kapaliYukseklik(); });
           duvar.classList.remove('acik');
           // stagger stillerini sifirla (yeniden acilista temiz baslar)
           duvar.querySelectorAll('li').forEach(li=>{ li.style.animation=''; li.style.animationDelay=''; li.style.opacity=''; });
