@@ -602,12 +602,14 @@
     .hizmet .aciklama{grid-column:2/-1;margin-top:.5rem}
   }
   @media (max-width: 560px){
-    /* Nav: hero uzerinde her zemin uzerinde okunsun (cam efekti + siyah metin) */
+    /* Nav: header bandi YOK (logo zaten opak zemin bandinda duruyor).
+       Hamburger seffaf nav'da, TAN harflerinin hizasina indirilir. */
     nav{
-      justify-content:flex-end;padding:.55rem var(--kenar);
-      background:rgba(239,237,233,.82);
-      -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
-      border-bottom:1px solid rgba(0,0,0,.06);
+      justify-content:flex-end;
+      padding:29px var(--kenar) .55rem;
+      background:none;
+      -webkit-backdrop-filter:none;backdrop-filter:none;
+      border-bottom:0;
     }
     .nav-toggle{display:flex}
 
