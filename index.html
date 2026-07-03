@@ -481,6 +481,8 @@
   #introPerde.bitti{ animation:introCik .5s ease forwards; }
   @keyframes introCik{ to{opacity:0;visibility:hidden} }
   body.intro-kilit{overflow:hidden}
+  /* Ic navigasyondan gelindiyse intro perdesi hic gosterilmez (flassiz) */
+  html.intro-atla #introPerde{display:none !important}
   @media (prefers-reduced-motion: reduce){
     .hT,.hA,.hN{animation:none}
     #introPerde{animation:introCik .4s ease .3s forwards}
@@ -687,6 +689,17 @@
 <div id="introPerde" aria-hidden="true">
   <div id="introTan"><svg viewBox="0 28 630 84" fill="#0B0B0B" role="img" aria-label="TAN"><rect class="kareDolgu" x="210" y="28" width="210" height="84"/><g class="harf hT"><path d="M70,56H0v-28h210v28h-70v56h-70v-56Z"/></g><g class="harf hA"><path d="M350,28h-98l-56,84h70l8.3-14h53.4l8.3,14h70l-56-84ZM286.8,77l12.4-21h3.6l12.4,21h-28.5Z"/></g><g class="harf hN"><polygon points="490 112 490 63 493.6 63 552 112 630 112 630 28 560 28 560 70 556.4 70 506.3 28 420 28 420 112 490 112"/></g></svg></div>
 </div>
+<script>
+  /* Ic navigasyondan (ayni origin) gelindiyse giris intro'sunu ATLA.
+     Erken (perde boyanmadan) calisir -> flas olmaz. Dogrudan/dis girise dokunmaz. */
+  (function(){
+    try{
+      if(document.referrer && new URL(document.referrer).origin === location.origin){
+        document.documentElement.classList.add('intro-atla');
+      }
+    }catch(e){}
+  })();
+</script>
 
 <nav lang="en">
   <button class="nav-toggle" id="navToggle" aria-label="Menüyü aç/kapat" aria-controls="navLinks" aria-expanded="false">
@@ -1186,6 +1199,12 @@
     const perde = document.getElementById('introPerde');
     const tan = document.getElementById('introTan');
     if(!perde || !tan) return;
+    // Ic navigasyondan gelindiyse (erken script isaretledi): intro yok, logo direkt gorunur.
+    if(document.documentElement.classList.contains('intro-atla')){
+      window.__introOK = 0;      // slogan/tagline tam gorunur (fade beklemesi yok)
+      perde.remove();
+      return;
+    }
     document.body.classList.add('intro-kilit');
     const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
