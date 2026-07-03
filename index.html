@@ -634,19 +634,26 @@
       padding:.85rem 1.15rem;border-radius:999px;
     }
 
-    /* Ilk ekran: hero ustte sabit oran, logo bandi altta — perde tam ekran */
+    /* Ilk ekran (mobil): USTTE logo header + TAM EKRAN hero video */
     .perde{min-height:100svh}
-    .hero{flex:0 0 auto;height:62svh;min-height:340px}
-    .intro{flex:1 1 auto;align-content:start;padding:1.8rem var(--kenar) 2rem}
-    .marka{flex-direction:column;gap:.8rem}
+    .hero{flex:0 0 auto;height:100svh;min-height:520px}
+    .intro{flex:0 0 auto;align-content:start;padding:1.8rem var(--kenar) 2rem}
+    .marka{display:none}                 /* intro icindeki logo yer tutucu gizli -> metin yukari */
+    .tanitim-metin{text-align:left;max-width:none;margin-left:0}
     .slogan{padding-top:0}
 
-    /* Logo: mobilde kayan animasyon yok. Yer tutucu perdede gorunur,
-       sabit logo perdede dururken yer tutucuyu izler (JS), sonra ust-sol'da sabitlenir.
-       Genislik: ekran genisliginden iki yandaki kenar payi cikarilarak yayilir. */
-    .logo-yer svg{width:calc(100vw - 2*var(--kenar))}
-    .logo-lockup svg{width:calc(100vw - 2*var(--kenar))}
+    /* Logo: ust HEADER olarak sabit. dongu() JS transform'unu !important ile ez;
+       tam logo (TAN + (r) + tagline) opak zemin bantta durur, hero uzerine biner. */
+    #logoSabit{
+      transform:none !important;
+      top:0;left:0;right:0;
+      background:var(--zemin);
+      padding:18px var(--kenar) 16px;
+      box-sizing:border-box;z-index:55;
+    }
+    #logoSabit svg{width:min(calc(100vw - 2*var(--kenar) - 50px), 660px)}
     .logo-lockup .g-slogan,.logo-lockup .g-yan{opacity:1 !important}
+    nav{z-index:60}                       /* hamburger logonun ustunde kalsin */
 
     .is-grid{grid-template-columns:1fr}
     .is.kare,.is.kucuk{grid-column:1/-1}
