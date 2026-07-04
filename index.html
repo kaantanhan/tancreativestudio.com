@@ -30,7 +30,7 @@
 <style>
   :root{
     --siyah:#0B0B0B;
-    --beyaz:#FFFFFF;--zemin:#EFEDE9;
+    --beyaz:#FFFFFF;--zemin:#EFEDE9;--zemin-alt:#E7E4DE;
     --tgri:#E7E6E3;     /* T. Gray — placeholder yuzeyleri */
     --tan:#E6C299;      /* marka vurgusu — hover */
     --cizgi:#DEDDD9;
@@ -255,7 +255,7 @@
   .bolum-link:hover .ok{transform:translateX(.35rem)}
 
   /* ---------- MUSTERILER ---------- */
-  .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem)}
+  .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem);background:var(--zemin-alt)}
   .clients h2{margin-bottom:2.4rem}
   .logo-duvari{
     list-style:none;
@@ -431,7 +431,7 @@
   }
 
   /* ---------- BASIN ---------- */
-  .press{padding:var(--ritim) var(--kenar)}
+  .press{padding:var(--ritim) var(--kenar);background:var(--zemin-alt)}
   .press h2{margin-bottom:2.4rem}
   .press-grid{
     display:grid;
