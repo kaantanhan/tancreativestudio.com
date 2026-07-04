@@ -157,23 +157,35 @@
   /* ---------- KAPANIS / CTA ---------- */
   .alt-cta{
     border-top:1px solid var(--cizgi);
-    padding:4.5rem var(--kenar) 5rem;
-    display:flex;flex-wrap:wrap;justify-content:space-between;
-    align-items:center;gap:2rem;
-  }
-  .alt-cta .soz{
-    font-size:clamp(2.25rem,3.5vw,3.5rem);
-    font-weight:700;letter-spacing:-.02em;line-height:1.06;
-    max-width:18ch;
+    padding:5.5rem var(--kenar) 6rem;
+    display:flex;justify-content:center;align-items:center;
   }
   .alt-cta a.btn{
-    display:inline-block;text-decoration:none;
+    position:relative;isolation:isolate;
+    display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;
     background:var(--siyah);color:var(--beyaz);
-    font-size:.95rem;font-weight:500;
-    padding:.95rem 2.2rem;border-radius:999px;
-    transition:transform .25s,opacity .25s;white-space:nowrap;
+    font-size:1.08rem;font-weight:500;letter-spacing:.01em;
+    padding:1.2rem 3rem;border-radius:999px;white-space:nowrap;
+    transition:transform .3s cubic-bezier(.2,.7,.2,1),background .3s;
   }
-  .alt-cta a.btn:hover{transform:translateY(-2px);opacity:.88}
+  .alt-cta a.btn .ok{display:inline-block;color:var(--tan);animation:ctaOk 1.9s ease-in-out infinite}
+  /* nabiz gibi genisleyen tan halka (dikkat cekici, loop) */
+  .alt-cta a.btn::before,
+  .alt-cta a.btn::after{
+    content:"";position:absolute;inset:0;z-index:-1;
+    border-radius:999px;border:1.5px solid var(--tan);
+    animation:ctaNabiz 2.6s cubic-bezier(.2,.6,.3,1) infinite;
+    pointer-events:none;
+  }
+  .alt-cta a.btn::after{animation-delay:1.3s}
+  .alt-cta a.btn:hover{transform:translateY(-3px);background:#1a1a18}
+  .alt-cta a.btn:hover .ok{animation:none;transform:translateX(5px)}
+  @keyframes ctaOk{0%,100%{transform:translateX(0)}50%{transform:translateX(5px)}}
+  @keyframes ctaNabiz{0%{transform:scale(1);opacity:.6}70%{opacity:0}100%{transform:scale(1.22);opacity:0}}
+  @media (prefers-reduced-motion:reduce){
+    .alt-cta a.btn .ok{animation:none}
+    .alt-cta a.btn::before,.alt-cta a.btn::after{display:none}
+  }
 
   /* ---------- MANIFESTO (buyuk giris ifadesi) ---------- */
   .manifesto{padding:1.5rem var(--kenar) 4.5rem}
@@ -402,11 +414,10 @@
 </section>
 
 <section class="alt-cta">
-  <div class="soz" data-tr>Bir proje mi var?<br>Konuşalım.</div>
-  <div class="soz" data-en lang="en">Have a project in mind?<br>Let's talk.</div>
   <a class="btn" href="mailto:info@tancreativestudio.com">
     <span data-tr>İletişime geç</span>
     <span data-en lang="en">Get in touch</span>
+    <span class="ok" aria-hidden="true">&rarr;</span>
   </a>
 </section>
 
