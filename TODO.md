@@ -38,9 +38,11 @@ work-01 (Akbank) ve work-02 (Paribuart) dolu. Kalan 6 sayfa placeholder:
 - [ ] **About/Intro** metni son hâli (about.html dolu görünüyor, kontrol)
 
 ## 6. Footer / iletişim / linkler
-- [ ] Footer **LinkedIn / X / Privacy Policy** linkleri "#" placeholder — gerçek URL'ler
-- [ ] Instagram linki kontrol (mevcut)
-- [ ] İletişim e-postası doğru mu (info@tancreativestudio.com)
+- [x] Footer **LinkedIn** → linkedin.com/company/tan-creative/ (yeni sekme)
+- [x] **X kaldırıldı** (tüm sayfalar)
+- [x] **Instagram** → instagram.com/tan.creative.studio/ (yeni sekme)
+- [x] **Privacy Policy** → privacy.html (tüm sayfalarda)
+- [x] İletişim e-postası doğrulandı (info@tancreativestudio.com)
 
 ## 7. Teknik / temizlik
 - [ ] Kullanılmayan dosyalar: eski `images/hero.mp4`, `images/hero.jpg`, `images/paribuart-kapak.jpg` (dusk) — sil ya da kullan
