@@ -231,6 +231,45 @@
   }
   .ortali{}
 
+  /* Bolum basligi + "hepsini gor" butonu (Selected Works / Services / Press) */
+  .bolum-bas{
+    display:flex;align-items:center;flex-wrap:wrap;gap:.5rem 1.1rem;
+    padding-bottom:1.5rem;border-bottom:1px solid var(--cizgi);
+  }
+  .bolum-bas .cizgi{min-width:2rem}
+  .bolum-bas .bolum-link{margin-left:auto}   /* sarinca saga yaslanir */
+  .bolum-bas h2{margin:0}
+  .bolum-ad{
+    font-family:var(--font-mono);
+    font-size:var(--fs-label);font-weight:400;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--siyah);white-space:nowrap;
+  }
+  .bolum-bas .cizgi{flex:1;height:1px;background:var(--cizgi)}
+  .bolum-link{
+    display:inline-flex;align-items:center;gap:.5rem;
+    font-family:var(--font-mono);
+    font-size:var(--fs-label);font-weight:400;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--siyah);
+    text-decoration:none;white-space:nowrap;
+    position:relative;padding-bottom:.28rem;
+  }
+  .bolum-link::after{
+    content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;
+    background:var(--tan);transform:scaleX(0);transform-origin:left;
+    transition:transform .34s cubic-bezier(.2,.7,.2,1);
+  }
+  .bolum-link:hover::after{transform:scaleX(1)}
+  .bolum-link .ok{
+    display:inline-block;color:var(--tan);
+    animation:okKay 1.9s ease-in-out infinite;
+    transition:transform .34s cubic-bezier(.2,.7,.2,1);
+  }
+  .bolum-link:hover .ok{animation:none;transform:translateX(.4rem)}
+  @keyframes okKay{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
+  @media (prefers-reduced-motion:reduce){ .bolum-link .ok{animation:none} }
+  .services .bolum-bas, .press .bolum-bas{margin-bottom:2.4rem}
+
   /* ---------- MUSTERILER ---------- */
   .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem)}
   .clients h2{margin-bottom:2.4rem}
@@ -722,9 +761,9 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="navLinks">
-    <a href="works.html">Works</a>
+    <a href="#works">Works</a>
     <a href="#services">Services</a>
-    <a href="#news">News</a>
+    <a href="#news">Press</a>
     <a href="about.html">About</a>
     <a class="contact" href="mailto:info@tancreativestudio.com">Contact</a>
   </div>
@@ -796,7 +835,11 @@
 
 <!-- ---------- SECILMIS ISLER ---------- -->
 <section class="works reveal" id="works">
-  <h2 class="bolum-baslik" data-no="02" lang="en">Selected Works</h2>
+  <div class="bolum-bas">
+    <h2 class="bolum-ad" data-no="02" lang="en">Selected Works</h2>
+    <span class="cizgi" aria-hidden="true"></span>
+    <a class="bolum-link" href="works.html" lang="en">View All <span class="ok" aria-hidden="true">&rarr;</span></a>
+  </div>
 
   <div class="is-grid">
     <a class="is kare" href="work-01.html"><div class="gorsel"><video src="images/akbank-1.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div><div class="etiket" lang="tr">Akbank Sanat - Niyetler 2</div></a>
@@ -812,15 +855,16 @@
     <a class="is genis" href="work-08.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Sanat - 2025 Visual identity</div></a>
   </div>
 
-  <div class="tum-isler">
-    <a href="works.html" lang="en">ALL WORKS</a>
-  </div>
 </section>
 
 <!-- ---------- BASIN ---------- -->
 <!-- ---------- SERVICES ---------- -->
 <section class="services reveal" id="services">
-  <h2 class="bolum-baslik" data-no="03" lang="en">Services</h2>
+  <div class="bolum-bas">
+    <h2 class="bolum-ad" data-no="03" lang="en">Services</h2>
+    <span class="cizgi" aria-hidden="true"></span>
+    <a class="bolum-link" href="services.html" lang="en">More Detail <span class="ok" aria-hidden="true">&rarr;</span></a>
+  </div>
   <ul class="hizmetler">
     <li class="hizmet">
       <span class="no">01</span>
@@ -851,7 +895,11 @@
 
 <!-- ---------- BASIN / PRESS ---------- -->
 <section class="press reveal" id="news">
-  <h2 class="bolum-baslik" data-no="04" lang="en">Press</h2>
+  <div class="bolum-bas">
+    <h2 class="bolum-ad" data-no="04" lang="en">Press</h2>
+    <span class="cizgi" aria-hidden="true"></span>
+    <a class="bolum-link" href="press.html" lang="en">Read All <span class="ok" aria-hidden="true">&rarr;</span></a>
+  </div>
   <div class="press-grid">
     <a class="haber" href="press-01.html">
       <div class="gorsel"></div>

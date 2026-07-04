@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>“Eşik” Exhibition — TAN Creative</title>
+<title>Services — TAN Creative</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B0B'/%3E%3Ctext x='50' y='72' font-family='Arial,sans-serif' font-size='74' font-weight='800' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
-<meta name="description" content="“Eşik” Exhibition — TAN Creative proje sayfası.">
+<meta name="description" content="TAN Creative — tüm işler.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +22,9 @@
     --font-display:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
     --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
+    --ritim:clamp(4rem, 7vw, 6.5rem);
+    --fs-micro:.64rem;--fs-label:.74rem;--fs-sm:.78rem;
+    --fs-body:1rem;--fs-h3:clamp(1.375rem, 1.9vw, 1.75rem);
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
@@ -45,7 +48,7 @@
   }
   .mini-logo:hover{color:var(--tan)}
   .mini-logo svg{width:124px;height:auto;display:block}
-  .mini-logo .g-slogan,.mini-logo .g-yan{display:none}
+  .mini-logo .g-slogan{display:none}
 
   /* Ana sayfaya yumusak gecis: sicak zemin perdesi belirir, sonra gidilir */
   .cikis-perde{
@@ -63,14 +66,14 @@
     padding:1.35rem var(--kenar);
   }
   nav a{
-    text-decoration:none;font-size:.84rem;font-weight:500;
-    letter-spacing:.01em;color:var(--siyah);
+    text-decoration:none;font-family:var(--font-mono);font-size:.72rem;font-weight:500;
+    letter-spacing:.02em;color:var(--siyah);
     transition:opacity .25s;
   }
   nav a:hover{opacity:.55}
   nav a.contact{
     border:1px solid var(--siyah);border-radius:999px;
-    padding:.42rem 1.15rem;
+    padding:.42rem 1.15rem;letter-spacing:.04em;
     transition:background .25s,color .25s;
   }
   nav a.contact:hover{background:var(--siyah);color:var(--beyaz);opacity:1}
@@ -96,165 +99,73 @@
   nav.open .nav-toggle span:nth-child(2){opacity:0}
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
-  /* ---------- PROJE BASLIGI ---------- */
-  .proje-bas{
-    padding:9.5rem var(--kenar) 3.2rem;
+  /* ---------- SAYFA BASLIGI (brutalist) ---------- */
+  .works-bas{
+    padding:9.5rem var(--kenar) 2.6rem;
+    border-bottom:1.5px solid var(--siyah);
   }
-  .geri{
-    display:inline-block;text-decoration:none;
-    font-size:.72rem;font-weight:600;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--metin-gri);
-    margin-bottom:2.2rem;transition:color .25s;
+  .works-bas .ust{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    font-family:var(--font-mono);font-size:.66rem;font-weight:400;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--metin-gri);
+    margin-bottom:1.6rem;
   }
-  .geri:hover{color:var(--tan)}
-  .proje-bas h1{
-    font-size:clamp(2.4rem, 5.6vw, 4.4rem);
-    font-weight:300;letter-spacing:-.02em;line-height:1.04;
-    max-width:18ch;
+  .works-bas h1{
+    font-family:var(--font-display);font-weight:700;
+    font-size:clamp(4rem,10vw,7.5rem);line-height:.9;
+    letter-spacing:-.02em;text-transform:uppercase;
   }
-  .proje-ozet{
-    margin-top:1.4rem;
-    font-size:clamp(1rem, 1.45vw, 1.25rem);
-    font-weight:500;max-width:34rem;line-height:1.4;
-  }
-  .meta{
+
+  /* ---------- IS GRID ---------- */
+  .works-govde{padding:2.4rem var(--kenar) 4.5rem}
+  .is-grid{
     display:grid;
     grid-template-columns:repeat(4, minmax(0,1fr));
-    gap:1.6rem;
-    margin-top:3.4rem;
+    gap:1.4rem 1.6rem;
   }
-  .meta div{
-    border-top:1px solid var(--cizgi);
-    padding-top:.7rem;
-  }
-  .meta dt{
-    font-family:var(--font-mono);
-    font-size:.68rem;font-weight:400;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--metin-gri);
-    margin-bottom:.3rem;
-  }
-  .meta dd{font-size:.85rem;font-weight:500}
-
-  /* ---------- PROJE KAPAK (editoryel spread — referans dergi serimi) ---------- */
-  .spread{--band:#EFEDE9}
-  .spread-ust{
-    display:grid;grid-template-columns:1fr auto 1fr;align-items:start;gap:1rem;
-    padding:8.5rem var(--kenar) 1.2rem;
-    background:var(--band);
-    font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
-  }
-  .spread-ust .geri{justify-self:start;margin:0}
-  .spread-orta-baslik{justify-self:center;text-align:center;line-height:1.3;color:var(--siyah)}
-  .spread-syf{justify-self:end;color:var(--metin-gri);font-weight:600;letter-spacing:.1em}
-  .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
-  .spread-gorsel img{width:100%;height:clamp(380px,68vh,760px);object-fit:cover;display:block}
-  /* Kapak gorseli olmayan projelerde placeholder */
-  .spread-gorsel .ph{height:clamp(380px,68vh,760px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
-  .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#B9B6AF}
-  .spread-alt{
-    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);
-    gap:2rem clamp(2rem,5vw,5rem);align-items:start;
-    padding:2.8rem var(--kenar) 3.6rem;background:var(--band);
-  }
-  .spread-h1{
-    font-size:clamp(2.1rem,4.6vw,4rem);font-weight:300;
-    letter-spacing:-.02em;line-height:1.02;color:var(--siyah);
-  }
-  .spread-kolonlar{
-    display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
-    gap:clamp(1.4rem,2.4vw,2.4rem);
-    font-size:1rem;font-weight:400;line-height:1.6;color:var(--metin-gri);
-  }
-  .spread-kolonlar p{margin:0}
-  @media (max-width:900px){
-    .spread-alt{grid-template-columns:1fr;gap:1.4rem}
-    .spread-kolonlar{grid-template-columns:1fr 1fr}
-  }
-  @media (max-width:560px){
-    .spread-ust{padding-top:3.4rem;grid-template-columns:auto 1fr;row-gap:.5rem}
-    .spread-orta-baslik{display:none}
-    .spread-kolonlar{grid-template-columns:1fr;gap:1rem}
-    .spread-gorsel img{height:46vh}
-    .spread-gorsel .ph{height:46vh}
-  }
-
-  /* ---------- GORSEL BLOKLARI ---------- */
-  .gorsel-blok{padding:0 var(--kenar);margin:1.2rem 0 1.6rem}
-  .gorsel-blok .ph{
-    background:var(--tgri);
+  .is{text-decoration:none;color:inherit;display:block}
+  .is .gorsel{
+    position:relative;
     display:flex;align-items:center;justify-content:center;
+    background:var(--tgri);
+    width:100%;
+    overflow:hidden;
+    transition:filter .35s;
   }
-  .gorsel-blok .ph::after{
-    content:'';
-    width:34px;height:1px;background:#C9C6BF;
+  .is .gorsel img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .is .gorsel::after{
+    content:"";position:absolute;inset:0;
+    background:var(--siyah);opacity:0;
+    transition:opacity .4s ease;pointer-events:none;
   }
-  .tam .ph{aspect-ratio:16/8}
-  .gorsel-blok img{width:100%;height:auto;display:block}
-  .ikili{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
-  .ikili .ph{aspect-ratio:4/5}
-  .uclu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.6rem}
-  .uclu .ph{aspect-ratio:1/1}
-  .gorsel-not{
+  .is:hover .gorsel img{transform:scale(1.04)}
+  .is:hover .gorsel::after{opacity:.05}
+  .yakinda{
+    font-family:var(--font-mono);font-size:.64rem;font-weight:500;
+    letter-spacing:.08em;text-transform:uppercase;color:#B9B6AF;
+  }
+  .is .etiket{
+    position:relative;
+    display:flex;align-items:baseline;gap:.55rem;
     margin-top:.7rem;
-    font-size:.7rem;font-weight:500;letter-spacing:.06em;
-    text-transform:uppercase;color:var(--metin-gri);
+    font-family:var(--font-mono);font-size:.68rem;font-weight:500;
+    letter-spacing:.1em;text-transform:uppercase;
+    transition:color .3s,transform .3s cubic-bezier(.2,.7,.2,1);
   }
-
-  /* video blogu: imlec PLAY yazar */
-  .video-blok .ph{position:relative;aspect-ratio:16/8}
-
-  /* ---------- METIN BLOKLARI ---------- */
-  .metin-blok{
-    display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,2fr);
-    gap:2rem;
-    padding:3.4rem var(--kenar);
+  .is .etiket .no{font-weight:400;color:var(--metin-gri)}
+  .is .etiket::after{
+    content:"↗";font-size:.8em;
+    opacity:0;transform:translateX(-.3rem);
+    transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1);
   }
-  .metin-blok h2{
-    font-size:.72rem;font-weight:600;letter-spacing:.14em;
-    text-transform:uppercase;
-  }
-  .metin-blok .govde{max-width:38rem;display:flex;flex-direction:column;gap:1.1rem}
-  .metin-blok p{font-size:.92rem;color:var(--siyah)}
-
-  /* ---------- KUNYE ---------- */
-  .kunye{
-    padding:3.2rem var(--kenar) 4.5rem;
-  }
-  .kunye h2{
-    font-size:.72rem;font-weight:600;letter-spacing:.14em;
-    text-transform:uppercase;margin-bottom:1.6rem;
-  }
-  .kunye dl{
-    display:grid;grid-template-columns:repeat(3, minmax(0,1fr));
-    gap:1.4rem 1.6rem;max-width:52rem;
-  }
-  .kunye div{border-top:1px solid var(--cizgi);padding-top:.7rem}
-  .kunye dt{
-    font-size:.68rem;font-weight:600;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--metin-gri);margin-bottom:.3rem;
-  }
-  .kunye dd{font-size:.85rem;font-weight:500}
-
-  /* ---------- SONRAKI PROJE ---------- */
-  .sonraki{
-    display:block;text-decoration:none;
-    border-top:1px solid var(--cizgi);
-    padding:4.2rem var(--kenar) 4.6rem;
-    transition:background .35s;
-  }
-  .sonraki:hover{background:#FBF7F1}
-  .sonraki .ust{
-    font-size:.72rem;font-weight:600;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--metin-gri);
-    margin-bottom:.9rem;
-  }
-  .sonraki .ad{
-    font-size:clamp(2rem, 4.6vw, 3.6rem);
-    font-weight:300;letter-spacing:-.02em;line-height:1.05;
-    transition:color .3s;
-  }
-  .sonraki:hover .ad{color:var(--tan)}
+  .is:hover .etiket{color:var(--tan);transform:translateX(.15rem)}
+  .is:hover .etiket::after{opacity:1;transform:translateX(0)}
+  .is.kare{grid-column:span 2}
+  .is.kare .gorsel{aspect-ratio:1/1}
+  .is.genis{grid-column:1 / -1}
+  .is.genis .gorsel{aspect-ratio:16/5}
+  .is.kucuk{grid-column:span 1}
+  .is.kucuk .gorsel{aspect-ratio:1/1}
 
   /* ---------- FOOTER ---------- */
   footer{
@@ -262,18 +173,17 @@
     justify-content:space-between;align-items:center;
     gap:1.2rem 2.5rem;
     padding:1.6rem var(--kenar) 2rem;
-    border-top:1px solid var(--cizgi);
-    font-size:.72rem;font-weight:500;
+    border-top:1.5px solid var(--siyah);
+    font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.04em;
   }
   footer .sol, footer .sag{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:center}
-  footer a{text-decoration:none;letter-spacing:.05em;transition:color .25s}
+  footer a{text-decoration:none;transition:color .25s}
   footer a:hover{color:var(--tan)}
-  footer .telif{letter-spacing:.02em}
   footer .buyuk{text-transform:uppercase}
 
   /* ---------- OZEL IMLEC ---------- */
   @media (hover:hover) and (pointer:fine){
-    .video-blok .ph, .sonraki, .sonraki *{cursor:none}
+    .is, .is *{cursor:none}
     #imlec{
       position:fixed;top:0;left:0;z-index:999;
       pointer-events:none;
@@ -306,12 +216,10 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
-    .proje-bas{padding-top:8rem}
-    .meta{grid-template-columns:repeat(2, minmax(0,1fr))}
-    .metin-blok{grid-template-columns:1fr;gap:1.1rem}
-    .kunye dl{grid-template-columns:repeat(2, minmax(0,1fr))}
-    .ikili{grid-template-columns:1fr}
-    .uclu{grid-template-columns:1fr 1fr}
+    .works-bas{padding-top:8rem}
+    .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .is.kare{grid-column:span 2}
+    .is.kucuk{grid-column:span 1}
   }
   @media (max-width: 560px){
     /* Mobil header: TAN solda + hamburger sagda; linkler acilir panelde */
@@ -343,74 +251,21 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
-    .proje-bas{padding-top:6.5rem}
-    .meta, .kunye dl{grid-template-columns:1fr}
-    .uclu{grid-template-columns:1fr}
-    .ikili{grid-template-columns:1fr}
-  }
-  /* =========================================================
-     BRUTALIST TİPO SİSTEMİ (Swiss/grotesk) — display: Archivo, mono: Space Mono
-     ========================================================= */
-  body{counter-reset:bolum}
-
-  nav a{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.02em}
-  nav a.contact{letter-spacing:.04em}
-
-  /* --- SPREAD GIRIS --- */
-  .spread-ust{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em}
-  .spread-orta-baslik{line-height:1.5}
-  .spread-gorsel{border-top:1.5px solid var(--siyah);border-bottom:1.5px solid var(--siyah)}
-  /* baslik tam genislik anitsal; kolonlar altinda */
-  .spread-alt{display:block;padding-top:3rem}
-  .spread-h1{
-    font-family:var(--font-display);font-weight:300;
-    font-size:clamp(4rem,8vw,7.5rem);line-height:.9;
-    letter-spacing:-.02em;text-transform:uppercase;
-    margin-bottom:2.2rem;max-width:none;
-  }
-  .spread-kolonlar{font-size:.84rem;line-height:1.6}
-
-  /* --- BOLUM BASLIKLARI (Overview / Approach) --- */
-  .metin-blok{border-top:1.5px solid var(--siyah);padding-top:2.6rem;align-items:start}
-  .metin-blok h2{
-    font-family:var(--font-display);font-weight:300;
-    font-size:clamp(2.25rem,3.5vw,3.5rem);line-height:1;
-    letter-spacing:-.01em;text-transform:uppercase;color:var(--siyah);
-    display:flex;flex-direction:column;gap:.7rem;
-  }
-  .metin-blok h2::before, .kunye h2::before{
-    counter-increment:bolum;
-    content:"(" counter(bolum,decimal-leading-zero) ")";
-    font-family:var(--font-mono);font-weight:400;font-size:.66rem;
-    letter-spacing:.1em;color:var(--metin-gri);
-  }
-  .metin-blok .govde p{font-size:1.02rem;line-height:1.62;color:var(--siyah)}
-
-  /* --- GORSEL CAPTION --- */
-  .gorsel-not{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.08em}
-
-  /* --- KUNYE / CREDITS --- */
-  .kunye{border-top:1.5px solid var(--siyah);padding-top:2.6rem}
-  .kunye h2{
-    font-family:var(--font-display);font-weight:300;
-    font-size:clamp(2.25rem,3.5vw,3.5rem);line-height:1;
-    letter-spacing:-.01em;text-transform:uppercase;
-    display:flex;flex-direction:column;gap:.7rem;margin-bottom:2.2rem;
-  }
-  .kunye dt{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.1em}
-  .kunye dd{font-size:.95rem;font-weight:600}
-
-  /* --- SONRAKI PROJE (anitsal) --- */
-  .sonraki{border-top:1.5px solid var(--siyah)}
-  .sonraki .ust{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em}
-  .sonraki .ad{
-    font-family:var(--font-display);font-weight:300;
-    font-size:clamp(4rem,8vw,7.5rem);line-height:.9;
-    letter-spacing:-.02em;text-transform:uppercase;max-width:none;
+    .works-bas{padding-top:6.5rem}
+    .is-grid{grid-template-columns:1fr}
+    .is.kare,.is.kucuk{grid-column:1/-1}
   }
 
-  /* --- FOOTER mono --- */
-  footer{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.04em}
+  /* ---------- SERVICES / HIZMETLER ---------- */
+  .hizmetler{border-top:1px solid var(--cizgi)}
+  .hizmet{display:grid;grid-template-columns:4rem minmax(0,1.1fr) minmax(0,1.3fr);gap:1.6rem;align-items:start;padding:2.4rem 0;border-bottom:1px solid var(--cizgi);transition:padding-left .4s cubic-bezier(.2,.7,.2,1)}
+  .hizmet .no{font-family:var(--font-mono);font-size:var(--fs-sm);font-weight:400;letter-spacing:.08em;color:var(--metin-gri);padding-top:.6rem}
+  .hizmet .baslik{margin:0;font-size:var(--fs-h3);font-weight:500;line-height:1.1;letter-spacing:-.01em;transition:color .3s}
+  .hizmet .aciklama p{margin:0;font-size:var(--fs-body);line-height:1.6;color:var(--metin-gri);max-width:38rem}
+  .hizmet .etiketler{margin-top:1rem;display:flex;flex-wrap:wrap;gap:.45rem .5rem}
+  .hizmet .etiketler span{font-family:var(--font-mono);font-size:var(--fs-micro);font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--metin-gri);border:1px solid var(--cizgi);border-radius:999px;padding:.28rem .72rem}
+  @media (hover:hover) and (pointer:fine){ .hizmet:hover{padding-left:1.1rem} .hizmet:hover .baslik{color:var(--tan)} }
+  @media (max-width:560px){ .hizmet{grid-template-columns:2.5rem minmax(0,1fr);gap:.5rem 1.2rem} .hizmet .aciklama{grid-column:2/-1;margin-top:.5rem} }
 </style>
 </head>
 <body>
@@ -423,7 +278,7 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="navLinks">
-    <a href="works.html">Works</a>
+    <a href="works.html" aria-current="page">Works</a>
     <a href="index.html#services">Services</a>
     <a href="index.html#news">Press</a>
     <a href="about.html">About</a>
@@ -431,84 +286,41 @@
   </div>
 </nav>
 
-<!-- ---------- PROJE KAPAK (editoryel spread) ---------- -->
-<header class="spread">
-  <div class="spread-ust">
-    <a class="geri" href="works.html" lang="en">&larr; All Works</a>
-    <div class="spread-orta-baslik" lang="en">TAN Creative<br>Case Study</div>
-    <span class="spread-syf">05 / 08</span>
-  </div>
-  <figure class="spread-gorsel reveal">
-    <div class="ph"><span class="yakinda-cover">Görsel Yakında</span></div>
-  </figure>
-  <div class="spread-alt reveal">
-    <h1 class="spread-h1"><span lang="tr">“Eşik”</span><br><span lang="en">Exhibition</span></h1>
-    <div class="spread-kolonlar">
-      <p>Bu projenin tanıtım metni hazırlanıyor. Yakında bu alanda işin kapsamı, yaklaşımı ve sonuçları yer alacak.</p>
-    </div>
-  </div>
+<!-- ---------- BASLIK ---------- -->
+<header class="works-bas">
+  <div class="ust" lang="en"><span>(What We Do)</span><span>03 Disciplines</span></div>
+  <h1 lang="en">Services</h1>
 </header>
 
-<!-- ---------- OVERVIEW ---------- -->
-<section class="metin-blok reveal">
-  <h2 lang="en">Overview</h2>
-  <div class="govde">
-    <p>Bu projenin tanıtım metni hazırlanıyor. Yakında bu alanda işin kapsamı, yaklaşımı ve sonuçları yer alacak.</p>
-    
-  </div>
-</section>
-
-<!-- ---------- IKILI GORSEL ---------- -->
-<div class="gorsel-blok ikili reveal">
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-</div>
-
-<!-- ---------- VIDEO (imlec: PLAY) ---------- -->
-<figure class="gorsel-blok tam video-blok reveal">
-  <div class="ph"></div>
-  <figcaption class="gorsel-not">Film Yakında</figcaption>
-</figure>
-
-<!-- ---------- APPROACH ---------- -->
-<section class="metin-blok reveal">
-  <h2 lang="en">Approach</h2>
-  <div class="govde">
-    <p>Yaklaşım metni yakında eklenecek.</p>
-  </div>
-</section>
-
-<!-- ---------- UCLU GORSEL ---------- -->
-<div class="gorsel-blok uclu reveal">
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-</div>
-
-<!-- ---------- KAPANIS GORSELI ---------- -->
-<figure class="gorsel-blok tam reveal">
-  <div class="ph"></div>
-  <figcaption class="gorsel-not">Görsel Yakında</figcaption>
-</figure>
-
-<!-- ---------- KUNYE ---------- -->
-<section class="kunye reveal">
-  <h2 lang="en">Credits</h2>
-  <dl lang="en">
-    <div><dt>Creative Direction</dt><dd>—</dd></div>
-    <div><dt>Design</dt><dd>—</dd></div>
-    <div><dt>Development</dt><dd>—</dd></div>
-    <div><dt>Motion</dt><dd>—</dd></div>
-    <div><dt>Photography</dt><dd>—</dd></div>
-    <div><dt>Production</dt><dd>TAN Creative</dd></div>
-  </dl>
-</section>
-
-<!-- ---------- SONRAKI PROJE (imlec: EXPLORE) ---------- -->
-<a class="sonraki" href="work-06.html">
-  <div class="ust" lang="en">Next Project</div>
-  <div class="ad">Les Benjamins New Year</div>
-</a>
+<!-- ---------- TUM ISLER ---------- -->
+<main class="works-govde">
+  <ul class="hizmetler">
+    <li class="hizmet reveal">
+      <span class="no">01</span>
+      <h3 class="baslik" lang="en">Brand Systems</h3>
+      <div class="aciklama" lang="en">
+        <p>Visual identities and scalable design systems — logotype, typography, color, and guidelines built to stay coherent across every touchpoint.</p>
+        <div class="etiketler"><span>Identity</span><span>Design Systems</span><span>Guidelines</span></div>
+      </div>
+    </li>
+    <li class="hizmet reveal">
+      <span class="no">02</span>
+      <h3 class="baslik" lang="en">Cultural Projects</h3>
+      <div class="aciklama" lang="en">
+        <p>Exhibitions, publications, and cultural programming — produced with institutions and artists from concept to delivery.</p>
+        <div class="etiketler"><span>Exhibition</span><span>Publication</span><span>Programming</span></div>
+      </div>
+    </li>
+    <li class="hizmet reveal">
+      <span class="no">03</span>
+      <h3 class="baslik" lang="en">Creative Technology</h3>
+      <div class="aciklama" lang="en">
+        <p>Interactive installations, generative tools, and digital experiences built at the intersection of design and code.</p>
+        <div class="etiketler"><span>Interactive</span><span>Generative</span><span>Web</span></div>
+      </div>
+    </li>
+  </ul>
+</main>
 
 <!-- ---------- FOOTER ---------- -->
 <footer>
@@ -562,7 +374,7 @@
   },{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // Ozel imlec: video uzerinde PLAY, sonraki proje uzerinde EXPLORE
+  // Ozel imlec: is kartlari uzerinde VIEW
   const imlec = document.getElementById('imlec');
   const imlecMetin = document.getElementById('imlecMetin');
   const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -588,15 +400,9 @@
       imlec.classList.remove('aktif');
       imlecMetin.textContent = '';
     }
-    const bolgeler = [
-      [document.querySelectorAll('.video-blok .ph'), 'PLAY'],
-      [document.querySelectorAll('.sonraki'),        'EXPLORE'],
-    ];
-    bolgeler.forEach(([eller, kelime])=>{
-      eller.forEach(el=>{
-        el.addEventListener('mouseenter', ()=>yaz(kelime));
-        el.addEventListener('mouseleave', gizle);
-      });
+    document.querySelectorAll('.is').forEach(el=>{
+      el.addEventListener('mouseenter', ()=>yaz('VIEW'));
+      el.addEventListener('mouseleave', gizle);
     });
     document.documentElement.addEventListener('mouseleave', gizle);
   }
