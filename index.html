@@ -216,59 +216,43 @@
   .tanitim-metin p{margin:0}
 
   /* ---------- BOLUM BASLIKLARI ---------- */
-  .bolum-baslik{
+  /* ---- BOLUM BASLIKLARI (cizgisiz — tan kare isaret + mono etiket) ---- */
+  /* Ortak baslik metni: kucuk tan kare + mono uppercase */
+  .bolum-baslik, .bolum-ad{
+    margin:0;
     font-family:var(--font-mono);
     font-size:var(--fs-label);font-weight:400;
     letter-spacing:.18em;text-transform:uppercase;
     color:var(--siyah);
-    display:flex;align-items:center;gap:1.1rem;
-    padding-bottom:1.5rem;
-    border-bottom:1px solid var(--cizgi);
+    display:inline-flex;align-items:center;gap:.8rem;
   }
-  /* bolum numaralari (01..04) kaldirildi */
-  .bolum-baslik::after{
-    content:"";flex:1;height:1px;background:var(--cizgi);
+  .bolum-baslik::before, .bolum-ad::before{
+    content:"";flex:none;
+    width:8px;height:8px;background:var(--tan);
   }
+  /* Butonsuz baslik (Clients) */
+  .bolum-baslik{margin-bottom:2.6rem}
   .ortali{}
 
-  /* Bolum basligi + "hepsini gor" butonu (Selected Works / Services / Press) */
+  /* Butonlu baslik satiri (Selected Works / Services / Press) — cizgi YOK, bosluk ayirir */
   .bolum-bas{
-    display:flex;align-items:center;flex-wrap:wrap;gap:.5rem 1.1rem;
-    padding-bottom:1.5rem;border-bottom:1px solid var(--cizgi);
+    display:flex;align-items:center;justify-content:space-between;
+    flex-wrap:wrap;gap:1rem 1.5rem;
+    margin-bottom:2.6rem;
   }
-  .bolum-bas .cizgi{min-width:2rem}
-  .bolum-bas .bolum-link{margin-left:auto}   /* sarinca saga yaslanir */
-  .bolum-bas h2{margin:0}
-  .bolum-ad{
-    font-family:var(--font-mono);
-    font-size:var(--fs-label);font-weight:400;
-    letter-spacing:.18em;text-transform:uppercase;
-    color:var(--siyah);white-space:nowrap;
-  }
-  .bolum-bas .cizgi{flex:1;height:1px;background:var(--cizgi)}
+  /* "hepsini gor" — kucuk pill buton (TAN buton dili), hover'da tan dolar */
   .bolum-link{
     display:inline-flex;align-items:center;gap:.5rem;
     font-family:var(--font-mono);
-    font-size:var(--fs-label);font-weight:400;letter-spacing:.12em;
-    text-transform:uppercase;color:var(--siyah);
-    text-decoration:none;white-space:nowrap;
-    position:relative;padding-bottom:.28rem;
+    font-size:.66rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;
+    color:var(--siyah);text-decoration:none;white-space:nowrap;
+    border:1px solid var(--siyah);border-radius:999px;
+    padding:.6rem 1.25rem;
+    transition:background .3s cubic-bezier(.2,.7,.2,1),border-color .3s,color .3s;
   }
-  .bolum-link::after{
-    content:"";position:absolute;left:0;bottom:0;height:1.5px;width:100%;
-    background:var(--tan);transform:scaleX(0);transform-origin:left;
-    transition:transform .34s cubic-bezier(.2,.7,.2,1);
-  }
-  .bolum-link:hover::after{transform:scaleX(1)}
-  .bolum-link .ok{
-    display:inline-block;color:var(--tan);
-    animation:okKay 1.9s ease-in-out infinite;
-    transition:transform .34s cubic-bezier(.2,.7,.2,1);
-  }
-  .bolum-link:hover .ok{animation:none;transform:translateX(.4rem)}
-  @keyframes okKay{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
-  @media (prefers-reduced-motion:reduce){ .bolum-link .ok{animation:none} }
-  .services .bolum-bas, .press .bolum-bas{margin-bottom:2.4rem}
+  .bolum-link .ok{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
+  .bolum-link:hover{background:var(--tan);border-color:var(--tan);color:var(--siyah)}
+  .bolum-link:hover .ok{transform:translateX(.35rem)}
 
   /* ---------- MUSTERILER ---------- */
   .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem)}
@@ -836,9 +820,7 @@
 <!-- ---------- SECILMIS ISLER ---------- -->
 <section class="works reveal" id="works">
   <div class="bolum-bas">
-    <h2 class="bolum-ad" data-no="02" lang="en">Selected Works</h2>
-    <span class="cizgi" aria-hidden="true"></span>
-    <a class="bolum-link" href="works.html" lang="en">View All <span class="ok" aria-hidden="true">&rarr;</span></a>
+    <h2 class="bolum-ad" data-no="02" lang="en">Selected Works</h2>    <a class="bolum-link" href="works.html" lang="en">View All <span class="ok" aria-hidden="true">&rarr;</span></a>
   </div>
 
   <div class="is-grid">
@@ -861,9 +843,7 @@
 <!-- ---------- SERVICES ---------- -->
 <section class="services reveal" id="services">
   <div class="bolum-bas">
-    <h2 class="bolum-ad" data-no="03" lang="en">Services</h2>
-    <span class="cizgi" aria-hidden="true"></span>
-    <a class="bolum-link" href="services.html" lang="en">More Detail <span class="ok" aria-hidden="true">&rarr;</span></a>
+    <h2 class="bolum-ad" data-no="03" lang="en">Services</h2>    <a class="bolum-link" href="services.html" lang="en">More Detail <span class="ok" aria-hidden="true">&rarr;</span></a>
   </div>
   <ul class="hizmetler">
     <li class="hizmet">
@@ -896,9 +876,7 @@
 <!-- ---------- BASIN / PRESS ---------- -->
 <section class="press reveal" id="news">
   <div class="bolum-bas">
-    <h2 class="bolum-ad" data-no="04" lang="en">Press</h2>
-    <span class="cizgi" aria-hidden="true"></span>
-    <a class="bolum-link" href="press.html" lang="en">Read All <span class="ok" aria-hidden="true">&rarr;</span></a>
+    <h2 class="bolum-ad" data-no="04" lang="en">Press</h2>    <a class="bolum-link" href="press.html" lang="en">Read All <span class="ok" aria-hidden="true">&rarr;</span></a>
   </div>
   <div class="press-grid">
     <a class="haber" href="press-01.html">
