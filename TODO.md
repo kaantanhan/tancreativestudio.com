@@ -28,12 +28,14 @@ work-01 (Akbank) ve work-02 (Paribuart) dolu. Kalan 6 sayfa placeholder:
 - [ ] Her projede **Credits** (Creative Direction / Design / Development / Motion / Photography) doldurulacak (şu an "—")
 
 ## 4. Press / News (press-01…04)
-- [ ] Lorem ipsum metinleri gerçek içerikle değiştir
+- [x] **press.html** toplu sayfası açıldı (4 haber → press-01…04)
+- [ ] Lorem ipsum metinleri gerçek içerikle değiştir (press-01…04 + press.html kartları)
 - [ ] Boş görsel placeholder'larına (.ph) gerçek görseller
-- [ ] Ana sayfa Press/News bölümü kartlarını gözden geçir
 
 ## 5. Ana sayfa bölümleri
-- [ ] **Services** — içerik/metin gözden geçir
+- [x] **services.html** toplu sayfası açıldı (3 disiplin)
+- [x] Bölüm başlıklarına "hepsini gör" butonları + nav scroll (Works/Services/Press)
+- [ ] **Services** — içerik/metin genişletme (şu an 3 kısa madde)
 - [ ] **Clients** — logo duvarı: eksik marka logoları / sıralama
 - [ ] **About/Intro** metni son hâli (about.html dolu görünüyor, kontrol)
 
