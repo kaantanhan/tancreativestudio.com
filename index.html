@@ -255,9 +255,7 @@
   .bolum-link:hover .ok{transform:translateX(.35rem)}
 
   /* ---------- MUSTERILER ---------- */
-  /* Bolum ayiricisi: her ana bolumun ustunde tam-genislik ince cizgi */
-  .clients, .works, .services, .press{border-top:1px solid var(--cizgi)}
-  .clients{padding:var(--ritim) var(--kenar)}
+  .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem)}
   .clients h2{margin-bottom:2.4rem}
   .logo-duvari{
     list-style:none;
@@ -334,7 +332,7 @@
   .isim-listesi li:hover{color:var(--tan)}
 
   /* ---------- SECILMIS ISLER ---------- */
-  .works{padding:var(--ritim) var(--kenar)}
+  .works{padding:clamp(2.2rem, 3.4vw, 3rem) var(--kenar) var(--ritim)}
   .works h2{margin-bottom:2.4rem}
   .is-grid{
     display:grid;
