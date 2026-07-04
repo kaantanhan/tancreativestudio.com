@@ -677,7 +677,11 @@
       padding:0 var(--kenar);
       box-sizing:border-box;z-index:55;
     }
-    #logoSabit svg{width:calc(min(100vw - 2*var(--kenar) - 50px, 660px) * .95)}
+    /* Band icinde TAN harfleri (®'siz) dikey ortali dursun: SVG viewBox'inda
+       TAN merkezi (y70) svg merkezinin (y58.6) altinda; ®+ust bosluk yuzunden
+       flex-center TAN'i ~%9.7 asagi birakir -> svg'yi o kadar yukari cek.
+       Yuzde svg yuksekligine gore oldugundan her boyutta gecerli. */
+    #logoSabit svg{width:calc(min(100vw - 2*var(--kenar) - 50px, 660px) * .95);transform:translateY(-9.7%)}
     .logo-lockup .g-slogan,.logo-lockup .g-yan{opacity:1 !important}
 
     .is-grid{grid-template-columns:1fr}
