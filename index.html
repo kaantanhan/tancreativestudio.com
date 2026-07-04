@@ -481,8 +481,9 @@
   #introPerde.bitti{ animation:introCik .5s ease forwards; }
   @keyframes introCik{ to{opacity:0;visibility:hidden} }
   body.intro-kilit{overflow:hidden}
-  /* Ic navigasyondan gelindiyse intro perdesi hic gosterilmez (flassiz) */
-  html.intro-atla #introPerde{display:none !important}
+  /* Ic navigasyondan gelindiyse: TAN animasyonu YOK ama perde sade zemin olarak
+     kalir ve yumusakca silinir (ic sayfadan gelen zemin perdesiyle cross-dissolve). */
+  html.intro-atla #introTan{display:none}
   @media (prefers-reduced-motion: reduce){
     .hT,.hA,.hN{animation:none}
     #introPerde{animation:introCik .4s ease .3s forwards}
@@ -1199,10 +1200,17 @@
     const perde = document.getElementById('introPerde');
     const tan = document.getElementById('introTan');
     if(!perde || !tan) return;
-    // Ic navigasyondan gelindiyse (erken script isaretledi): intro yok, logo direkt gorunur.
+    // Ic navigasyondan gelindiyse (erken script isaretledi): TAN animasyonu yok.
+    // Sade zemin perdesi yumusakca silinir -> ic sayfanin cikis perdesiyle
+    // kesintisiz sicak-zemin gecisi. Reduced-motion'da aninda.
     if(document.documentElement.classList.contains('intro-atla')){
       window.__introOK = 0;      // slogan/tagline tam gorunur (fade beklemesi yok)
-      perde.remove();
+      const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(az){ perde.remove(); return; }
+      requestAnimationFrame(()=>{
+        perde.classList.add('bitti');            // introCik: opacity 1->0 (.5s)
+        setTimeout(()=>perde.remove(), 560);
+      });
       return;
     }
     document.body.classList.add('intro-kilit');
