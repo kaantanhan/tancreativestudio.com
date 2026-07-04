@@ -175,6 +175,71 @@
   }
   .alt-cta a.btn:hover{transform:translateY(-2px);opacity:.88}
 
+  /* ---------- MANIFESTO (buyuk giris ifadesi) ---------- */
+  .manifesto{padding:1.5rem var(--kenar) 4.5rem}
+  .manifesto .buyuk{
+    font-size:clamp(1.9rem, 3.6vw, 3.1rem);
+    font-weight:500;letter-spacing:-.02em;line-height:1.16;
+    max-width:26ch;color:var(--siyah);
+  }
+  .manifesto .buyuk .vurgu{color:var(--metin-gri)}
+
+  /* ---------- ETIKETLI BOLUMLER ---------- */
+  .bolum{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2.6fr);
+    gap:2rem clamp(2rem,6vw,6rem);
+    padding:3.4rem var(--kenar);
+    border-top:1px solid var(--cizgi);
+    align-items:start;
+  }
+  .bolum > .b-etiket{
+    font-family:var(--font-mono);
+    font-size:.7rem;font-weight:400;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--metin-gri);
+    position:sticky;top:1.4rem;
+  }
+  .bolum .paragraflar{
+    max-width:44rem;display:flex;flex-direction:column;gap:1.5rem;
+    font-size:clamp(1rem,1.3vw,1.12rem);line-height:1.65;
+  }
+
+  /* Expertise — 3 kategori */
+  .uzmanlik{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2.6rem 2rem}
+  .uzmanlik .kategori h3{
+    font-size:clamp(1.2rem,1.6vw,1.5rem);font-weight:500;letter-spacing:-.01em;
+    margin:0 0 1.1rem;line-height:1.15;
+  }
+  .uzmanlik .kategori ul{list-style:none;display:flex;flex-direction:column;gap:0}
+  .uzmanlik .kategori li{
+    font-size:.98rem;color:var(--metin-gri);
+    padding:.6rem 0;border-top:1px solid var(--cizgi);
+  }
+
+  /* Clients */
+  .musteri-intro{
+    font-size:clamp(1rem,1.3vw,1.12rem);line-height:1.6;color:var(--metin-gri);
+    max-width:42rem;margin-bottom:2.2rem;
+  }
+  .musteri-liste{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(2rem,4vw,4rem)}
+  .musteri-liste span{
+    display:block;
+    font-size:clamp(1.05rem,1.6vw,1.4rem);font-weight:500;letter-spacing:-.01em;
+    padding:.95rem 0;border-top:1px solid var(--cizgi);
+    transition:color .25s,padding-left .3s cubic-bezier(.2,.7,.2,1);
+  }
+  .musteri-liste span:hover{color:var(--tan);padding-left:.55rem}
+
+  /* Contact */
+  .iletisim{display:flex;flex-direction:column;gap:0}
+  .iletisim .satir{
+    display:grid;grid-template-columns:minmax(8rem,1fr) 3fr;gap:1rem;align-items:baseline;
+    padding:1.1rem 0;border-top:1px solid var(--cizgi);
+  }
+  .iletisim .k{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--metin-gri)}
+  .iletisim .v{font-size:clamp(1.05rem,1.5vw,1.3rem);font-weight:500}
+  .iletisim .v a{text-decoration:none;transition:color .25s}
+  .iletisim .v a:hover{color:var(--tan)}
+
   /* ---------- FOOTER ---------- */
   footer{
     display:flex;flex-wrap:wrap;
@@ -199,6 +264,11 @@
   @media (max-width: 760px){
     .govde{grid-template-columns:1fr;gap:1rem}
     .govde .etiket{margin-bottom:.4rem}
+    .bolum{grid-template-columns:1fr;gap:.9rem}
+    .bolum > .b-etiket{position:static;top:auto;margin-bottom:.3rem}
+    .uzmanlik{grid-template-columns:1fr;gap:2rem}
+    .musteri-liste{grid-template-columns:1fr;gap:0}
+    .iletisim .satir{grid-template-columns:1fr;gap:.25rem}
   }
   @media (max-width: 560px){
     /* Mobil header: TAN solda + hamburger sagda; linkler acilir panelde */
@@ -251,7 +321,7 @@
   <div class="nav-links" id="navLinks">
     <a href="works.html" lang="en">Works</a>
     <a href="index.html#services" lang="en">Services</a>
-    <a href="index.html#news" lang="en">News</a>
+    <a href="index.html#news" lang="en">Press</a>
     <a href="about.html" class="aktif">About</a>
     <span class="dil" aria-label="Dil / Language">
       <button type="button" id="dilTR" data-set="tr">TR</button>
@@ -267,14 +337,16 @@
   <h1 data-en lang="en">About</h1>
 </header>
 
-<section class="icerik">
-  <!-- LEAD / GIRIS -->
-  <p class="lead" data-tr>TAN Creative, İstanbul merkezli disiplinler arası bir stüdyodur. Marka sistemleri, kültürel projeler ve yaratıcı teknoloji araçları geliştirir.</p>
-  <p class="lead" data-en lang="en">TAN Creative is an Istanbul-based interdisciplinary studio. It builds brand systems, cultural projects, and creative technology tools.</p>
+<!-- MANIFESTO -->
+<section class="manifesto">
+  <p class="buyuk" data-tr>TAN Creative; marka sistemleri, kültürel projeler ve yaratıcı teknoloji üreten <span class="vurgu">İstanbul merkezli disiplinler arası</span> bir stüdyodur.</p>
+  <p class="buyuk" data-en lang="en">TAN Creative is an <span class="vurgu">Istanbul-based interdisciplinary</span> studio building brand systems, cultural projects, and creative technology.</p>
+</section>
 
-  <div class="govde">
-    <span class="etiket" data-tr>Yaklaşım</span>
-    <span class="etiket" data-en lang="en">Approach</span>
+<!-- YAKLASIM / APPROACH -->
+<section class="bolum">
+    <span class="b-etiket" data-tr>Yaklaşım</span>
+    <span class="b-etiket" data-en lang="en">Approach</span>
 
     <!-- TR govde -->
     <div class="paragraflar" data-tr>
@@ -289,6 +361,43 @@
       <p>The studio works primarily in the cultural field, in contexts that demand a high degree of precision. An identity system, an exhibition space, or a real-time visual composition are all conceived as applications of the same design logic at different scales. The result is neither a purely aesthetic surface nor a technical display detached from its context, but a working, applicable form of the concept.</p>
       <p>Work carried out to date with institutions and brands such as Borusan Contemporary, Akbank Sanat, Yapı Kredi Kültür Sanat, and Les Benjamins reflects this way of working across different contexts. TAN Creative treats every collaboration not as a one-off deliverable, but as a production relationship in which concept and execution continuously define one another.</p>
     </div>
+</section>
+
+<!-- EXPERTISE -->
+<section class="bolum">
+  <span class="b-etiket" data-tr>Uzmanlık</span>
+  <span class="b-etiket" data-en lang="en">Expertise</span>
+  <div class="uzmanlik" lang="en">
+    <div class="kategori"><h3>Brand Systems</h3><ul><li>Identity</li><li>Design Systems</li><li>Guidelines</li><li>Art Direction</li></ul></div>
+    <div class="kategori"><h3>Cultural Projects</h3><ul><li>Exhibitions</li><li>Publications</li><li>Programming</li><li>Curatorial Design</li></ul></div>
+    <div class="kategori"><h3>Creative Technology</h3><ul><li>Interactive Installations</li><li>Generative Tools</li><li>Real-time Visuals</li><li>Web</li></ul></div>
+  </div>
+</section>
+
+<!-- CLIENTS -->
+<section class="bolum">
+  <span class="b-etiket" data-tr>Müşteriler &amp; İş Birlikleri</span>
+  <span class="b-etiket" data-en lang="en">Clients &amp; Collaborations</span>
+  <div>
+    <p class="musteri-intro" data-tr>Hassasiyete ve uzun soluklu iş birliğine değer veren kurum ve markalarla çalışıyoruz.</p>
+    <p class="musteri-intro" data-en lang="en">We work with institutions and brands that value precision and long-term collaboration.</p>
+    <div class="musteri-liste" lang="en">
+      <span>Akbank Sanat</span><span>Borusan Contemporary</span>
+      <span>Borusan Sanat</span><span>Yapı Kredi Kültür Sanat</span>
+      <span>Les Benjamins</span><span>Paribu</span>
+      <span>Allianz</span><span>Emaar</span>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="bolum">
+  <span class="b-etiket" data-tr>İletişim</span>
+  <span class="b-etiket" data-en lang="en">Contact</span>
+  <div class="iletisim">
+    <div class="satir"><span class="k" data-tr>Stüdyo</span><span class="k" data-en lang="en">Studio</span><span class="v">İstanbul, Türkiye</span></div>
+    <div class="satir"><span class="k">Email</span><span class="v"><a href="mailto:info@tancreativestudio.com">info@tancreativestudio.com</a></span></div>
+    <div class="satir"><span class="k" data-tr>Sosyal</span><span class="k" data-en lang="en">Social</span><span class="v"><a href="https://www.linkedin.com/company/tan-creative/" target="_blank" rel="noopener">LinkedIn</a> <span style="color:var(--cizgi)">/</span> <a href="https://www.instagram.com/tan.creative.studio/" target="_blank" rel="noopener">Instagram</a></span></div>
   </div>
 </section>
 

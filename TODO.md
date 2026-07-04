@@ -37,7 +37,7 @@ work-01 (Akbank) ve work-02 (Paribuart) dolu. Kalan 6 sayfa placeholder:
 - [x] Bölüm başlıklarına "hepsini gör" butonları + nav scroll (Works/Services/Press)
 - [ ] **Services** — içerik/metin genişletme (şu an 3 kısa madde)
 - [ ] **Clients** — logo duvarı: eksik marka logoları / sıralama
-- [ ] **About/Intro** metni son hâli (about.html dolu görünüyor, kontrol)
+- [x] **About** sayfası onformative tarzı zenginleştirildi (manifesto + Approach + Expertise + Clients + Contact, iki dilli)
 
 ## 6. Footer / iletişim / linkler
 - [x] Footer **LinkedIn** → linkedin.com/company/tan-creative/ (yeni sekme)
