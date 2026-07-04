@@ -327,14 +327,14 @@
     overflow:hidden;
     transition:filter .35s;
   }
-  .is .gorsel img{width:100%;height:100%;object-fit:cover;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+  .is .gorsel img,.is .gorsel video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
   /* Hover'da gorselin uzerinden gecen ince karartma katmani */
   .is .gorsel::after{
     content:"";position:absolute;inset:0;
     background:var(--siyah);opacity:0;
     transition:opacity .4s ease;pointer-events:none;
   }
-  .is:hover .gorsel img{transform:scale(1.04)}
+  .is:hover .gorsel img,.is:hover .gorsel video{transform:scale(1.04)}
   .is:hover .gorsel::after{opacity:.05}
   .is .etiket{
     position:relative;
@@ -800,7 +800,7 @@
 
   <div class="is-grid">
     <a class="is kare" href="work-01.html"><div class="gorsel"><img src="images/niyetler-2.jpg" alt="Akbank Sanat — Niyetler 2"></div><div class="etiket" lang="tr">Akbank Sanat - Niyetler 2</div></a>
-    <a class="is kare" href="work-02.html"><div class="gorsel"><img src="images/paribuart-kapak-1.jpg" alt="Paribuart — 9th Anniversary"></div><div class="etiket" lang="en">Paribuart - 9th Anniversary</div></a>
+    <a class="is kare" href="work-02.html"><div class="gorsel"><video src="images/paribuart-3.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Paribuart — 9th Anniversary"></video></div><div class="etiket" lang="en">Paribuart - 9th Anniversary</div></a>
 
     <a class="is genis" href="work-03.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Allianz - Point Cloud</div></a>
 
