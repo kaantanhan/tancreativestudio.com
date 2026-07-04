@@ -647,6 +647,17 @@
       padding:.85rem 1.15rem;border-radius:999px;
     }
 
+    /* Band en uste ulasinca SABITLENIR: fixed header olur -> logo+hamburger
+       hic kaybolmaz, sonraki icerik arkasindan yukari kayar (JS .sabit ekler). */
+    #logoSabit.sabit, nav.sabit{position:fixed;top:0}
+    /* Sabitken (band ustte) menu ASAGI acilir */
+    nav.sabit .nav-links{
+      top:100%;bottom:auto;
+      transform:translateY(-.6rem);
+      border-top:0;border-bottom:1px solid rgba(0,0,0,.07);
+    }
+    nav.sabit.open .nav-links{transform:none}
+
     /* Ilk ekran (mobil): TAM EKRAN hero video + altta logo banti */
     .perde{min-height:100svh}
     .hero{flex:0 0 auto;height:100svh;min-height:520px}
@@ -944,6 +955,35 @@
     window.addEventListener('load', ()=>{ olc(); setTimeout(olc, 200); });
     olc();
     requestAnimationFrame(kare);
+  })();
+
+  // Mobil: logo+hamburger banti en uste gelince SABITLENIR (fixed). Ilk ekranin
+  // altindan yukari kayar, ust kenara degince orada durur; sonraki icerik
+  // arkasindan kayar -> logo/hamburger hic kaybolmaz.
+  (function(){
+    const bant = document.getElementById('logoSabit');
+    const navEl = document.querySelector('nav');
+    const mq = matchMedia('(max-width:560px)');
+    if(!bant || !navEl) return;
+    let esik = 0;
+    function olcEsik(){
+      // Yalnizca sabit DEGILKEN olc (sabitken band konumu 0'a sabittir).
+      if(bant.classList.contains('sabit')) return;
+      esik = bant.getBoundingClientRect().top + window.scrollY;  // band'in belge ust konumu
+    }
+    function guncelle(){
+      if(!mq.matches){ bant.classList.remove('sabit'); navEl.classList.remove('sabit'); return; }
+      const pin = window.scrollY >= esik - 0.5;
+      bant.classList.toggle('sabit', pin);
+      navEl.classList.toggle('sabit', pin);
+    }
+    window.addEventListener('scroll', guncelle, {passive:true});
+    window.addEventListener('resize', ()=>{
+      bant.classList.remove('sabit'); navEl.classList.remove('sabit');
+      olcEsik(); guncelle();
+    }, {passive:true});
+    window.addEventListener('load', ()=>{ olcEsik(); guncelle(); });
+    olcEsik(); guncelle();
   })();
 
   // Kaydirma ile belirme
