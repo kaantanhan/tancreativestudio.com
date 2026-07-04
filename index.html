@@ -622,7 +622,7 @@
       -webkit-backdrop-filter:none;backdrop-filter:none;
       border-bottom:0;
     }
-    .nav-toggle{display:flex}
+    .nav-toggle{display:flex;margin-right:.2rem}   /* sag kenardan biraz ic */
 
     /* Linkler: band ekranin altinda oldugu icin panel YUKARI acilir */
     .nav-links{
@@ -677,7 +677,7 @@
       padding:0 var(--kenar);
       box-sizing:border-box;z-index:55;
     }
-    #logoSabit svg{width:min(calc(100vw - 2*var(--kenar) - 50px), 660px)}
+    #logoSabit svg{width:calc(min(100vw - 2*var(--kenar) - 50px, 660px) * .95)}
     .logo-lockup .g-slogan,.logo-lockup .g-yan{opacity:1 !important}
 
     .is-grid{grid-template-columns:1fr}
