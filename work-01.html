@@ -147,7 +147,7 @@
   .spread-orta-baslik{justify-self:center;text-align:center;line-height:1.3;color:var(--siyah)}
   .spread-syf{justify-self:end;color:var(--metin-gri);font-weight:600;letter-spacing:.1em}
   .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
-  .spread-gorsel img{width:100%;height:clamp(380px,68vh,760px);object-fit:cover;display:block}
+  .spread-gorsel img,.spread-gorsel video{width:100%;height:clamp(380px,68vh,760px);object-fit:cover;display:block}
   /* Kapak gorseli olmayan projelerde placeholder */
   .spread-gorsel .ph{height:clamp(380px,68vh,760px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
   .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#B9B6AF}
@@ -174,7 +174,7 @@
     .spread-ust{padding-top:3.4rem;grid-template-columns:auto 1fr;row-gap:.5rem}
     .spread-orta-baslik{display:none}
     .spread-kolonlar{grid-template-columns:1fr;gap:1rem}
-    .spread-gorsel img{height:46vh}
+    .spread-gorsel img,.spread-gorsel video{height:46vh}
     .spread-gorsel .ph{height:46vh}
   }
 
@@ -192,6 +192,7 @@
   .gorsel-blok img{width:100%;height:auto;display:block}
   .ikili{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem}
   .ikili .ph{aspect-ratio:4/5}
+  .ikili img,.ikili video{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;background:var(--tgri)}
   .uclu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1.6rem}
   .uclu .ph{aspect-ratio:1/1}
   .gorsel-not{
@@ -439,7 +440,7 @@
     <span class="spread-syf">01 / 08</span>
   </div>
   <figure class="spread-gorsel reveal">
-    <img src="images/niyetler-2.jpg" alt="Akbank Sanat “Niyetler 2 / Intentions 2” sergisi — sergi mekânından görünüm">
+    <video src="images/akbank-kapak.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat “Niyetler 2 / Intentions 2” sergisi kapak videosu"></video>
   </figure>
   <div class="spread-alt reveal">
     <h1 class="spread-h1" lang="tr">Akbank Sanat<br>Niyetler 2</h1>
@@ -458,17 +459,17 @@
   </div>
 </section>
 
-<!-- ---------- IKILI GORSEL ---------- -->
+<!-- ---------- VIDEO IKILI 1 ---------- -->
 <div class="gorsel-blok ikili reveal">
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
+  <figure><video src="images/akbank-1.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+  <figure><video src="images/akbank-2.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
 </div>
 
-<!-- ---------- VIDEO (imlec: PLAY) ---------- -->
-<figure class="gorsel-blok tam video-blok reveal">
-  <div class="ph"></div>
-  <figcaption class="gorsel-not">Film Yakında</figcaption>
-</figure>
+<!-- ---------- VIDEO IKILI 2 ---------- -->
+<div class="gorsel-blok ikili reveal">
+  <figure><video src="images/akbank-3.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+  <figure><video src="images/akbank-4.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+</div>
 
 <!-- ---------- APPROACH ---------- -->
 <section class="metin-blok reveal">
@@ -477,13 +478,6 @@
     <p>Yaklaşım metni yakında eklenecek.</p>
   </div>
 </section>
-
-<!-- ---------- UCLU GORSEL ---------- -->
-<div class="gorsel-blok uclu reveal">
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
-</div>
 
 <!-- ---------- KAPANIS GORSELI ---------- -->
 <figure class="gorsel-blok tam reveal">
