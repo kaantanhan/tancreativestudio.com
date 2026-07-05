@@ -225,13 +225,18 @@
   }
   .tanitim-metin p{margin:0}
 
-  /* ---------- FIKIR / MANIFESTO ---------- */
-  .fikir{padding:1.9rem var(--kenar) clamp(2rem, 3vw, 2.6rem)}
+  /* ---------- FIKIR / MANIFESTO ----------
+     Buyuk editoryel statement: govde gri, anahtar ifadeler siyah (.vurgu).
+     about.html manifesto diliyle ayni aile. */
+  .fikir{padding:clamp(4.5rem, 8vw, 8rem) var(--kenar) clamp(3rem, 5vw, 4.5rem)}
   .fikir-govde{
-    justify-self:end;text-align:right;
-    font-size:var(--fs-body);line-height:1.6;color:var(--siyah);
-    max-width:24rem;margin:0 0 0 auto;
+    font-size:clamp(1.45rem, 2.6vw, 2.35rem);
+    font-weight:500;letter-spacing:-.02em;line-height:1.32;
+    color:var(--metin-gri);
+    max-width:34ch;margin:0;
+    text-wrap:balance;
   }
+  .fikir-govde .vurgu{color:var(--siyah)}
 
   /* ---------- BOLUM BASLIKLARI ---------- */
   /* ---- BOLUM BASLIKLARI (acik gri uzun ayirici cizgi + grotesk etiket) ---- */
@@ -790,7 +795,7 @@
 
 <!-- ---------- FIKIR / MANIFESTO ---------- -->
 <section class="fikir reveal">
-  <p class="fikir-govde">TAN için tasarım, yalnızca estetik bir çıktı üretme süreci değildir. Her proje; araştırma, gözlem ve gerçek dünya verileriyle beslenen bir düşünme ve problem çözme süreci olarak ele alınır. Kararlar yalnızca varsayımlara değil, gözlem, etkileşim ve ölçülebilir davranışlara dayanır.</p>
+  <p class="fikir-govde">TAN için tasarım, yalnızca estetik bir çıktı üretme süreci değildir. Her proje; <span class="vurgu">araştırma, gözlem ve gerçek dünya verileriyle</span> beslenen bir <span class="vurgu">düşünme ve problem çözme süreci</span> olarak ele alınır. Kararlar yalnızca varsayımlara değil, <span class="vurgu">gözlem, etkileşim ve ölçülebilir davranışlara</span> dayanır.</p>
 </section>
 
 <!-- ---------- MUSTERILER ---------- -->
