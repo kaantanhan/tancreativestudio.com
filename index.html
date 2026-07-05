@@ -203,12 +203,15 @@
     align-items:end;
     padding:1.6rem var(--kenar) 1.9rem;
   }
-  .marka{display:flex;align-items:flex-start;gap:1.1rem}
+  /* margin-bottom: TAN harflerini (®'siz) intro bandinda dikey ortalar —
+     tam-lockup kutusu ust bosluk (®) + alt padding yuzunden TAN'i biraz asagi
+     birakiyordu; bu bosluk logoyu ~yari-fark kadar yukari cekip merkezler. */
+  .marka{display:flex;align-items:flex-start;gap:1.1rem;margin-bottom:.8rem}
 
   /* Logo scroll davranisi: yer tutucu akista kalir, gorunen logo fixed olarak
      kaydirildikca sol ust koseye tasinip %20 olcege kuculur */
   .logo-yer{line-height:0}
-  .logo-yer svg{width:clamp(320px, 42vw, 620px);height:auto;display:block;visibility:hidden}
+  .logo-yer svg{width:clamp(384px, 50.4vw, 744px);height:auto;display:block;visibility:hidden}
   .logo-lockup{
     position:fixed;left:0;top:0;z-index:60;
     line-height:0;color:var(--siyah);
@@ -216,7 +219,7 @@
     will-change:transform;
     cursor:pointer;
   }
-  .logo-lockup svg{width:clamp(320px, 42vw, 620px);height:auto;display:block}
+  .logo-lockup svg{width:clamp(384px, 50.4vw, 744px);height:auto;display:block}
   .logo-lockup .g-slogan,.logo-lockup .g-yan{will-change:opacity}
   .tanitim-metin{
     justify-self:end;align-self:start;
