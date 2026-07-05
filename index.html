@@ -226,10 +226,27 @@
   .tanitim-metin p{margin:0}
 
   /* ---------- FIKIR / MANIFESTO ----------
-     Buyuk editoryel statement: govde gri, anahtar ifadeler siyah (.vurgu).
-     Scroll ile kelime kelime belirir (JS .kl spanlerine bolup .acik ekler).
-     about.html manifesto diliyle ayni aile. */
-  .fikir{padding:clamp(4.5rem, 8vw, 8rem) var(--kenar) clamp(4.5rem, 8vw, 8rem)}
+     Buyuk editoryel statement + T-Flow gozu: bolum, okuyucunun imlecini
+     bir sensor gibi izler — ustteki mono telemetri satiri canli koordinat
+     ve odak kelimeyi yazar, imlece yakin kelimeler tan ile "olculur"
+     (::selection diliyle ayni isaret). Scroll ile kelime kelime belirir. */
+  .fikir{
+    padding:clamp(4.5rem, 8vw, 8rem) var(--kenar);
+    cursor:crosshair;
+  }
+  .f-veri{
+    font-family:var(--font-mono);
+    font-size:var(--fs-micro);letter-spacing:.14em;
+    color:var(--metin-gri);
+    margin:0 0 2.6rem;
+    display:flex;align-items:center;gap:.55rem;
+  }
+  .f-veri::before{
+    content:"";flex:none;width:6px;height:6px;border-radius:50%;
+    background:var(--tan);
+    animation:fikirNabiz 1.6s ease-in-out infinite;
+  }
+  @keyframes fikirNabiz{0%,100%{opacity:1}50%{opacity:.25}}
   .fikir-govde{
     font-size:clamp(1.45rem, 2.6vw, 2.35rem);
     font-weight:500;letter-spacing:-.02em;line-height:1.4;
@@ -237,17 +254,36 @@
     max-width:34ch;margin:0;
     text-wrap:balance;
   }
+  /* Ikinci paragraf (T-Flow): kucuk boy, saga cekilmis — asimetrik ritim */
+  .fikir-p2{
+    font-size:clamp(1rem, 1.35vw, 1.2rem);
+    font-weight:400;letter-spacing:0;line-height:1.65;
+    max-width:30rem;margin:3.2rem 0 0 auto;
+  }
+  .tflow{font-family:var(--font-mono);font-weight:700;font-size:.88em;white-space:nowrap}
   /* JS calismadan: govde gri, vurgu siyah (kademesiz tam gorunur) */
   .fikir-govde .vurgu{color:var(--siyah)}
   /* Kelime spanleri (JS bolunce): sonuk baslar, scroll ilerledikce acilir */
   .fikir-govde .kl{
     color:var(--cizgi);
-    transition:color .5s cubic-bezier(.2,.7,.2,1);
+    transition:color .5s cubic-bezier(.2,.7,.2,1),
+               background-color .25s ease, box-shadow .25s ease;
   }
   .fikir-govde .kl.acik{color:var(--metin-gri)}
   .fikir-govde .kl.vg.acik{color:var(--siyah)}
+  /* Imlece yakin kelimeler: tan "olcum" isareti (metin her temada koyu kalir) */
+  .fikir-govde .kl.izle{
+    color:#0B0B0B;
+    background:var(--tan);box-shadow:0 0 0 3px var(--tan);
+  }
   @media (prefers-reduced-motion:reduce){
     .fikir-govde .kl{transition:none}
+    .f-veri::before{animation:none}
+  }
+  /* Dokunmatik cihaz: telemetri/crosshair anlamsiz — gizle */
+  @media (hover:none){
+    .f-veri{display:none}
+    .fikir{cursor:auto}
   }
 
   /* ---------- BOLUM BASLIKLARI ---------- */
@@ -805,6 +841,13 @@
 </section>
 </div>
 
+<!-- ---------- FIKIR / MANIFESTO (T-Flow gozu: imlec telemetrisi + scroll kelime reveal) ---------- -->
+<section class="fikir" id="fikir">
+  <p class="f-veri" id="fikirVeri" aria-hidden="true">T-FLOW &middot; beklemede</p>
+  <p class="fikir-govde">TAN için tasarım, yalnızca estetik bir çıktı üretme süreci değildir. Kararlar; <span class="vurgu">araştırma, gözlem ve gerçek dünya verileriyle</span> şekillenir, varsayımlardan çok <span class="vurgu">ölçülebilir davranışlara</span> dayanır.</p>
+  <p class="fikir-govde fikir-p2">Bu yaklaşımı desteklemek amacıyla TAN, <span class="vurgu">kendi araçlarını</span> da geliştirir. Bunlardan ilki olan <span class="vurgu tflow">T-Flow</span>, kültür kurumları ve markaların mekânsal deneyimleri <span class="vurgu">gerçek kullanım verileri</span> üzerinden analiz etmelerine olanak tanır.</p>
+</section>
+
 <!-- ---------- MUSTERILER ---------- -->
 <section class="clients reveal">
   <h2 class="bolum-baslik" data-no="01" lang="en">Clients &amp; Collaborations</h2>
@@ -845,11 +888,6 @@
     <button type="button" id="logoDahaBtn" aria-expanded="false" aria-controls="logoDuvari" aria-label="Daha fazla iş birliği göster">+</button>
     <button type="button" id="logoKapatBtn" class="kapat" aria-controls="logoDuvari" aria-label="Daha az göster" hidden>&minus;</button>
   </div>
-</section>
-
-<!-- ---------- FIKIR / MANIFESTO (scroll ile kelime kelime belirir) ---------- -->
-<section class="fikir" id="fikir">
-  <p class="fikir-govde">TAN için tasarım, yalnızca estetik bir çıktı üretme süreci değildir. Her proje; <span class="vurgu">araştırma, gözlem ve gerçek dünya verileriyle</span> beslenen bir <span class="vurgu">düşünme ve problem çözme süreci</span> olarak ele alınır. Kararlar yalnızca varsayımlara değil, <span class="vurgu">gözlem, etkileşim ve ölçülebilir davranışlara</span> dayanır.</p>
 </section>
 
 <!-- ---------- SECILMIS ISLER ---------- -->
@@ -1392,54 +1430,98 @@
     document.documentElement.classList.toggle('koyu-tema');
   });
 
-  // ---------- Fikir manifestosu: scroll ile kelime kelime belirir ----------
+  // ---------- Fikir manifestosu: scroll kelime reveal + T-Flow imlec izleme ----------
   (function(){
-    const p = document.querySelector('.fikir-govde');
     const sec = document.querySelector('.fikir');
-    if(!p || !sec) return;
+    if(!sec) return;
+    const paragraflar = sec.querySelectorAll('.fikir-govde');
+    if(!paragraflar.length) return;
 
-    // Metni kelimelere bol; .vurgu icindekiler .vg (siyah acilir) alir.
-    const parcalar = Array.from(p.childNodes);
-    p.textContent = '';
-    parcalar.forEach(node=>{
-      const vg = node.nodeType===1 && node.classList && node.classList.contains('vurgu');
-      const text = node.textContent;
-      text.split(/(\s+)/).forEach(part=>{
-        if(part==='') return;
-        if(/^\s+$/.test(part)){ p.appendChild(document.createTextNode(part)); return; }
-        const s = document.createElement('span');
-        s.className = 'kl' + (vg ? ' vg' : '');
-        s.textContent = part;
-        p.appendChild(s);
+    // Metni kelimelere bol; .vurgu icindekiler .vg (siyah acilir) alir,
+    // .tflow kendi mono stilini kelime spanine tasir.
+    paragraflar.forEach(p=>{
+      const parcalar = Array.from(p.childNodes);
+      p.textContent = '';
+      parcalar.forEach(node=>{
+        const el = node.nodeType===1 ? node : null;
+        const vg = !!(el && el.classList.contains('vurgu'));
+        const tf = !!(el && el.classList.contains('tflow'));
+        node.textContent.split(/(\s+)/).forEach(part=>{
+          if(part==='') return;
+          if(/^\s+$/.test(part)){ p.appendChild(document.createTextNode(part)); return; }
+          const s = document.createElement('span');
+          s.className = 'kl' + (vg ? ' vg' : '') + (tf ? ' tflow' : '');
+          s.textContent = part;
+          p.appendChild(s);
+        });
       });
     });
 
-    const kelimeler = Array.from(p.querySelectorAll('.kl'));
+    const kelimeler = Array.from(sec.querySelectorAll('.kl'));
     const azHareket = matchMedia('(prefers-reduced-motion:reduce)').matches;
-    if(azHareket){ kelimeler.forEach(w=>w.classList.add('acik')); return; }
 
-    let bekliyor = false;
-    function guncelle(){
-      bekliyor = false;
-      const r = sec.getBoundingClientRect();
-      const vh = window.innerHeight || document.documentElement.clientHeight;
-      // Bolum alttan girerken (top≈%88vh) 0, tepeye yaklasirken (top≈%28vh) 1
-      const bas = vh*0.88, bit = vh*0.28;
-      let ilerleme = (bas - r.top) / (bas - bit);
-      ilerleme = Math.max(0, Math.min(1, ilerleme));
-      const n = Math.round(ilerleme * kelimeler.length);
-      for(let i=0;i<kelimeler.length;i++){
-        kelimeler[i].classList.toggle('acik', i < n);
-      }
+    // --- Scroll ile kelime kelime belirme ---
+    if(azHareket){
+      kelimeler.forEach(w=>w.classList.add('acik'));
+    }else{
+      let bekliyor = false;
+      const guncelle = ()=>{
+        bekliyor = false;
+        const r = sec.getBoundingClientRect();
+        const vh = window.innerHeight || document.documentElement.clientHeight;
+        // Bolum alttan girerken (top≈%88vh) 0, tepeye yaklasirken (top≈%28vh) 1
+        const bas = vh*0.88, bit = vh*0.28;
+        let ilerleme = (bas - r.top) / (bas - bit);
+        ilerleme = Math.max(0, Math.min(1, ilerleme));
+        const n = Math.round(ilerleme * kelimeler.length);
+        for(let i=0;i<kelimeler.length;i++){
+          kelimeler[i].classList.toggle('acik', i < n);
+        }
+      };
+      const istek = ()=>{
+        if(bekliyor) return;
+        bekliyor = true;
+        requestAnimationFrame(guncelle);
+      };
+      window.addEventListener('scroll', istek, {passive:true});
+      window.addEventListener('resize', istek);
+      guncelle();
     }
-    function istek(){
-      if(bekliyor) return;
-      bekliyor = true;
-      requestAnimationFrame(guncelle);
+
+    // --- T-Flow gozu: imlec telemetrisi (yalniz hover'li cihazlar) ---
+    // Bolum, uzerindeki imleci sensor gibi izler: yakin kelimeler tan ile
+    // isaretlenir, telemetri satiri bolum-ici koordinat + odak kelime yazar.
+    const veri = document.getElementById('fikirVeri');
+    if(matchMedia('(hover:hover)').matches){
+      const YARICAP = 110;
+      let mx = 0, my = 0, icinde = false, rafB = false;
+      const izle = ()=>{
+        rafB = false;
+        if(!icinde) return;
+        const sr = sec.getBoundingClientRect();
+        let yakin = null, yakinD = Infinity;
+        kelimeler.forEach(w=>{
+          const r = w.getBoundingClientRect();
+          const d = Math.hypot(mx-(r.left+r.width/2), my-(r.top+r.height/2));
+          w.classList.toggle('izle', d < YARICAP);
+          if(d < yakinD){ yakinD = d; yakin = w; }
+        });
+        if(veri){
+          const x = String(Math.max(0, Math.round(mx-sr.left))).padStart(4,'0');
+          const y = String(Math.max(0, Math.round(my-sr.top))).padStart(4,'0');
+          veri.textContent = 'T-FLOW · kayit x'+x+' y'+y+' · odak: '+(yakin ? yakin.textContent : '—');
+        }
+      };
+      sec.addEventListener('mousemove', e=>{
+        mx = e.clientX; my = e.clientY; icinde = true;
+        if(!rafB){ rafB = true; requestAnimationFrame(izle); }
+      }, {passive:true});
+      sec.addEventListener('mouseleave', ()=>{
+        icinde = false;
+        kelimeler.forEach(w=>w.classList.remove('izle'));
+        if(veri) veri.textContent = 'T-FLOW · beklemede';
+      });
     }
-    window.addEventListener('scroll', istek, {passive:true});
-    window.addEventListener('resize', istek);
-    guncelle();
   })();
 </script>
 
