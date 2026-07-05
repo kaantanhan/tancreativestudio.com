@@ -30,7 +30,7 @@
 <style>
   :root{
     --siyah:#0B0B0B;
-    --beyaz:#FFFFFF;--zemin:#EFEDE9;--zemin-alt:#E7E4DE;
+    --beyaz:#FFFFFF;--zemin:#EFEDE9;
     --tgri:#E7E6E3;     /* T. Gray — placeholder yuzeyleri */
     --tan:#E6C299;      /* marka vurgusu — hover */
     --cizgi:#DEDDD9;
@@ -216,37 +216,37 @@
   .tanitim-metin p{margin:0}
 
   /* ---------- FIKIR / MANIFESTO ---------- */
-  .fikir{padding:var(--ritim) var(--kenar) clamp(2rem, 3vw, 2.6rem)}
+  .fikir{padding:1.9rem var(--kenar) clamp(2rem, 3vw, 2.6rem)}
   .fikir-govde{
-    font-size:var(--fs-body);line-height:1.7;color:var(--metin-gri);
-    max-width:42rem;margin:0;
+    justify-self:end;text-align:right;
+    font-size:var(--fs-body);line-height:1.6;color:var(--siyah);
+    max-width:24rem;margin:0 0 0 auto;
   }
 
   /* ---------- BOLUM BASLIKLARI ---------- */
-  /* ---- BOLUM BASLIKLARI (cizgisiz — tan kare isaret + mono etiket) ---- */
-  /* Ortak baslik metni: kucuk tan kare + mono uppercase */
+  /* ---- BOLUM BASLIKLARI (siyah uzun ayirici cizgi + grotesk etiket) ---- */
   .bolum-baslik, .bolum-ad{
     margin:0;
-    font-family:var(--font-mono);
+    font-family:var(--font);
     font-size:var(--fs-label);font-weight:400;
     letter-spacing:.18em;text-transform:uppercase;
     color:var(--siyah);
-    display:inline-flex;align-items:center;gap:.8rem;
+    display:flex;align-items:center;gap:1rem;
   }
-  .bolum-baslik::before, .bolum-ad::before{
-    content:"";flex:none;
-    width:8px;height:8px;background:var(--tan);
+  .bolum-baslik::after, .bolum-ad::after{
+    content:"";flex:1;height:1px;background:var(--siyah);
   }
   /* Butonsuz baslik (Clients) */
   .bolum-baslik{margin-bottom:2.6rem}
   .ortali{}
 
-  /* Butonlu baslik satiri (Selected Works / Services / Press) — cizgi YOK, bosluk ayirir */
+  /* Butonlu baslik satiri (Selected Works / Services / Press) — cizgi baslik ile buton arasini doldurur */
   .bolum-bas{
     display:flex;align-items:center;justify-content:space-between;
     flex-wrap:wrap;gap:1rem 1.5rem;
     margin-bottom:2.6rem;
   }
+  .bolum-bas .bolum-ad{flex:1;min-width:0}
   /* "hepsini gor" — kucuk pill buton (TAN buton dili), hover'da tan dolar */
   .bolum-link{
     display:inline-flex;align-items:center;gap:.5rem;
@@ -262,7 +262,7 @@
   .bolum-link:hover .ok{transform:translateX(.35rem)}
 
   /* ---------- MUSTERILER ---------- */
-  .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem);background:var(--zemin-alt)}
+  .clients{padding:var(--ritim) var(--kenar) clamp(.8rem, 1.6vw, 1.2rem)}
   .clients h2{margin-bottom:2.4rem}
   .logo-duvari{
     list-style:none;
@@ -438,7 +438,7 @@
   }
 
   /* ---------- BASIN ---------- */
-  .press{padding:var(--ritim) var(--kenar);background:var(--zemin-alt)}
+  .press{padding:var(--ritim) var(--kenar)}
   .press h2{margin-bottom:2.4rem}
   .press-grid{
     display:grid;
