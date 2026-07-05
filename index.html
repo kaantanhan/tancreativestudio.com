@@ -227,16 +227,28 @@
 
   /* ---------- FIKIR / MANIFESTO ----------
      Buyuk editoryel statement: govde gri, anahtar ifadeler siyah (.vurgu).
+     Scroll ile kelime kelime belirir (JS .kl spanlerine bolup .acik ekler).
      about.html manifesto diliyle ayni aile. */
-  .fikir{padding:clamp(4.5rem, 8vw, 8rem) var(--kenar) clamp(3rem, 5vw, 4.5rem)}
+  .fikir{padding:clamp(4.5rem, 8vw, 8rem) var(--kenar) clamp(4.5rem, 8vw, 8rem)}
   .fikir-govde{
     font-size:clamp(1.45rem, 2.6vw, 2.35rem);
-    font-weight:500;letter-spacing:-.02em;line-height:1.32;
+    font-weight:500;letter-spacing:-.02em;line-height:1.4;
     color:var(--metin-gri);
     max-width:34ch;margin:0;
     text-wrap:balance;
   }
+  /* JS calismadan: govde gri, vurgu siyah (kademesiz tam gorunur) */
   .fikir-govde .vurgu{color:var(--siyah)}
+  /* Kelime spanleri (JS bolunce): sonuk baslar, scroll ilerledikce acilir */
+  .fikir-govde .kl{
+    color:var(--cizgi);
+    transition:color .5s cubic-bezier(.2,.7,.2,1);
+  }
+  .fikir-govde .kl.acik{color:var(--metin-gri)}
+  .fikir-govde .kl.vg.acik{color:var(--siyah)}
+  @media (prefers-reduced-motion:reduce){
+    .fikir-govde .kl{transition:none}
+  }
 
   /* ---------- BOLUM BASLIKLARI ---------- */
   /* ---- BOLUM BASLIKLARI (acik gri uzun ayirici cizgi + grotesk etiket) ---- */
@@ -793,11 +805,6 @@
 </section>
 </div>
 
-<!-- ---------- FIKIR / MANIFESTO ---------- -->
-<section class="fikir reveal">
-  <p class="fikir-govde">TAN için tasarım, yalnızca estetik bir çıktı üretme süreci değildir. Her proje; <span class="vurgu">araştırma, gözlem ve gerçek dünya verileriyle</span> beslenen bir <span class="vurgu">düşünme ve problem çözme süreci</span> olarak ele alınır. Kararlar yalnızca varsayımlara değil, <span class="vurgu">gözlem, etkileşim ve ölçülebilir davranışlara</span> dayanır.</p>
-</section>
-
 <!-- ---------- MUSTERILER ---------- -->
 <section class="clients reveal">
   <h2 class="bolum-baslik" data-no="01" lang="en">Clients &amp; Collaborations</h2>
@@ -838,6 +845,11 @@
     <button type="button" id="logoDahaBtn" aria-expanded="false" aria-controls="logoDuvari" aria-label="Daha fazla iş birliği göster">+</button>
     <button type="button" id="logoKapatBtn" class="kapat" aria-controls="logoDuvari" aria-label="Daha az göster" hidden>&minus;</button>
   </div>
+</section>
+
+<!-- ---------- FIKIR / MANIFESTO (scroll ile kelime kelime belirir) ---------- -->
+<section class="fikir" id="fikir">
+  <p class="fikir-govde">TAN için tasarım, yalnızca estetik bir çıktı üretme süreci değildir. Her proje; <span class="vurgu">araştırma, gözlem ve gerçek dünya verileriyle</span> beslenen bir <span class="vurgu">düşünme ve problem çözme süreci</span> olarak ele alınır. Kararlar yalnızca varsayımlara değil, <span class="vurgu">gözlem, etkileşim ve ölçülebilir davranışlara</span> dayanır.</p>
 </section>
 
 <!-- ---------- SECILMIS ISLER ---------- -->
@@ -1379,6 +1391,56 @@
     if(t && (t.tagName==='INPUT' || t.tagName==='TEXTAREA' || t.isContentEditable)) return;
     document.documentElement.classList.toggle('koyu-tema');
   });
+
+  // ---------- Fikir manifestosu: scroll ile kelime kelime belirir ----------
+  (function(){
+    const p = document.querySelector('.fikir-govde');
+    const sec = document.querySelector('.fikir');
+    if(!p || !sec) return;
+
+    // Metni kelimelere bol; .vurgu icindekiler .vg (siyah acilir) alir.
+    const parcalar = Array.from(p.childNodes);
+    p.textContent = '';
+    parcalar.forEach(node=>{
+      const vg = node.nodeType===1 && node.classList && node.classList.contains('vurgu');
+      const text = node.textContent;
+      text.split(/(\s+)/).forEach(part=>{
+        if(part==='') return;
+        if(/^\s+$/.test(part)){ p.appendChild(document.createTextNode(part)); return; }
+        const s = document.createElement('span');
+        s.className = 'kl' + (vg ? ' vg' : '');
+        s.textContent = part;
+        p.appendChild(s);
+      });
+    });
+
+    const kelimeler = Array.from(p.querySelectorAll('.kl'));
+    const azHareket = matchMedia('(prefers-reduced-motion:reduce)').matches;
+    if(azHareket){ kelimeler.forEach(w=>w.classList.add('acik')); return; }
+
+    let bekliyor = false;
+    function guncelle(){
+      bekliyor = false;
+      const r = sec.getBoundingClientRect();
+      const vh = window.innerHeight || document.documentElement.clientHeight;
+      // Bolum alttan girerken (top≈%88vh) 0, tepeye yaklasirken (top≈%28vh) 1
+      const bas = vh*0.88, bit = vh*0.28;
+      let ilerleme = (bas - r.top) / (bas - bit);
+      ilerleme = Math.max(0, Math.min(1, ilerleme));
+      const n = Math.round(ilerleme * kelimeler.length);
+      for(let i=0;i<kelimeler.length;i++){
+        kelimeler[i].classList.toggle('acik', i < n);
+      }
+    }
+    function istek(){
+      if(bekliyor) return;
+      bekliyor = true;
+      requestAnimationFrame(guncelle);
+    }
+    window.addEventListener('scroll', istek, {passive:true});
+    window.addEventListener('resize', istek);
+    guncelle();
+  })();
 </script>
 
 </body>
