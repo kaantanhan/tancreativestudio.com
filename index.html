@@ -1405,6 +1405,75 @@
     document.documentElement.classList.toggle('koyu-tema');
   });
 
+  // ---------- Yumusak scroll (Lenis/locomotive tarzi lerp; sadece mouse/trackpad) ----------
+  // Sayfadaki tum scroll-bagli efektler (hero maskesi, logo kuculmesi, mobil band, vs.)
+  // window.scrollY'i canli okudugundan bu, onlarla otomatik uyumlu calisir — sadece
+  // gercek scrollY'in KENDISI zamanla (setTimeout donguzu) hedefe yumusakca yaklasir.
+  // GUVENLIK (3 katman, canli bir stüdyo sitesi oldugu icin scroll ASLA kilitlenmemeli):
+  //  1) Baslangic testi: scrollTo bu tarayicida/ortamda sayfayi gercekten kaydirmiyorsa
+  //     (bilinmeyen bir eklenti/sandbox durumu) hijack HIC devreye girmez.
+  //  2) Calisma-zamani devre kesici: adim() birkac kare boyunca beklenen hareketi
+  //     uretemezse (ornegin sonradan olusan bir engel) hijack kendini kapatir.
+  //  3) Bekci: dongu "donarsa" (400ms nabizsiz) hedefe aninda gecip kilidi birakir.
+  (function(){
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return; // dokunmatikte native birakilir
+
+    const maxYBaslangic = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    if(maxYBaslangic > 30){
+      const once = window.scrollY;
+      window.scrollTo(0, once + 20);
+      const scrollToCalisiyor = Math.abs(window.scrollY - once) > 2;
+      window.scrollTo(0, once);
+      if(!scrollToCalisiyor) return; // guvenilir degil -> native scroll'a hic dokunma
+    }
+
+    const LERP = .1; // 0-1: kucuk deger = daha "agir"/yumusak, buyuk deger = daha sert
+    let hedef = window.scrollY;
+    let calisiyor = false;
+    let sonNabiz = 0;
+    let aktif = true;
+    let hareketsizSayac = 0;
+
+    function sinirla(v){
+      const maxY = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      return Math.min(Math.max(v, 0), maxY);
+    }
+    function adim(){
+      sonNabiz = performance.now();
+      const oncekiY = window.scrollY;
+      const fark = hedef - oncekiY;
+      if(Math.abs(fark) < .5){
+        window.scrollTo(0, hedef);
+        calisiyor = false;
+        return;
+      }
+      window.scrollTo(0, oncekiY + fark*LERP);
+      // Devre kesici: hareket beklenirken scrollY gercekten degismiyorsa birkac
+      // karede algila ve hijack'i kalici olarak kapat (native scroll'a don).
+      if(Math.abs(window.scrollY - oncekiY) < .1 && Math.abs(fark) > 2){
+        if(++hareketsizSayac > 8){ aktif = false; calisiyor = false; return; }
+      } else {
+        hareketsizSayac = 0;
+      }
+      setTimeout(adim, 16);
+    }
+    window.addEventListener('wheel', e=>{
+      if(!aktif || e.ctrlKey) return; // devre kesildiyse ya da pinch-zoom: tarayiciya birak
+      e.preventDefault();
+      if(!calisiyor) hedef = window.scrollY; // araya giren native scroll (klavye/scrollbar) varsa yakala
+      hedef = sinirla(hedef + e.deltaY);
+      if(!calisiyor){ calisiyor = true; sonNabiz = performance.now(); setTimeout(adim, 16); }
+    }, {passive:false});
+
+    // Bekci: dongu bir sebeple donarsa (400ms nabizsiz) hedefe aninda gec, kilitlenmeyi onle.
+    setInterval(()=>{
+      if(calisiyor && performance.now() - sonNabiz > 400){
+        window.scrollTo(0, hedef);
+        calisiyor = false;
+      }
+    }, 250);
+  })();
 </script>
 
 </body>
