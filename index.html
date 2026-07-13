@@ -305,13 +305,13 @@
   }
   .logo-daha button[hidden]{display:none}
   .logo-daha .kapat{
-    width:34px;height:34px;font-size:1.15rem;
+    width:17px;height:17px;font-size:.58rem;
   }
   .logo-daha button{
-    width:46px;height:46px;border-radius:999px;
+    width:23px;height:23px;border-radius:999px;
     border:1px solid var(--siyah);background:transparent;
     color:var(--siyah);
-    font-size:var(--fs-lead);font-weight:400;line-height:1;
+    font-size:.75rem;font-weight:400;line-height:1;
     font-family:var(--font);
     cursor:pointer;
     display:flex;align-items:center;justify-content:center;
@@ -720,12 +720,23 @@
     .press-grid{grid-template-columns:1fr}
     footer{flex-direction:column;align-items:flex-start}
 
-    /* Sponsor logolari: mobilde masaustunun YARISI boyut + kapali sira yuksekligi */
-    .logo-duvari{--duvar-kapali:34px}
-    .logo-duvari li.has-logo:not([class*="logo-"]) svg{height:19px}
-    .logo-duvari li.logo-genis svg{height:9px}
-    .logo-duvari li.logo-orta svg{height:23px}
-    .logo-duvari li.logo-dikey svg{height:29px}
+    /* Sponsor logolari: mobilde 3 sutun grid; kapaliyken 2 sira (6 logo) gorunur */
+    .logo-duvari{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));  /* esit sutunlar */
+      grid-auto-rows:34px;
+      column-gap:1.2rem;row-gap:1.6rem;
+      justify-items:center;align-items:center;
+      --duvar-kapali:calc(34px * 2 + 1.6rem);   /* 2 sira + 1 aralik */
+    }
+    /* mobilde masaustunun YARISI logo boyutu; genis logolar sutuna sigsin diye
+       yukseklikler MAX olarak verilir + max-width:100% (en-boy orani korunur). */
+    .logo-duvari li{width:100%}
+    .logo-duvari li svg{width:auto;height:auto;max-width:100%}
+    .logo-duvari li.has-logo:not([class*="logo-"]) svg{max-height:19px}
+    .logo-duvari li.logo-genis svg{max-height:9px}
+    .logo-duvari li.logo-orta svg{max-height:23px}
+    .logo-duvari li.logo-dikey svg{max-height:29px}
   }
 </style>
 </head>
