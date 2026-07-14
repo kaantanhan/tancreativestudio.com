@@ -754,6 +754,28 @@
     .logo-duvari li.ol-orta    svg{max-height:30px}
     .logo-duvari li.ol-kompakt svg{max-height:38px}   /* kare/dikey ikon */
 
+    /* MOBIL INCE AYAR (tek tek): oran sinifinin verdigi olcek bazi logolarda
+       optik olarak buyuk/kucuk kaliyordu. Asagidaki kurallar ol-* kurallarindan
+       SONRA gelir ve specificity'de onlari asar (:has icindeki attribute sayilir). */
+
+    /* +%15 (23 -> 26.45px) */
+    .logo-duvari li:has(svg[aria-label="Borusan Sanat"]) svg,
+    .logo-duvari li:has(svg[aria-label="İstanbul Büyükşehir Belediyesi"]) svg,
+    .logo-duvari li:has(svg[aria-label="Borusan Contemporary"]) svg,
+    .logo-duvari li:has(svg[aria-label="Beymen Club"]) svg{max-height:26.45px}
+
+    /* -%10 (23 -> 20.7px) */
+    .logo-duvari li:has(svg[aria-label="Base — new artist platform"]) svg,
+    .logo-duvari li:has(svg[aria-label="Bob"]) svg{max-height:20.7px}
+    /* -%10 (38 -> 34.2px) */
+    .logo-duvari li:has(svg[aria-label="Canlandıranlar"]) svg,
+    .logo-duvari li:has(svg[aria-label="Ördek.co"]) svg,
+    .logo-duvari li:has(svg[aria-label="Fol"]) svg{max-height:34.2px}
+    /* -%10 (30 -> 27px) */
+    .logo-duvari li:has(svg[aria-label="Mimar Sinan Güzel Sanatlar Üniversitesi"]) svg{max-height:27px}
+    /* ParibuArt GENISLIKTEN sinirli (max-height'i degistirmek kucultmez) -> max-width -%10 */
+    .logo-duvari li:has(svg[aria-label="ParibuArt"]) svg{max-width:79.2%}
+
     /* Mobilde - (kapat) butonu + ile ayni boyutta */
     .logo-daha .kapat{width:23px;height:23px;font-size:.75rem}
   }
