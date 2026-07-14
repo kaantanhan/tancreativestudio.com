@@ -1400,21 +1400,47 @@
     const acilmaBitis = 1550;
     const ortadaDur = 550;
     const minBekle = new Promise(r=>setTimeout(r, acilmaBitis + ortadaDur));
-    const fontHazir = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+    // GUVENLIK 1 — FONT ZAMAN ASIMI: eskiden document.fonts.ready SURESIZ bekleniyordu.
+    // Google Fonts yavaslar/engellenirse (agir ag, reklam engelleyici, DNS) bu promise
+    // cozulmuyor -> perde kalkmiyor -> body.intro-kilit{overflow:hidden} yuzunden sayfa
+    // TAN animasyonunda KILITLI kaliyordu ("bazen takiliyor" sikayetinin ana sebebi).
+    // Artik en fazla 1.5s beklenir; font gec gelirse handoff'ta cok kucuk bir kayma
+    // olabilir ama sayfa asla takilmaz.
+    const fontHazir = (document.fonts && document.fonts.ready)
+      ? Promise.race([document.fonts.ready, new Promise(r=>setTimeout(r, 1500))])
+      : Promise.resolve();
+
+    let bittiMi = false;
+    function introBitir(){                       // perdeyi kaldir + kilidi ac (tek sefer)
+      if(bittiMi) return;
+      bittiMi = true;
+      perde.classList.add('bitti');
+      window.__introOK = performance.now();
+      document.body.classList.remove('intro-kilit');
+      setTimeout(()=>perde.remove(), 600);
+    }
+    function tasiVeBitir(){
+      // GUVENLIK 2: olcum (getScreenCTM null donebilir) patlarsa bile perde KALKMALI.
+      // Eskiden burada atilan hata, hemen altindaki perde-kaldirma kodunu da iptal
+      // ediyordu -> kalici takilma.
+      try{ hedefHesapla(); }catch(e){}
+      perde.classList.add('tasin');              // dev TAN sol-ust koseye kayar (0.9s)
+      setTimeout(introBitir, 1050);              // 0.9s hareket + ~0.15s tampon
+    }
+
     Promise.all([minBekle, fontHazir]).then(()=>{
-      // Logo konumunu tazele (olc), bir kare bekle (dongu uygulasin), sonra hedefi olc
-      window.dispatchEvent(new Event('resize'));
-      requestAnimationFrame(()=>{
-        hedefHesapla();
-        perde.classList.add('tasin');             // dev TAN sol-ust kenara hizalanip koseye kayar (0.9s)
-        setTimeout(()=>{
-          perde.classList.add('bitti');           // perde acilir
-          window.__introOK = performance.now();   // CREATIVE/©/tagline yumusakca belirsin
-          document.body.classList.remove('intro-kilit');
-          setTimeout(()=>perde.remove(), 600);
-        }, 1050);   // 0.9s hareket + ~0.15s tampon (TAN tam otursun, sonra perde acilir)
-      });
+      window.dispatchEvent(new Event('resize'));  // logo konumunu tazele
+      // GUVENLIK 3: sayfa ARKA PLAN sekmesinde yuklenirse rAF duraklar ve callback hic
+      // calismaz. setTimeout arka planda da tetiklendiginden yedek olarak eklendi.
+      let calisti = false;
+      const birKez = ()=>{ if(calisti) return; calisti = true; tasiVeBitir(); };
+      requestAnimationFrame(birKez);
+      setTimeout(birKez, 200);
     });
+
+    // GUVENLIK 4 — SON CARE: ne olursa olsun ~6sn sonra perde kalkar. Yukaridaki
+    // zincirin herhangi bir halkasi kopsa bile sayfa asla kilitli kalmaz.
+    setTimeout(introBitir, 6000);
   })();
 
   // ---------- Gizli koyu tema ("-" tusu ile ac/kapa) ----------
