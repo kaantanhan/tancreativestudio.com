@@ -292,6 +292,13 @@
   .logo-duvari li.logo-genis svg{height:18px}
   .logo-duvari li.logo-orta svg{height:46px}
   .logo-duvari li.logo-dikey svg{height:58px}
+  /* 37px olcegi COK-SATIRLI logolar icindir (Akbank/Yapi Kredi gibi yigilmis
+     satirlar). Bu uc TEK-SATIR wordmark 37px'te harf boyu devlesiyordu; harf
+     olcekleri komsulariyla (Beymen, Les Benjamins) esitlensin diye kucultuldu.
+     (.has-logo ile specificity, temel kuralin :not(...) kuralini asar.) */
+  .logo-duvari li.has-logo:has(svg[aria-label="Emaar"]) svg{height:22px}
+  .logo-duvari li.has-logo:has(svg[aria-label="Demir Tasarım"]) svg{height:24px}
+  .logo-duvari li.has-logo:has(svg[aria-label="Sinopale — Sinop Bienali"]) svg{height:28px}
 
   /* tum logolar akista durur; fazla siralar max-height + overflow ile kirpilir.
      acilista alt siralar JS ile sirayla (stagger) belirir */
