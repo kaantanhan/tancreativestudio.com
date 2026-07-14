@@ -296,6 +296,9 @@
      satirlar). Bu uc TEK-SATIR wordmark 37px'te harf boyu devlesiyordu; harf
      olcekleri komsulariyla (Beymen, Les Benjamins) esitlensin diye kucultuldu.
      (.has-logo ile specificity, temel kuralin :not(...) kuralini asar.) */
+  /* Les Benjamins %10 kucultuldu (18 -> 16.2px). logo-genis sinifini ParibuArt ve
+     Beymen de kullandigi icin yalnizca bu logo hedeflenir. */
+  .logo-duvari li.logo-genis:has(svg[aria-label="Les Benjamins"]) svg{height:16.2px}
   .logo-duvari li.has-logo:has(svg[aria-label="Emaar"]) svg{height:22px}
   .logo-duvari li.has-logo:has(svg[aria-label="Demir Tasarım"]) svg{height:24px}
   .logo-duvari li.has-logo:has(svg[aria-label="Sinopale — Sinop Bienali"]) svg{height:28px}
