@@ -738,6 +738,11 @@
       width:auto;height:auto;
       max-width:100%;max-height:28px;
     }
+    /* Dis kolonlari disa hizala -> logo blogunun sag/sol kenar boslugu simetrik
+       (sol kolon genis wordmark'lar sola yaslaniyordu; sag kolon ortada kalinca
+       sagda fazla bosluk oluyordu). Orta kolon ortali kalir. */
+    .logo-duvari li:nth-child(3n+1){justify-content:flex-start}
+    .logo-duvari li:nth-child(3n){justify-content:flex-end}
 
     /* Mobilde - (kapat) butonu + ile ayni boyutta */
     .logo-daha .kapat{width:23px;height:23px;font-size:.75rem}
