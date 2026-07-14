@@ -724,25 +724,25 @@
     .logo-duvari{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));  /* esit sutunlar */
-      grid-auto-rows:34px;
-      column-gap:1.2rem;row-gap:1.6rem;
+      grid-auto-rows:46px;                              /* en yuksek logoyu (38px) alir */
+      column-gap:1rem;row-gap:1.9rem;
       justify-items:center;align-items:center;
-      --duvar-kapali:calc(34px * 2 + 1.6rem);   /* 2 sira + 1 aralik */
+      --duvar-kapali:calc(46px * 2 + 1.9rem);   /* 2 sira + 1 aralik */
     }
-    /* Mobilde tum logolar TEK optik olcege normalize (ilk 6 referansi):
-       genis wordmark'lar sutun genisligini doldurur (max-width:100%),
-       kompakt marka/logolar 28px yukseklige ulasir. Boylece hicbiri kucuk
-       kalmaz; sinif-bazli farkli yukseklikler kaldirildi. */
-    .logo-duvari li{width:100%}
+    /* OPTIK NORMALIZASYON — logolar ayni YUKSEKLIGE degil ayni GORSEL AGIRLIGA
+       getirilir: genis wordmark'lar alcak, kompakt ikonlar yuksek olur. Tek-yukseklik
+       yaklasimi geniş logolari devlestirip kompakt olanlari kaybediyordu.
+       Siniflar JS'te viewBox oranindan atanir (ol-*). max-width:%88 -> hicbir logo
+       hucre kenarina yapismaz; hepsi ortali oldugu icin sag/sol bosluk dengeli. */
+    .logo-duvari li{width:100%;justify-content:center}
     .logo-duvari li svg{
       width:auto;height:auto;
-      max-width:100%;max-height:28px;
+      max-width:88%;max-height:26px;         /* JS calismazsa guvenli varsayilan */
     }
-    /* Dis kolonlari disa hizala -> logo blogunun sag/sol kenar boslugu simetrik
-       (sol kolon genis wordmark'lar sola yaslaniyordu; sag kolon ortada kalinca
-       sagda fazla bosluk oluyordu). Orta kolon ortali kalir. */
-    .logo-duvari li:nth-child(3n+1){justify-content:flex-start}
-    .logo-duvari li:nth-child(3n){justify-content:flex-end}
+    .logo-duvari li.ol-engenis svg{max-height:17px}   /* cok genis wordmark */
+    .logo-duvari li.ol-genis   svg{max-height:23px}
+    .logo-duvari li.ol-orta    svg{max-height:30px}
+    .logo-duvari li.ol-kompakt svg{max-height:38px}   /* kare/dikey ikon */
 
     /* Mobilde - (kapat) butonu + ile ayni boyutta */
     .logo-daha .kapat{width:23px;height:23px;font-size:.75rem}
@@ -1274,6 +1274,29 @@
     });
     document.documentElement.addEventListener('mouseleave', gizle);
   }
+
+  // Logo optik normalizasyonu: her logonun viewBox en-boy oranindan bir sinif atar.
+  // Amac, logolari ayni YUKSEKLIGE degil ayni GORSEL AGIRLIGA getirmek: genis
+  // wordmark'lar alcak, kompakt markalar daha yuksek olur -> satirlarda dengeli
+  // ritim. Siniflari yalnizca mobil CSS kullanir (masaustu kendi sistemi ile calisir).
+  (function(){
+    const duvar = document.getElementById('logoDuvari');
+    if(!duvar) return;
+    duvar.querySelectorAll('li').forEach(li=>{
+      const svg = li.querySelector('svg');
+      const vb = svg && svg.getAttribute('viewBox');
+      if(!vb) return;
+      const p = vb.trim().split(/[\s,]+/).map(Number);
+      const oran = p[2] / p[3];
+      if(!isFinite(oran) || oran <= 0) return;
+      li.classList.add(
+        oran >= 5   ? 'ol-engenis' :   // cok genis wordmark (Les Benjamins, Beymen)
+        oran >= 2.2 ? 'ol-genis'   :   // genis (Akbank, Sinopale)
+        oran >= 1.2 ? 'ol-orta'    :   // dengeli
+                      'ol-kompakt'     // kare/dikey ikon (baykus, F, A)
+      );
+    });
+  })();
 
   // Logo duvari: + butonu gizli logolari acar
   (function(){
