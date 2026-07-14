@@ -292,8 +292,6 @@
   .logo-duvari li.logo-genis svg{height:18px}
   .logo-duvari li.logo-orta svg{height:46px}
   .logo-duvari li.logo-dikey svg{height:58px}
-  /* Mobil tipografik indeks icin JS'in urettigi ad/no metinleri masaustunde gizli */
-  .logo-duvari .logo-ad, .logo-duvari .logo-no{display:none}
 
   /* tum logolar akista durur; fazla siralar max-height + overflow ile kirpilir.
      acilista alt siralar JS ile sirayla (stagger) belirir */
@@ -722,7 +720,7 @@
     .press-grid{grid-template-columns:1fr}
     footer{flex-direction:column;align-items:flex-start}
 
-    /* Sponsor logolari (FALLBACK, JS yoksa): 3 sutun grid, 2 sira gorunur */
+    /* Sponsor logolari: mobilde 3 sutun grid; kapaliyken 2 sira (6 logo) gorunur */
     .logo-duvari{
       display:grid;
       grid-template-columns:repeat(3, minmax(0, 1fr));  /* esit sutunlar */
@@ -731,38 +729,14 @@
       justify-items:center;align-items:center;
       --duvar-kapali:calc(34px * 2 + 1.6rem);   /* 2 sira + 1 aralik */
     }
+    /* mobilde masaustunun YARISI logo boyutu; genis logolar sutuna sigsin diye
+       yukseklikler MAX olarak verilir + max-width:100% (en-boy orani korunur). */
     .logo-duvari li{width:100%}
     .logo-duvari li svg{width:auto;height:auto;max-width:100%}
     .logo-duvari li.has-logo:not([class*="logo-"]) svg{max-height:19px}
     .logo-duvari li.logo-genis svg{max-height:9px}
     .logo-duvari li.logo-orta svg{max-height:23px}
     .logo-duvari li.logo-dikey svg{max-height:29px}
-
-    /* MOBIL TIPOGRAFIK INDEKS (.adli = JS ad listesini uretti):
-       kucultulmus logo duvari yerine editoryel musteri indeksi — ince cizgili
-       satirlar, solda kurum adi, sagda mono sira no (works "(01)" diliyle ayni).
-       Kapaliyken 6 satir; + butonu tamamini acar (ayni max-height mekanigi). */
-    .logo-duvari.adli{
-      display:block;
-      --duvar-kapali:calc(48px * 6);            /* 6 satir */
-    }
-    .logo-duvari.adli li{
-      width:100%;height:48px;
-      justify-content:space-between;gap:1rem;
-      border-bottom:1px solid var(--cizgi);
-    }
-    .logo-duvari.adli li svg{display:none}
-    .logo-duvari.adli .logo-ad{
-      display:block;flex:1;min-width:0;
-      font-size:.875rem;font-weight:400;color:var(--siyah);
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-    .logo-duvari.adli .logo-no{
-      display:block;flex:none;
-      font-family:var(--font-mono);
-      font-size:var(--fs-micro);letter-spacing:.12em;
-      color:var(--metin-gri);
-    }
   }
 </style>
 </head>
@@ -1292,28 +1266,6 @@
     });
     document.documentElement.addEventListener('mouseleave', gizle);
   }
-
-  // Mobil tipografik indeks: her li'ye kurum adi (svg aria-label) + mono sira no
-  // eklenir; CSS yalnizca .adli sinifi varken (JS calisti) metin moduna gecer,
-  // aksi halde mobilde logo grid fallback'i gorunur. Masaustu her durumda logo.
-  (function(){
-    const duvar = document.getElementById('logoDuvari');
-    if(!duvar) return;
-    const lis = [...duvar.querySelectorAll('li')];
-    let n = 0;
-    lis.forEach(li=>{
-      const svg = li.querySelector('svg');
-      const ad = svg && svg.getAttribute('aria-label');
-      if(!ad) return;
-      n++;
-      const adEl = document.createElement('span');
-      adEl.className = 'logo-ad'; adEl.textContent = ad;
-      const noEl = document.createElement('span');
-      noEl.className = 'logo-no'; noEl.textContent = String(n).padStart(2,'0');
-      li.append(adEl, noEl);
-    });
-    if(n) duvar.classList.add('adli');
-  })();
 
   // Logo duvari: + butonu gizli logolari acar
   (function(){
