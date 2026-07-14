@@ -729,19 +729,15 @@
       justify-items:center;align-items:center;
       --duvar-kapali:calc(34px * 2 + 1.6rem);   /* 2 sira + 1 aralik */
     }
-    /* mobilde masaustunun YARISI logo boyutu; genis logolar sutuna sigsin diye
-       yukseklikler MAX olarak verilir + max-width:100% (en-boy orani korunur). */
+    /* Mobilde tum logolar TEK optik olcege normalize (ilk 6 referansi):
+       genis wordmark'lar sutun genisligini doldurur (max-width:100%),
+       kompakt marka/logolar 28px yukseklige ulasir. Boylece hicbiri kucuk
+       kalmaz; sinif-bazli farkli yukseklikler kaldirildi. */
     .logo-duvari li{width:100%}
-    .logo-duvari li svg{width:auto;height:auto;max-width:100%}
-    .logo-duvari li.has-logo:not([class*="logo-"]) svg{max-height:19px}
-    .logo-duvari li.logo-genis svg{max-height:9px}
-    .logo-duvari li.logo-orta svg{max-height:23px}
-    .logo-duvari li.logo-dikey svg{max-height:29px}
-    /* Bazi logolar mobilde kucuk kaliyordu — biraz buyutuldu (hucreye sigar) */
-    .logo-duvari li:has(svg[aria-label="Borusan Sanat"]) svg{max-height:28px}
-    .logo-duvari li.has-logo:has(svg[aria-label="Akbank Sanat"]) svg{max-height:25px}
-    .logo-duvari li:has(svg[aria-label="ParibuArt"]) svg{max-height:14px}
-    .logo-duvari li:has(svg[aria-label="İstanbul Büyükşehir Belediyesi"]) svg{max-height:28px}
+    .logo-duvari li svg{
+      width:auto;height:auto;
+      max-width:100%;max-height:28px;
+    }
 
     /* Mobilde - (kapat) butonu + ile ayni boyutta */
     .logo-daha .kapat{width:23px;height:23px;font-size:.75rem}
