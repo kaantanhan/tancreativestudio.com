@@ -737,6 +737,14 @@
     .logo-duvari li.logo-genis svg{max-height:9px}
     .logo-duvari li.logo-orta svg{max-height:23px}
     .logo-duvari li.logo-dikey svg{max-height:29px}
+    /* Bazi logolar mobilde kucuk kaliyordu — biraz buyutuldu (hucreye sigar) */
+    .logo-duvari li:has(svg[aria-label="Borusan Sanat"]) svg{max-height:28px}
+    .logo-duvari li.has-logo:has(svg[aria-label="Akbank Sanat"]) svg{max-height:25px}
+    .logo-duvari li:has(svg[aria-label="ParibuArt"]) svg{max-height:14px}
+    .logo-duvari li:has(svg[aria-label="İstanbul Büyükşehir Belediyesi"]) svg{max-height:28px}
+
+    /* Mobilde - (kapat) butonu + ile ayni boyutta */
+    .logo-daha .kapat{width:23px;height:23px;font-size:.75rem}
   }
 </style>
 </head>
