@@ -223,8 +223,11 @@
   .logo-lockup .g-slogan,.logo-lockup .g-yan{will-change:opacity}
   .tanitim-metin{
     justify-self:end;align-self:center;   /* TAN'a dikey ortalama (JS hizala() hassaslastirir) */
-    max-width:24rem;text-align:right;
+    /* Alan SOLDAN kisildi (metin saga hizali -> sag kenar sabit, sol kenar ice gelir).
+       23rem, metnin istenen 3 satira kirildigi genislik: "Istanbul" 3. satira duser. */
+    max-width:23rem;text-align:right;
     font-size:var(--fs-body);line-height:1.6;color:var(--siyah);
+    text-wrap:balance;   /* satir uzunluklarini birbirine yaklastirir */
   }
   .tanitim-metin p{margin:0}
 
@@ -636,6 +639,14 @@
   }
 
   /* ---------- RESPONSIVE ---------- */
+  /* Dar masaustu bandi (901-1010px): 1.4fr/1fr oraniyla metin kolonu 23rem'in
+     ALTINA dusuyordu -> tanitim metni 4 satira kiriliyordu. Bu aralikta logo
+     kolonu dogal genisligini alir, metin kolonuna 23rem taban verilir ve gap
+     kisilir; boylece metin her masaustu genisliginde 3 satir kalir. */
+  @media (min-width: 901px) and (max-width: 1010px){
+    .intro{grid-template-columns:auto minmax(23rem, 1fr);gap:2rem}
+  }
+
   @media (max-width: 900px){
     .intro{grid-template-columns:1fr;gap:2.2rem}
     .tanitim-metin{justify-self:start;text-align:left;max-width:40rem}
