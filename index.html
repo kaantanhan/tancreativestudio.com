@@ -263,7 +263,18 @@
     padding:clamp(5rem, 9vw, 9rem) var(--kenar);
     overflow:hidden;                       /* cikis kaymasi tasma yaratmasin */
   }
-  .oz-ic{will-change:opacity,transform}
+  /* Iki kolonlu editoryel duzen: P1 solda, P2 sayfanin SAGINA yasli, ustten
+     hizali. TR/EN esleri ayni grid hucrelerini paylasir (gizli olan display:none
+     oldugundan grid'e katilmaz). */
+  .oz-ic{
+    will-change:opacity,transform;
+    display:grid;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    gap:0 clamp(2.5rem, 6vw, 6rem);
+    align-items:start;
+  }
+  .oz-p1{grid-column:1;grid-row:1}
+  .oz-p2{grid-column:2;grid-row:1;justify-self:end}
   .oz-govde{
     font-size:clamp(1.35rem, 2.4vw, 2.15rem);
     font-weight:300;letter-spacing:-.01em;line-height:1.42;
@@ -271,7 +282,6 @@
     max-width:46rem;margin:0;
     text-wrap:balance;
   }
-  .oz-govde + .oz-govde{margin-top:1.3em}
   .oz-govde strong{font-weight:600;letter-spacing:-.015em}
 
   /* ---------- BOLUM BASLIKLARI ---------- */
@@ -695,6 +705,10 @@
   @media (max-width: 900px){
     .intro{grid-template-columns:1fr;gap:2.2rem}
     .tanitim-metin{justify-self:start;text-align:left;max-width:40rem}
+    /* oz: dar ekranda tek kolon, P2 tekrar P1'in altina */
+    .oz-ic{grid-template-columns:1fr}
+    .oz-p1, .oz-p2{grid-column:1;grid-row:auto;justify-self:start}
+    .oz-p2{margin-top:1.3em}
     .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
     .is.kare{grid-column:span 2}
     .is.kucuk{grid-column:span 1}
@@ -912,10 +926,10 @@
      anahtar kavramlar bold — tipografik agirlik oyunu. -->
 <section class="oz" aria-label="Yaklaşım">
   <div class="oz-ic">
-    <p class="oz-govde" data-tr lang="tr">Her projenin <strong>özüne</strong> ineriz. İnsanların nasıl düşündüğünü, davrandığını ve çevreleriyle nasıl etkileşim kurduğunu, geliştirdiğimiz <strong>yaratıcı teknoloji destekli araştırma metodolojileriyle</strong> çözümleriz.</p>
-    <p class="oz-govde" data-tr lang="tr">Bu nedenle kararlarımızı yalnızca sezgilere değil; <strong>araştırmaya, gözleme ve ölçülebilir verilere</strong> de dayandırır, bunları <strong>anlamlı tasarımlara, deneyimlere ve yaratıcı teknoloji çözümlerine</strong> dönüştürürüz.</p>
-    <p class="oz-govde" data-en lang="en">We get to the <strong>essence</strong> of every project. We decode how people think, behave and interact with their surroundings through the <strong>creative-technology-driven research methodologies</strong> we develop.</p>
-    <p class="oz-govde" data-en lang="en">That is why we ground our decisions not in intuition alone, but in <strong>research, observation and measurable data</strong> — turning them into <strong>meaningful design, experiences and creative technology solutions</strong>.</p>
+    <p class="oz-govde oz-p1" data-tr lang="tr">Her projenin <strong>özüne</strong> ineriz. İnsanların nasıl düşündüğünü, davrandığını ve çevreleriyle nasıl etkileşim kurduğunu, geliştirdiğimiz <strong>yaratıcı teknoloji destekli araştırma metodolojileriyle</strong> çözümleriz.</p>
+    <p class="oz-govde oz-p2" data-tr lang="tr">Bu nedenle kararlarımızı yalnızca sezgilere değil; <strong>araştırmaya, gözleme ve ölçülebilir verilere</strong> de dayandırır, bunları <strong>anlamlı tasarımlara, deneyimlere ve yaratıcı teknoloji çözümlerine</strong> dönüştürürüz.</p>
+    <p class="oz-govde oz-p1" data-en lang="en">We get to the <strong>essence</strong> of every project. We decode how people think, behave and interact with their surroundings through the <strong>creative-technology-driven research methodologies</strong> we develop.</p>
+    <p class="oz-govde oz-p2" data-en lang="en">That is why we ground our decisions not in intuition alone, but in <strong>research, observation and measurable data</strong> — turning them into <strong>meaningful design, experiences and creative technology solutions</strong>.</p>
   </div>
 </section>
 
