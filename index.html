@@ -263,18 +263,18 @@
     padding:clamp(5rem, 9vw, 9rem) var(--kenar);
     overflow:hidden;                       /* cikis kaymasi tasma yaratmasin */
   }
-  /* Iki kolonlu editoryel duzen: P1 solda, P2 sayfanin SAGINA yasli, ustten
-     hizali. TR/EN esleri ayni grid hucrelerini paylasir (gizli olan display:none
-     oldugundan grid'e katilmaz). */
+  /* Editoryel duzen: P1 solda, P2 sayfanin ORTASINDA (orta kolon), ustten
+     hizali; sag uctes kolon bos kalir. TR/EN esleri ayni grid hucrelerini
+     paylasir (gizli olan display:none oldugundan grid'e katilmaz). */
   .oz-ic{
     will-change:opacity,transform;
     display:grid;
-    grid-template-columns:repeat(2, minmax(0,1fr));
-    gap:0 clamp(2.5rem, 6vw, 6rem);
+    grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:0 clamp(2.5rem, 5vw, 5rem);
     align-items:start;
   }
   .oz-p1{grid-column:1;grid-row:1}
-  .oz-p2{grid-column:2;grid-row:1;justify-self:end}
+  .oz-p2{grid-column:2;grid-row:1}
   .oz-govde{
     font-size:clamp(1.35rem, 2.4vw, 2.15rem);
     font-weight:300;letter-spacing:-.01em;line-height:1.42;
