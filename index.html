@@ -250,6 +250,9 @@
     font-size:var(--fs-body);line-height:1.6;color:var(--siyah);
     text-wrap:balance;   /* satir uzunluklarini birbirine yaklastirir */
   }
+  /* EN metni TR'den daha uzun: 23rem'de 4 satira kiriliyordu. 24rem'de tam 3
+     dengeli satir verir (24-30rem araliginda kararli, olculdu). */
+  html[lang="en"] .tanitim-metin{max-width:24rem}
   .tanitim-metin p{margin:0}
 
   /* ---------- BOLUM BASLIKLARI ---------- */
@@ -665,7 +668,9 @@
      kolonu dogal genisligini alir, metin kolonuna 23rem taban verilir ve gap
      kisilir; boylece metin her masaustu genisliginde 3 satir kalir. */
   @media (min-width: 901px) and (max-width: 1010px){
-    .intro{grid-template-columns:auto minmax(23rem, 1fr);gap:2rem}
+    /* taban 24rem: EN metninin (daha uzun) 3 satir kalmasi icin gereken genislik.
+       TR kutusu kendi max-width'i (23rem) ile sinirli oldugundan etkilenmez. */
+    .intro{grid-template-columns:auto minmax(24rem, 1fr);gap:2rem}
   }
 
   @media (max-width: 900px){
