@@ -661,19 +661,6 @@
     .is .gorsel img{transition:none}
   }
 
-  /* ---------- SATIR ANIMASYONU (locomotive tarzi metin belirmesi) ----------
-     JS kelimeleri .sa-k (maske) > .sa-i (icerik) spanlerine boler; ayni satirdaki
-     kelimeler ayni gecikmeyle YUKARI suzulur -> satir satir maskeden cikma etkisi.
-     Animasyon bitince orijinal HTML geri konur (dogal satir kirilimi/secim). */
-  .sa-k{display:inline-block;overflow:hidden;vertical-align:top}
-  .sa-i{
-    display:inline-block;
-    transform:translateY(115%);
-    transition:transform .95s cubic-bezier(.215,.61,.355,1);
-    will-change:transform;
-  }
-  .sa-oynat .sa-i{transform:translateY(0)}
-
   /* ---------- RESPONSIVE ---------- */
   /* Dar masaustu bandi (901-1010px): 1.4fr/1fr oraniyla metin kolonu 23rem'in
      ALTINA dusuyordu -> tanitim metni 4 satira kiriliyordu. Bu aralikta logo
@@ -1597,66 +1584,58 @@
     });
   })();
 
-  // ---------- Satir animasyonu (locomotive tarzi): metinler maskeden yukari suzulur ----------
-  // Kelimeler .sa-k(maske)>.sa-i spanlerine bolunur; AYNI SATIRDAKI kelimeler ayni
-  // gecikmeyi alir -> satir satir belirme. Ic markup (strong/span) korunur cunku
-  // kelime spanleri kendi ebeveynlerinin ICINDE kalir. Bitince orijinal HTML geri
-  // konur (text-wrap:balance ve dogal kirilim geri gelsin; kisa animasyon boyunca
-  // olasi minik kirilim farki kabul edilebilir).
+  // ---------- Scramble animasyonu (locomotive tarzi): metin rastgele ----------
+  // karakterlerle titreyip SOLDAN SAGA gercek haline "cozulur" (decode).
+  // Yalnizca metin dugumlerinin textContent'i degistirilir -> DOM yapisi,
+  // <strong> vurgulari, flex basliklardaki ::after cizgisi hicbir sekilde
+  // bozulmaz; bitiste orijinal metin birebir geri yazilir.
   (function(){
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const SURE = 950, SATIR_GECIKME = 90;   // ms (CSS .sa-i transition ile uyumlu)
+    const HAVUZ = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!<>-_\\/[]{}=+*#%&()';
+    const TIK = 32;                          // ms; her tikta cozulmemis karakterler yeniden karisir
 
-    function bol(el){
-      if(el.__saOrijinal === undefined) el.__saOrijinal = el.innerHTML;
-      // Flex basliklarda (bolum-ad ::after cizgisi) kelimeler flex-item olmasin:
-      // icerigi tek bir sarici span'e al.
-      if(el.matches('.bolum-baslik, .bolum-ad')){
-        const s = document.createElement('span');
-        while(el.firstChild) s.appendChild(el.firstChild);
-        el.appendChild(s);
-      }
+    function dugumleriTopla(el){
       const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
-      const dugumler = [];
-      let n; while(n = w.nextNode()){ if(n.textContent.trim()) dugumler.push(n); }
-      dugumler.forEach(node=>{
-        const parca = document.createDocumentFragment();
-        node.textContent.split(/(\s+)/).forEach(p=>{
-          if(!p) return;
-          if(/^\s+$/.test(p)){ parca.appendChild(document.createTextNode(p)); return; }
-          const k = document.createElement('span'); k.className = 'sa-k';
-          const i = document.createElement('span'); i.className = 'sa-i';
-          i.textContent = p;
-          k.appendChild(i); parca.appendChild(k);
-        });
-        node.parentNode.replaceChild(parca, node);
-      });
-      return [...el.querySelectorAll('.sa-k')];
+      const out = []; let n;
+      while(n = w.nextNode()){ if(n.textContent.trim()) out.push(n); }
+      return out;
     }
 
     function oynat(el){
-      if(!el || el.__saCalisiyor) return;
-      el.__saCalisiyor = true;
+      if(!el) return;
       const jeton = (el.__saJeton = (el.__saJeton || 0) + 1);
-      const maskeler = bol(el);
-      if(!maskeler.length){ el.__saCalisiyor = false; return; }
-      // satir gruplari (offsetTop) -> ayni satira ayni gecikme
-      let satir = -1, sonTop = null;
-      maskeler.forEach(k=>{
-        const t = k.offsetTop;
-        if(sonTop === null || Math.abs(t - sonTop) > 3){ satir++; sonTop = t; }
-        k.firstChild.style.transitionDelay = (satir * SATIR_GECIKME / 1000) + 's';
-      });
-      void el.offsetWidth;                    // reflow: baslangic konumu islensin
-      el.classList.add('sa-oynat');
-      const toplam = satir * SATIR_GECIKME + SURE + 100;
-      setTimeout(()=>{
-        if(el.__saJeton !== jeton) return;    // bu arada yeniden tetiklendiyse dokunma
-        el.innerHTML = el.__saOrijinal;       // orijinali geri koy
-        el.classList.remove('sa-oynat');
-        el.__saCalisiyor = false;
-      }, toplam);
+      // Onceki calisma yarida kaldiysa orijinallerini geri yaz (kaynak temiz kalsin)
+      if(el.__saSon){ el.__saSon.forEach(d=>{ d.node.textContent = d.orijinal; }); }
+      const dugumler = dugumleriTopla(el).map(node=>({node, orijinal:node.textContent}));
+      if(!dugumler.length) return;
+      el.__saSon = dugumler;
+      const toplamChar = dugumler.reduce((s,d)=>s+d.orijinal.length, 0);
+      const SURE = Math.min(1400, 450 + toplamChar*7);   // uzun metin biraz daha uzun cozulur
+      const bas = performance.now();
+      const zamanlayici = setInterval(()=>{
+        if(el.__saJeton !== jeton){ clearInterval(zamanlayici); return; }
+        const g = Math.min(1, (performance.now() - bas) / SURE);
+        let cozulmus = Math.floor(toplamChar * g);       // bastan itibaren cozulen karakter
+        dugumler.forEach(d=>{
+          const L = d.orijinal.length;
+          const c = Math.max(0, Math.min(L, cozulmus));
+          cozulmus -= L;
+          let s = d.orijinal.slice(0, c);
+          for(let i = c; i < L; i++){
+            const ch = d.orijinal[i];
+            s += (ch === ' ' || ch === ' ' || ch === '\n')
+              ? ch
+              : HAVUZ[(Math.random() * HAVUZ.length) | 0];
+          }
+          d.node.textContent = s;
+        });
+        if(g >= 1){
+          clearInterval(zamanlayici);
+          dugumler.forEach(d=>{ d.node.textContent = d.orijinal; });
+          el.__saSon = null;
+        }
+      }, TIK);
     }
 
     // --- Tanitim metni: intro perdesi kalktiginda oyna (perde altinda bosa oynamasin) ---
