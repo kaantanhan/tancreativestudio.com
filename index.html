@@ -342,9 +342,7 @@
     margin-top:2rem;
   }
   .logo-daha button[hidden]{display:none}
-  .logo-daha .kapat{
-    width:17px;height:17px;font-size:.58rem;
-  }
+  /* + ve - butonlari HER YERDE ayni boyut (asagidaki ortak kural) */
   .logo-daha button{
     width:23px;height:23px;border-radius:999px;
     border:1px solid var(--siyah);background:transparent;
@@ -820,9 +818,6 @@
     .logo-duvari li:has(svg[aria-label="Mimar Sinan Güzel Sanatlar Üniversitesi"]) svg{max-height:27px}
     /* ParibuArt GENISLIKTEN sinirli (max-height'i degistirmek kucultmez) -> max-width -%10 */
     .logo-duvari li:has(svg[aria-label="ParibuArt"]) svg{max-width:79.2%}
-
-    /* Mobilde - (kapat) butonu + ile ayni boyutta */
-    .logo-daha .kapat{width:23px;height:23px;font-size:.75rem}
   }
 </style>
 </head>
