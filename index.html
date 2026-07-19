@@ -661,11 +661,6 @@
     .is .gorsel img{transition:none}
   }
 
-  /* Scramble/decode: henuz cozulmemis karakterler SOLUK -> goz cozulmus
-     metne odaklanir, titresim rahatsiz etmez (Windle teknigindeki .dud). */
-  .sa-sarici{display:inline}
-  .sa-dud{color:var(--metin-gri);opacity:.45}
-
   /* ---------- RESPONSIVE ---------- */
   /* Dar masaustu bandi (901-1010px): 1.4fr/1fr oraniyla metin kolonu 23rem'in
      ALTINA dusuyordu -> tanitim metni 4 satira kiriliyordu. Bu aralikta logo
@@ -1587,105 +1582,6 @@
     btn.addEventListener('click', ()=>{
       uygula(kok.getAttribute('lang') === 'tr' ? 'en' : 'tr');
     });
-  })();
-
-  // ---------- Scramble/decode animasyonu (kanonik TextScramble teknigi) ----------
-  // Referans: Justin Windle "Text Scramble Effect" (codepen.io/soulwire/pen/mEMPrK) —
-  // locomotive tarzi sitelerin kullandigi teknik. Onceki surum cok hizli ve goz
-  // yoruyordu; sakinligin 4 anahtari:
-  //   1) Karakter BASINA rastgele basla/bit penceresi -> ayni anda metnin tamami
-  //      degil yalnizca kucuk bir kismi titrer; cozulme organik ve dagitik olur.
-  //   2) Titreyen karakter her karede degil ~%50 olasilikla degisir (stroboskop yok).
-  //   3) Titreyen karakterler SOLUK (.sa-dud) -> goz cozulmus metne odaklanir.
-  //   4) Havuzda harf/rakam YOK; cogunlugu alt cizgi olan sakin semboller.
-  // Yapi: animasyon boyunca icerik TEK sarici span icinde cizilir (flex
-  // basliklarin ::after cizgisi bozulmaz); bitiste orijinal HTML geri konur.
-  // Ic markup'li (strong vb.) elemanlar guvenlik geregi atlanir.
-  (function(){
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-    const HAVUZ = '!<>-_\\/[]{}—=+*^?#________';   // Windle havuzu (agirlik alt cizgide)
-    const TIK = 30;                                     // ms (kare saati)
-
-    function kacir(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-    function oynat(el){
-      if(!el) return;
-      if(el.__saOrijinal === undefined){
-        if(el.querySelector('*')) return;               // ic markup'li: guvenli atla
-        el.__saOrijinal = el.innerHTML;
-        el.__saMetin = el.textContent;
-      }
-      const hedef = el.__saMetin;
-      const jeton = (el.__saJeton = (el.__saJeton || 0) + 1);
-      const L = hedef.length;
-      // GOZ YORMAMA ANAHTARI: baslangic zamani karakterin KONUMUNA baglidir ->
-      // cozulme soldan saga ilerleyen DAR bir dalga olur; her an metnin yalnizca
-      // ~%15'i titrer. (Kanonik ornekte tum karakterler ayni pencereye rastgele
-      // dagildigi icin uzun paragrafta ayni anda ~%70 titriyor ve goz yoruyordu.)
-      // Yayilma metin uzunluguna gore olceklenir: kisa baslik hizli, paragraf sakin.
-      const yayilma = Math.min(46, Math.max(10, Math.round(L * 0.35)));
-      const kuyruk = [];
-      for(let i = 0; i < L; i++){
-        const to = hedef[i];
-        if(to === ' '){ kuyruk.push({to:' ', sabit:true}); continue; }   // bosluklar titremez
-        const bas = Math.round((i / L) * yayilma) + ((Math.random() * 5) | 0);
-        const son = bas + 7 + ((Math.random() * 6) | 0);                 // ~210-390ms titrer
-        kuyruk.push({to, bas, son, ch:''});
-      }
-      let kare = 0;
-      const zamanlayici = setInterval(()=>{
-        if(el.__saJeton !== jeton){ clearInterval(zamanlayici); return; }
-        let out = '', biten = 0;
-        for(const q of kuyruk){
-          if(q.sabit){ out += ' '; biten++; continue; }
-          if(kare >= q.son){ biten++; out += kacir(q.to); }
-          else if(kare >= q.bas){
-            if(!q.ch || Math.random() < 0.28) q.ch = HAVUZ[(Math.random() * HAVUZ.length) | 0];
-            out += '<span class="sa-dud">' + kacir(q.ch) + '</span>';
-          } else out += '&nbsp;';                       // henuz baslamadi: yer tutar, titremez
-        }
-        el.innerHTML = '<span class="sa-sarici">' + out + '</span>';
-        kare++;
-        if(biten === kuyruk.length){
-          clearInterval(zamanlayici);
-          el.innerHTML = el.__saOrijinal;               // orijinali birebir geri koy
-        }
-      }, TIK);
-    }
-
-    // --- Tanitim metni: intro perdesi kalktiginda oyna (perde altinda bosa oynamasin) ---
-    function tanitimOynat(){
-      const dil = document.documentElement.getAttribute('lang') === 'en' ? 'en' : 'tr';
-      oynat(document.querySelector('.tanitim-metin p[data-' + dil + ']'));
-    }
-    if(document.documentElement.classList.contains('intro-atla')){
-      tanitimOynat();
-    } else {
-      let deneme = 0;
-      const t = setInterval(()=>{
-        if(window.__introOK !== undefined || ++deneme > 40){ clearInterval(t); tanitimOynat(); }
-      }, 200);
-    }
-
-    // --- Dil gecisi: yeni gorunen tanitim metni her seferinde yeniden oynar ---
-    const dilBtn = document.getElementById('dilBtn');
-    if(dilBtn) dilBtn.addEventListener('click', tanitimOynat);   // dil IIFE'si once calisir (kayit sirasi)
-
-    // --- Scroll ile gorunen metinler: bir kez, %25 gorununce ---
-    const kapsam = document.querySelectorAll(
-      '.bolum-baslik, .bolum-ad, .hizmet .baslik, .hizmet .aciklama p, .haber p'
-    );
-    if('IntersectionObserver' in window){
-      const io = new IntersectionObserver(girisler=>{
-        girisler.forEach(g=>{
-          if(!g.isIntersecting) return;
-          io.unobserve(g.target);
-          oynat(g.target);
-        });
-      }, {threshold:.25});
-      kapsam.forEach(el=>io.observe(el));
-    }
   })();
 
   // ---------- Gizli koyu tema ("-" tusu ile ac/kapa) ----------
