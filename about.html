@@ -111,9 +111,35 @@
   .dil button.aktif{color:var(--siyah)}
   .dil .ayrac{color:var(--cizgi)}
 
+  /* ---------- KAPAK GORSELI ----------
+     Ana sayfadaki perde mantigi: gorsel sabit durur, icerik katmani
+     kendi zemini ile birlikte kaydikca uzerine biner. */
+  .kapak{
+    position:fixed;top:0;left:0;
+    width:100vw;height:86vh;height:86svh;
+    z-index:0;overflow:hidden;background:#0B0B0B;
+  }
+  .kapak img{
+    width:100%;height:100%;object-fit:cover;object-position:center 46%;display:block;
+  }
+  .kapak-bosluk{height:86vh;height:86svh}
+  .ustune-kayan{position:relative;z-index:1;background:var(--zemin)}
+
+  /* Kapak gorselinin uzerindeyken ust ogeler beyaza doner */
+  nav a,.mini-logo,.dil button,.dil .ayrac,.nav-toggle span{transition:color .25s,border-color .25s,background .25s}
+  body.kapak-ustunde nav a{color:#fff}
+  body.kapak-ustunde nav a.contact{border-color:rgba(255,255,255,.7)}
+  body.kapak-ustunde nav a.contact:hover{background:#fff;color:#0B0B0B}
+  body.kapak-ustunde .mini-logo{color:#fff}
+  body.kapak-ustunde .dil button{color:rgba(255,255,255,.55)}
+  body.kapak-ustunde .dil button.aktif,
+  body.kapak-ustunde .dil button:hover{color:#fff}
+  body.kapak-ustunde .dil .ayrac{color:rgba(255,255,255,.35)}
+  body.kapak-ustunde .nav-toggle span{background:#fff}
+
   /* ---------- BASLIK ---------- */
   .ust-bant{
-    padding:9.5rem var(--kenar) 0;
+    padding:4.5rem var(--kenar) 0;
     display:flex;justify-content:space-between;align-items:flex-end;
     gap:2rem;flex-wrap:wrap;
   }
@@ -317,8 +343,18 @@
     .nav-links .dil{
       justify-content:center;padding:.9rem .2rem .2rem;
     }
-    .ust-bant{padding-top:6rem}
+    .ust-bant{padding-top:3.5rem}
     footer{flex-direction:column;align-items:flex-start}
+    .kapak,.kapak-bosluk{height:58vh;height:58svh}
+    /* Kapak uzerinde nav bandi seffaf; menu acilinca krem panel geri gelir */
+    body.kapak-ustunde nav:not(.open){background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+    body.kapak-ustunde nav.open .nav-links a{color:var(--siyah)}
+    body.kapak-ustunde nav.open .nav-links a.contact{border-color:var(--siyah)}
+    body.kapak-ustunde nav.open .dil button{color:var(--metin-gri)}
+    body.kapak-ustunde nav.open .dil button.aktif{color:var(--siyah)}
+    body.kapak-ustunde nav.open .dil .ayrac{color:var(--cizgi)}
+    body.kapak-ustunde nav.open .nav-toggle span{background:var(--siyah)}
+    body.kapak-ustunde:has(nav.open) .mini-logo{color:var(--siyah)}
   }
 </style>
 </head>
@@ -344,6 +380,14 @@
     <a class="contact" href="mailto:info@tancreativestudio.com">Contact</a>
   </div>
 </nav>
+
+<!-- KAPAK: sabit durur, asagidaki icerik katmani uzerine kayar -->
+<div class="kapak" aria-hidden="true">
+  <img src="images/hakkinda-kapak.jpg" alt="" fetchpriority="high">
+</div>
+<div class="kapak-bosluk" aria-hidden="true"></div>
+
+<div class="ustune-kayan">
 
 <header class="ust-bant">
   <h1 data-tr>Hakkında</h1>
@@ -434,7 +478,24 @@
   </div>
 </footer>
 
+</div><!-- /.ustune-kayan -->
+
 <script>
+  // Kapak gorseli uzerindeyken nav + logo beyaz olsun
+  (function(){
+    const kapak = document.querySelector('.kapak');
+    if(!kapak) return;
+    function guncelle(){
+      // Sabit TAN logosunun dikey ortasi kremi gordugu anda siyaha don
+      const esik = kapak.getBoundingClientRect().height - 24;
+      document.body.classList.toggle('kapak-ustunde', window.scrollY < esik);
+    }
+    guncelle();
+    window.addEventListener('scroll', guncelle, {passive:true});
+    window.addEventListener('resize', guncelle);
+    window.addEventListener('orientationchange', guncelle);
+  })();
+
   // Mobil hamburger menu — ac/kapat, link tiklayinca ve ESC ile kapat
   (function(){
     const navEl = document.querySelector('nav');
