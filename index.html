@@ -822,6 +822,17 @@
 </style>
 </head>
 <body>
+<script>
+  // Sayfa hep en ustten acilsin: yenilemede tarayicinin eski scroll konumunu
+  // geri getirmesini engelle. Cipa (#...) ile gelinmisse dokunma.
+  if(!location.hash && 'scrollRestoration' in history){
+    history.scrollRestoration = 'manual';
+    window.scrollTo({top:0, left:0, behavior:'instant'});
+    window.addEventListener('pageshow', function(e){
+      if(e.persisted) window.scrollTo({top:0, left:0, behavior:'instant'});
+    });
+  }
+</script>
 <!-- ZEMIN IZGARASI (pasif): aktiflestirmek icin asagidaki satirin yorumunu kaldir.
      Stil .izgara CSS blogunda hazir duruyor. -->
 <!-- <div class="izgara" aria-hidden="true"></div> -->
@@ -1454,17 +1465,29 @@
     const perde = document.getElementById('introPerde');
     const tan = document.getElementById('introTan');
     if(!perde || !tan) return;
+    // Cipa (#capabilities gibi) ile gelindiyse tarayicinin acilistaki dogal atlamasi
+    // guvenilmez: intro kilidine takilip yutuluyor ya da smooth animasyonu araya giren
+    // bir scroll ile iptal oluyor. Perde kalkarken atlamayi elle garantile.
+    function cipayaAtla(){
+      if(!location.hash) return;
+      try{
+        const h = document.querySelector(location.hash);
+        // rAF'a baglama: arka plan sekmesinde rAF hic calismaz, atlama askida kalir.
+        if(h) h.scrollIntoView({behavior:'instant', block:'start'});
+      }catch(e){}
+    }
     // Ic navigasyondan gelindiyse (erken script isaretledi): TAN animasyonu yok.
     // Sade zemin perdesi yumusakca silinir -> ic sayfanin cikis perdesiyle
     // kesintisiz sicak-zemin gecisi. Reduced-motion'da aninda.
     if(document.documentElement.classList.contains('intro-atla')){
       window.__introOK = 0;      // slogan/tagline tam gorunur (fade beklemesi yok)
       const az = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if(az){ perde.remove(); return; }
+      if(az){ perde.remove(); cipayaAtla(); return; }
       requestAnimationFrame(()=>{
         perde.classList.add('bitti');            // introCik: opacity 1->0 (.5s)
         setTimeout(()=>perde.remove(), 560);
       });
+      cipayaAtla();
       return;
     }
     document.body.classList.add('intro-kilit');
@@ -1472,7 +1495,7 @@
 
     if(azMotion){
       window.__introOK = 0;  // hareket azaltma: logo tam gorunur (fade yok)
-      setTimeout(()=>{ perde.classList.add('bitti'); document.body.classList.remove('intro-kilit'); setTimeout(()=>perde.remove(),500); }, 300);
+      setTimeout(()=>{ perde.classList.add('bitti'); document.body.classList.remove('intro-kilit'); cipayaAtla(); setTimeout(()=>perde.remove(),500); }, 300);
       return;
     }
 
@@ -1534,6 +1557,7 @@
       perde.classList.add('bitti');
       window.__introOK = performance.now();
       document.body.classList.remove('intro-kilit');
+      cipayaAtla();
       setTimeout(()=>perde.remove(), 600);
     }
     function tasiVeBitir(){
@@ -1606,13 +1630,25 @@
     if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if(!matchMedia('(hover:hover) and (pointer:fine)').matches) return; // dokunmatikte native birakilir
 
-    const maxYBaslangic = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
-    if(maxYBaslangic > 30){
-      const once = window.scrollY;
-      window.scrollTo(0, once + 20);
-      const scrollToCalisiyor = Math.abs(window.scrollY - once) > 2;
-      window.scrollTo(0, once);
-      if(!scrollToCalisiyor) return; // guvenilir degil -> native scroll'a hic dokunma
+    // Cipa ile gelindiyse (#capabilities) baslangic testini HIC yapma: test,
+    // tarayicinin cipa atlamasiyla yarisip onu iptal edebiliyordu (sayfa en ustte
+    // kaliyordu). Testin atlanmasi guvenli — 2. katman (devre kesici) yine korur.
+    if(!location.hash){
+      const maxYBaslangic = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+      if(maxYBaslangic > 30){
+        // Test animasyonsuz olmali: CSS scroll-behavior:smooth aktifken scrollTo
+        // animasyonlu calisir; +20 hedefli animasyon yarim kalip sayfayi "cok az
+        // asagida" birakabiliyordu. Gecici olarak kapatip geri aciyoruz.
+        const kokStil = document.documentElement.style;
+        const eskiDavranis = kokStil.scrollBehavior;
+        kokStil.scrollBehavior = 'auto';
+        const once = window.scrollY;
+        window.scrollTo(0, once + 20);
+        const scrollToCalisiyor = Math.abs(window.scrollY - once) > 2;
+        window.scrollTo(0, once);
+        kokStil.scrollBehavior = eskiDavranis || '';
+        if(!scrollToCalisiyor) return; // guvenilir degil -> native scroll'a hic dokunma
+      }
     }
 
     const LERP = .1; // 0-1: kucuk deger = daha "agir"/yumusak, buyuk deger = daha sert

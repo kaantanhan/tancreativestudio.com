@@ -100,6 +100,17 @@
 </style>
 </head>
 <body>
+<script>
+  // Sayfa hep en ustten acilsin: yenilemede tarayicinin eski scroll konumunu
+  // geri getirmesini engelle. Cipa (#...) ile gelinmisse dokunma.
+  if(!location.hash && 'scrollRestoration' in history){
+    history.scrollRestoration = 'manual';
+    window.scrollTo({top:0, left:0, behavior:'instant'});
+    window.addEventListener('pageshow', function(e){
+      if(e.persisted) window.scrollTo({top:0, left:0, behavior:'instant'});
+    });
+  }
+</script>
 
 <header class="ust">
   <a class="geri" href="index.html">TAN Creative</a>
