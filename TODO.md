@@ -13,17 +13,18 @@
 ## 🟠 1. İçerik — en yüksek etki (site "hazır" görünmesini bu belirliyor)
 Şu an sitenin büyük kısmı placeholder. Öncelik: metinler → görseller.
 
-**Proje sayfaları (work-03…08 tamamen placeholder — her birinde 7 adet "Görsel Yakında")**
-- [ ] work-03 — Allianz / Point Cloud
-- [ ] work-04 — Emaar Artbox
-- [ ] work-05 — "Eşik" Exhibition
-- [ ] work-06 — Les Benjamins New Year
-- [ ] work-07 — Borusan Contemporary / Edward Burtynsky
-- [ ] work-08 — Borusan Sanat / 2025 Visual Identity
+**Proje sayfaları (work-03…09 placeholder — yıldızlı 9 proje düzeni, 2026-07-27)**
+- [ ] work-03 — Emaar - Artbox
+- [ ] work-04 — YKKS - Koç 100. Yıl
+- [ ] work-05 — Les Benjamins - Vitrin
+- [ ] work-06 — Borusan Sanat - Visual
+- [ ] work-07 — Borusan Contemporary - Visual
+- [ ] work-08 — Borusan Contemporary - Edward Burtynsky
+- [ ] work-09 — İRHM - Temsil ve Hafıza
 
 **Metinler (8 work sayfasının hepsinde "hazırlanıyor" placeholder'ı var — work-01 ve 02 dahil)**
 - [ ] work-01 (Akbank) ve work-02 (Paribuart): Overview + Approach + spread özeti
-- [ ] work-03…08: tüm gövde metinleri
+- [ ] work-03…09: tüm gövde metinleri
 - [ ] Tüm projelerde **Credits** (Creative Direction / Design / Development / Motion / Photography) — şu an "—"
 
 **Press**
@@ -32,7 +33,7 @@
 - [ ] index.html'deki press kartları da lorem — gerçek başlık/kaynak/özet
 
 **Kart kapakları**
-- [ ] work-03…08 kartları (index'te 3, works.html'de 6 adet "Görsel Yakında") → kapak görseli/videosu
+- [ ] work-03…09 kartları (index + works placeholder'ları) → kapak görseli/videosu
 
 ## 🟡 2. SEO / paylaşım — hızlı kazanç
 - [ ] **og etiketleri sadece index.html'de var** (6 adet); diğer **14 sayfada hiç yok** → WhatsApp/LinkedIn/X'te paylaşılınca önizleme çıkmıyor. En azından og:title + og:description + og:image ekle.

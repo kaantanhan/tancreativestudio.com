@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Works — TAN Creative</title>
+<title>İRHM - Temsil ve Hafıza — TAN Creative</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B0B'/%3E%3Ctext x='50' y='72' font-family='Arial,sans-serif' font-size='74' font-weight='800' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
-<meta name="description" content="TAN Creative — tüm işler.">
+<meta name="description" content="İRHM - Temsil ve Hafıza — TAN Creative proje sayfası.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,7 +21,7 @@
     --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
     --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
-    --fs-label:.74rem; /* etiketler — index ile ayni */
+    --fs-label:.74rem; /* bolum basliklari — index ile ayni */
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
@@ -49,7 +49,7 @@
   }
   .mini-logo:hover{color:var(--tan)}
   .mini-logo svg{width:124px;height:auto;display:block}
-  .mini-logo .g-slogan{display:none}
+  .mini-logo .g-slogan,.mini-logo .g-yan{display:none}
 
   /* Ana sayfaya yumusak gecis: sicak zemin perdesi belirir, sonra gidilir */
   .cikis-perde{
@@ -67,7 +67,8 @@
     padding:1.35rem var(--kenar);
   }
   nav a{
-    text-decoration:none;font-family:var(--font-mono);font-size:.74rem;font-weight:500;
+    text-decoration:none;font-family:var(--font-mono);
+    font-size:.74rem;font-weight:500;
     letter-spacing:.02em;color:var(--siyah);
     transition:opacity .25s;
   }
@@ -75,7 +76,7 @@
   nav a.aktif{opacity:.45}
   nav a.contact{
     border:1px solid var(--siyah);border-radius:999px;
-    padding:.42rem 1.15rem;letter-spacing:.04em;
+    padding:.42rem 1.15rem;
     transition:background .25s,color .25s;
   }
   nav a.contact:hover{background:var(--siyah);color:var(--beyaz);opacity:1}
@@ -101,67 +102,125 @@
   nav.open .nav-toggle span:nth-child(2){opacity:0}
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
-  /* ---------- SAYFA BASLIGI (index/proje sayfalari dili) ---------- */
-  .works-bas{
-    padding:8.5rem var(--kenar) 2.4rem;
-    border-bottom:1px solid var(--cizgi);
+  /* ---------- KAPAK USTUNDE NAV ----------
+     Kapak medyasi koyu ise (JS olcer) gorsel uzerindeyken nav/logo beyaz. */
+  nav a{transition:opacity .25s,color .25s,border-color .25s,background .25s}
+  .mini-logo,.nav-toggle span{transition:color .25s,background .25s}
+  body.kapak-ustunde nav a{color:#fff}
+  body.kapak-ustunde nav a.contact{border-color:rgba(255,255,255,.7)}
+  body.kapak-ustunde nav a.contact:hover{background:#fff;color:#0B0B0B}
+  body.kapak-ustunde .mini-logo{color:#fff}
+  body.kapak-ustunde .nav-toggle span{background:#fff}
+
+  /* ---------- GERI LINKI ---------- */
+  .geri{
+    display:inline-block;text-decoration:none;
+    font-family:var(--font-mono);
+    font-size:.68rem;font-weight:400;letter-spacing:.14em;
+    text-transform:uppercase;color:var(--metin-gri);
+    transition:color .25s;
   }
-  .works-bas h1{
-    font-weight:500;
-    font-size:clamp(2.4rem,5vw,4.2rem);line-height:1.05;
-    letter-spacing:-.02em;
+  .geri:hover{color:var(--tan)}
+
+  /* ---------- PROJE KAPAK (editoryel spread) ---------- */
+  .spread-ust{
+    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
+    padding:1.1rem var(--kenar) 0;
+    font-family:var(--font-mono);
+    font-size:.66rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
+  }
+  .spread-ust .geri{margin:0}
+  .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
+  .spread-gorsel img{width:100%;height:clamp(420px,74svh,900px);object-fit:cover;display:block}
+  /* Kapak gorseli olmayan projelerde placeholder */
+  .spread-gorsel .ph{height:clamp(420px,74svh,900px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
+  .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#666663}
+  .spread-alt{
+    display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+    gap:2rem clamp(2rem,5vw,5rem);align-items:start;
+    padding:1.5rem var(--kenar) 3.6rem;
+  }
+  .spread-h1{
+    font-size:clamp(2rem,5vw,4.2rem);font-weight:500;
+    letter-spacing:-.02em;line-height:1.05;color:var(--siyah);
+    text-wrap:balance;overflow-wrap:break-word;min-width:0;
+  }
+  .spread-kolonlar{
+    max-width:34rem;display:flex;flex-direction:column;
+    gap:1.1rem;
+    font-size:.95rem;font-weight:400;line-height:1.62;color:var(--metin-gri);
+  }
+  .spread-kolonlar p{margin:0}
+  @media (max-width:900px){
+    .spread-alt{grid-template-columns:1fr;gap:1.4rem}
+  }
+  @media (max-width:560px){
+    .spread-gorsel img{height:56svh}
+    .spread-gorsel .ph{height:56svh}
   }
 
-  /* ---------- IS GRID ---------- */
-  .works-govde{padding:2.4rem var(--kenar) 4.5rem}
-  .is-grid{
-    display:grid;
-    grid-template-columns:repeat(4, minmax(0,1fr));
-    gap:1.4rem 1.6rem;
-  }
-  .is{text-decoration:none;color:inherit;display:block}
-  .is .gorsel{
-    position:relative;
-    display:flex;align-items:center;justify-content:center;
+  /* ---------- GORSEL BLOKLARI ---------- */
+  .gorsel-blok{padding:0 var(--kenar);margin:.9rem 0}
+  .gorsel-blok .ph{
     background:var(--tgri);
-    width:100%;
-    overflow:hidden;
-    transition:filter .35s;
+    display:flex;align-items:center;justify-content:center;
   }
-  .is .gorsel img,.is .gorsel video{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
-  .is .gorsel::after{
-    content:"";position:absolute;inset:0;
-    background:var(--siyah);opacity:0;
-    transition:opacity .4s ease;pointer-events:none;
+  .gorsel-blok .ph::after{
+    content:'';
+    width:34px;height:1px;background:#C9C6BF;
   }
-  .is:hover .gorsel img,.is:hover .gorsel video{transform:scale(1.04)}
-  .is:hover .gorsel::after{opacity:.05}
-  .yakinda{
-    font-family:var(--font-mono);font-size:.64rem;font-weight:400;
-    letter-spacing:.08em;text-transform:uppercase;color:#666663;
-  }
-  .is .etiket{
-    position:relative;
-    display:flex;align-items:center;gap:.4rem;
+  .tam .ph{aspect-ratio:16/8}
+  .gorsel-blok img{width:100%;height:auto;display:block}
+  .ikili{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
+  .ikili .ph{aspect-ratio:4/5}
+  .uclu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem}
+  .uclu .ph{aspect-ratio:1/1}
+  .gorsel-not{
     margin-top:.7rem;
-    font-family:var(--font-mono);font-size:var(--fs-label);font-weight:500;
-    letter-spacing:.1em;text-transform:uppercase;
-    transition:color .3s,transform .3s cubic-bezier(.2,.7,.2,1);
+    font-family:var(--font-mono);
+    font-size:.64rem;font-weight:400;letter-spacing:.08em;
+    text-transform:uppercase;color:var(--metin-gri);
   }
-  .is .etiket .no{font-weight:400;color:var(--metin-gri)}
-  .is .etiket::after{
-    content:"↗";font-size:.8em;
-    opacity:0;transform:translateX(-.3rem);
-    transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1);
+
+  /* video blogu: imlec PLAY yazar */
+  .video-blok .ph{position:relative;aspect-ratio:16/8}
+
+  /* ---------- BOLUM BASLIKLARI (index dili: kucuk etiket + acik gri cizgi) ---------- */
+  .bolum-ad{
+    font-family:var(--font);
+    font-size:var(--fs-label);font-weight:400;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--siyah);
+    display:flex;align-items:center;gap:1rem;
   }
-  .is:hover .etiket{color:var(--tan);transform:translateX(.15rem)}
-  .is:hover .etiket::after{opacity:1;transform:translateX(0)}
-  .is.kare{grid-column:span 2}
-  .is.kare .gorsel{aspect-ratio:1/1}
-  .is.genis{grid-column:1 / -1}
-  .is.genis .gorsel{aspect-ratio:16/5}
-  .is.kucuk{grid-column:span 1}
-  .is.kucuk .gorsel{aspect-ratio:1/1}
+  .bolum-ad::after{content:"";flex:1;height:1px;background:var(--cizgi)}
+
+  /* ---------- METIN BLOKLARI ---------- */
+  .metin-blok{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,2fr);
+    gap:2rem;
+    padding:3.4rem var(--kenar);
+  }
+  .metin-blok .govde{max-width:38rem;display:flex;flex-direction:column;gap:1.1rem}
+  .metin-blok p{font-size:1.02rem;line-height:1.62;color:var(--siyah)}
+
+  /* ---------- KUNYE ---------- */
+  .kunye{
+    padding:3.2rem var(--kenar) 4.5rem;
+  }
+  .kunye .bolum-ad{margin-bottom:2.2rem}
+  .kunye dl{
+    display:grid;grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:1.4rem 1.6rem;max-width:52rem;
+  }
+  .kunye div{border-top:1px solid var(--cizgi);padding-top:.7rem}
+  .kunye dt{
+    font-family:var(--font-mono);
+    font-size:.64rem;font-weight:400;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--metin-gri);margin-bottom:.3rem;
+  }
+  .kunye dd{font-size:.9rem;font-weight:500}
 
   /* ---------- FOOTER ---------- */
   footer{
@@ -170,16 +229,18 @@
     gap:1.2rem 2.5rem;
     padding:1.6rem var(--kenar) 2rem;
     border-top:1px solid var(--cizgi);
-    font-family:var(--font-mono);font-size:.7rem;font-weight:400;letter-spacing:.04em;
+    font-family:var(--font-mono);
+    font-size:.7rem;font-weight:400;letter-spacing:.04em;
   }
   footer .sol, footer .sag{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:center}
-  footer a{text-decoration:none;transition:color .25s}
+  footer a{text-decoration:none;letter-spacing:.05em;transition:color .25s}
   footer a:hover{color:var(--tan)}
+  footer .telif{letter-spacing:.02em}
   footer .buyuk{text-transform:uppercase}
 
   /* ---------- OZEL IMLEC ---------- */
   @media (hover:hover) and (pointer:fine){
-    .is, .is *{cursor:none}
+    .video-blok .ph{cursor:none}
     #imlec{
       position:fixed;top:0;left:0;z-index:999;
       pointer-events:none;
@@ -191,7 +252,6 @@
       will-change:transform;
     }
     #imlec.aktif{opacity:1}
-    #imlec.acik{color:#fff}   /* koyu gorsel uzerinde beyaz (zemin parlakligi JS olcer) */
     #imlec #imlecMetin::after{
       content:'';display:inline-block;
       width:1px;height:.95em;background:currentColor;
@@ -213,10 +273,10 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
-    .works-bas{padding-top:8rem}
-    .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
-    .is.kare{grid-column:span 2}
-    .is.kucuk{grid-column:span 1}
+    .metin-blok{grid-template-columns:1fr;gap:1.1rem}
+    .kunye dl{grid-template-columns:repeat(2, minmax(0,1fr))}
+    .ikili{grid-template-columns:1fr}
+    .uclu{grid-template-columns:1fr 1fr}
   }
   @media (max-width: 560px){
     /* Mobil header: TAN solda + hamburger sagda; linkler acilir panelde */
@@ -248,9 +308,14 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
-    .works-bas{padding-top:6.5rem}
-    .is-grid{grid-template-columns:1fr}
-    .is.kare,.is.kucuk{grid-column:1/-1}
+    /* Koyu kapak uzerinde nav bandi seffaf; menu acilinca krem panel doner */
+    body.kapak-ustunde nav:not(.open){background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+    body.kapak-ustunde nav.open .nav-links a{color:var(--siyah)}
+    body.kapak-ustunde nav.open .nav-toggle span{background:var(--siyah)}
+    body.kapak-ustunde:has(nav.open) .mini-logo{color:var(--siyah)}
+    .kunye dl{grid-template-columns:1fr}
+    .uclu{grid-template-columns:1fr}
+    .ikili{grid-template-columns:1fr}
   }
 </style>
 </head>
@@ -275,7 +340,7 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="navLinks">
-    <a href="works.html" class="aktif" aria-current="page">Works</a>
+    <a href="works.html" class="aktif">Works</a>
     <a href="index.html#capabilities">Capabilities</a>
     <a href="index.html#news">Press</a>
     <a href="about.html">About</a>
@@ -283,28 +348,77 @@
   </div>
 </nav>
 
-<!-- ---------- BASLIK ---------- -->
-<header class="works-bas">
-  <h1 lang="en">Works</h1>
+<!-- ---------- PROJE KAPAK (editoryel spread) ---------- -->
+<header class="spread">
+  <figure class="spread-gorsel">
+    <div class="ph"><span class="yakinda-cover">Görsel Yakında</span></div>
+  </figure>
+  <div class="spread-ust">
+    <a class="geri" href="works.html" lang="en">&larr; All Works</a>
+  </div>
+  <div class="spread-alt reveal">
+    <h1 class="spread-h1" lang="tr">İRHM<br>Temsil ve Hafıza</h1>
+    <div class="spread-kolonlar">
+      <p>Bu projenin tanıtım metni hazırlanıyor. Yakında bu alanda işin kapsamı, yaklaşımı ve sonuçları yer alacak.</p>
+    </div>
+  </div>
 </header>
 
-<!-- ---------- TUM ISLER ---------- -->
-<main class="works-govde">
-  <div class="is-grid">
-    <a class="is kare reveal" href="work-01.html"><div class="gorsel"><video src="images/akbank-kapak-loop.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div><div class="etiket" lang="tr"><span class="no">(01)</span>Akbank Sanat - Niyetler 2</div></a>
-    <a class="is kare reveal" href="work-02.html"><div class="gorsel"><img src="images/paribuart-kapak-1.jpg" alt="Paribuart — 9th Anniversary"></div><div class="etiket" lang="en"><span class="no">(02)</span>Paribuart - 9th Anniversary</div></a>
-
-    <a class="is genis reveal" href="work-03.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en"><span class="no">(03)</span>Emaar - Artbox</div></a>
-
-    <a class="is kucuk reveal" href="work-04.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr"><span class="no">(04)</span>YKKS - Koç 100. Yıl</div></a>
-    <a class="is kucuk reveal" href="work-05.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en"><span class="no">(05)</span>Les Benjamins - Vitrin</div></a>
-    <a class="is kucuk reveal" href="work-06.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en"><span class="no">(06)</span>Borusan Sanat - Visual</div></a>
-    <a class="is kucuk reveal" href="work-07.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en"><span class="no">(07)</span>Borusan Contemporary - Visual</div></a>
-
-    <a class="is kare reveal" href="work-08.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en"><span class="no">(08)</span>Borusan Contemporary - Edward Burtynsky</div></a>
-    <a class="is kare reveal" href="work-09.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr"><span class="no">(09)</span>İRHM - Temsil ve Hafıza</div></a>
+<!-- ---------- OVERVIEW ---------- -->
+<section class="metin-blok reveal">
+  <h2 class="bolum-ad" lang="en">Overview</h2>
+  <div class="govde">
+    <p>Bu projenin tanıtım metni hazırlanıyor. Yakında bu alanda işin kapsamı, yaklaşımı ve sonuçları yer alacak.</p>
+    
   </div>
-</main>
+</section>
+
+<!-- ---------- IKILI GORSEL ---------- -->
+<div class="gorsel-blok ikili reveal">
+  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
+  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
+</div>
+
+<!-- ---------- VIDEO (imlec: PLAY) ---------- -->
+<figure class="gorsel-blok tam video-blok reveal">
+  <div class="ph"></div>
+  <figcaption class="gorsel-not">Film Yakında</figcaption>
+</figure>
+
+<!-- ---------- APPROACH ---------- -->
+<section class="metin-blok reveal">
+  <h2 class="bolum-ad" lang="en">Approach</h2>
+  <div class="govde">
+    <p>Yaklaşım metni yakında eklenecek.</p>
+  </div>
+</section>
+
+<!-- ---------- UCLU GORSEL ---------- -->
+<div class="gorsel-blok uclu reveal">
+  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
+  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
+  <figure><div class="ph"></div><figcaption class="gorsel-not">Görsel Yakında</figcaption></figure>
+</div>
+
+<!-- ---------- KAPANIS GORSELI ---------- -->
+<figure class="gorsel-blok tam reveal">
+  <div class="ph"></div>
+  <figcaption class="gorsel-not">Görsel Yakında</figcaption>
+</figure>
+
+<!-- ---------- KUNYE ---------- -->
+<section class="kunye reveal">
+  <h2 class="bolum-ad" lang="en">Credits</h2>
+  <dl lang="en">
+    <div><dt>Creative Direction</dt><dd>—</dd></div>
+    <div><dt>Design</dt><dd>—</dd></div>
+    <div><dt>Development</dt><dd>—</dd></div>
+    <div><dt>Motion</dt><dd>—</dd></div>
+    <div><dt>Photography</dt><dd>—</dd></div>
+    <div><dt>Production</dt><dd>TAN Creative</dd></div>
+  </dl>
+</section>
+
 
 <!-- ---------- FOOTER ---------- -->
 <footer>
@@ -338,6 +452,46 @@
     }
   })();
 
+  // Kapak koyu ise uzerindeyken nav/logo beyaz olsun (parlaklik olcumu)
+  (function(){
+    const kapak = document.querySelector('.spread-gorsel');
+    const medya = kapak ? kapak.querySelector('video, img') : null;
+    if(!kapak) return;
+    let koyu = false;
+    function guncelle(){
+      const r = kapak.getBoundingClientRect();
+      document.body.classList.toggle('kapak-ustunde', koyu && r.bottom > 28);
+    }
+    function olc(){
+      if(!medya) return;
+      try{
+        const mw = medya.videoWidth || medya.naturalWidth;
+        const mh = medya.videoHeight || medya.naturalHeight;
+        if(!mw || !mh) return;
+        const c = document.createElement('canvas');
+        c.width = 64; c.height = 24;
+        const ctx = c.getContext('2d', {willReadFrequently:true});
+        // nav'in dendigi ust bolge: medyanin ust %22'si
+        ctx.drawImage(medya, 0, 0, mw, mh*.22, 0, 0, 64, 24);
+        const d = ctx.getImageData(0, 0, 64, 24).data;
+        let L = 0;
+        for(let i = 0; i < d.length; i += 4) L += .2126*d[i] + .7152*d[i+1] + .0722*d[i+2];
+        L /= d.length/4;
+        koyu = L < 110;
+        guncelle();
+      }catch(e){}
+    }
+    if(medya){
+      if(medya.tagName === 'VIDEO'){
+        if(medya.readyState >= 2) olc(); else medya.addEventListener('loadeddata', olc);
+      }else{
+        if(medya.complete) olc(); else medya.addEventListener('load', olc);
+      }
+    }
+    window.addEventListener('scroll', guncelle, {passive:true});
+    window.addEventListener('resize', guncelle);
+  })();
+
   // Ana sayfaya yumusak gecis: logo tiklaninca sicak zemin perdesi belirir, sonra gider
   (function(){
     const link = document.querySelector('.mini-logo');
@@ -358,62 +512,13 @@
   },{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // Ozel imlec: is kartlari uzerinde EXPLORE (index ile ayni kelime).
-  // Metin rengi, altindaki zeminin parlakligina gore siyah/beyaz secilir
-  // (index'teki genel olcum sisteminin aynisi — koyu kapak videolarinda okunur kalir).
+  // Ozel imlec: video uzerinde PLAY
   const imlec = document.getElementById('imlec');
   const imlecMetin = document.getElementById('imlecMetin');
   const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(matchMedia('(hover:hover) and (pointer:fine)').matches){
-    const ornek = document.createElement('canvas');
-    ornek.width = 2; ornek.height = 2;
-    const octx = ornek.getContext('2d', {willReadFrequently:true});
-    function medyaAltinda(el, cx, cy){
-      if(!el) return null;
-      let m = (el.matches && el.matches('video,img')) ? el : null;
-      if(!m){ const g = el.closest && el.closest('.gorsel'); if(g) m = g.querySelector('video, img'); }
-      if(!m) return null;
-      const mw = m.videoWidth || m.naturalWidth, mh = m.videoHeight || m.naturalHeight;
-      if(!mw || !mh) return null;
-      const r = m.getBoundingClientRect();
-      if(cx < r.left || cx > r.right || cy < r.top || cy > r.bottom) return null;
-      const s = Math.max(r.width / mw, r.height / mh);
-      const ox = (r.width - mw*s)/2, oy = (r.height - mh*s)/2;
-      const sx = Math.min(mw-2, Math.max(0, (cx - r.left - ox)/s));
-      const sy = Math.min(mh-2, Math.max(0, (cy - r.top  - oy)/s));
-      try{
-        octx.drawImage(m, sx, sy, 2, 2, 0, 0, 2, 2);
-        const d = octx.getImageData(0, 0, 2, 2).data;
-        let L = 0; for(let i = 0; i < d.length; i += 4) L += .2126*d[i] + .7152*d[i+1] + .0722*d[i+2];
-        return L / (d.length / 4);
-      }catch(e){ return null; }
-    }
-    function arkaPlanParlaklik(el){
-      let node = el;
-      while(node && node.nodeType === 1){
-        const bg = getComputedStyle(node).backgroundColor;
-        const m = bg && bg.match(/rgba?\(([^)]+)\)/);
-        if(m){
-          const p = m[1].split(',').map(parseFloat);
-          const a = (p[3] == null) ? 1 : p[3];
-          if(a > 0.15) return .2126*p[0] + .7152*p[1] + .0722*p[2];
-        }
-        node = node.parentElement;
-      }
-      return 240; // varsayilan: acik zemin
-    }
-    let koyuda = false; // histerezis
-    function zeminKoyuMu(cx, cy){
-      const ust = document.elementFromPoint(cx, cy);
-      if(!ust) return koyuda;
-      let L = medyaAltinda(ust, cx, cy);
-      if(L == null) L = arkaPlanParlaklik(ust);
-      if(koyuda){ if(L > 110) koyuda = false; } else { if(L < 70) koyuda = true; }
-      return koyuda;
-    }
     document.addEventListener('mousemove', e=>{
       imlec.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
-      imlec.classList.toggle('acik', zeminKoyuMu(e.clientX, e.clientY));
     }, {passive:true});
 
     let yazTimer = null;
@@ -433,9 +538,14 @@
       imlec.classList.remove('aktif');
       imlecMetin.textContent = '';
     }
-    document.querySelectorAll('.is').forEach(el=>{
-      el.addEventListener('mouseenter', ()=>yaz('EXPLORE'));
-      el.addEventListener('mouseleave', gizle);
+    const bolgeler = [
+      [document.querySelectorAll('.video-blok .ph'), 'PLAY'],
+    ];
+    bolgeler.forEach(([eller, kelime])=>{
+      eller.forEach(el=>{
+        el.addEventListener('mouseenter', ()=>yaz(kelime));
+        el.addEventListener('mouseleave', gizle);
+      });
     });
     document.documentElement.addEventListener('mouseleave', gizle);
   }
