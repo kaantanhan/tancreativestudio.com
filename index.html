@@ -379,7 +379,9 @@
   .isim-listesi li:hover{color:var(--tan)}
 
   /* ---------- SECILMIS ISLER ---------- */
-  .works{padding:clamp(2.2rem, 3.4vw, 3rem) var(--kenar) var(--ritim)}
+  /* Ust padding, clients'in alt padding'iyle aynali: +/- butonu iki bolumun
+     tam ortasinda durur (ustundeki ve altindaki bosluk esit). */
+  .works{padding:clamp(.8rem, 1.6vw, 1.2rem) var(--kenar) var(--ritim)}
   .is-grid{
     display:grid;
     grid-template-columns:repeat(4, minmax(0,1fr));
