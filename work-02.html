@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Paribuart - 9th Anniversary — TAN Creative</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B0B'/%3E%3Ctext x='50' y='72' font-family='Arial,sans-serif' font-size='74' font-weight='800' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Paribuart - 9th Anniversary — TAN Creative proje sayfası.">
+<meta name="description" content="Paribu’nun 9. yılı — Paribu Art ekranları için gerçek zamanlı insan algılamayla çalışan interaktif ekran deneyimi. TAN Creative proje sayfası.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -99,6 +99,16 @@
   nav.open .nav-toggle span:nth-child(2){opacity:0}
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
+  /* ---------- KAPAK USTUNDE NAV ----------
+     Kapak medyasi koyu ise (JS olcer) gorsel uzerindeyken nav/logo beyaz. */
+  nav a{transition:opacity .25s,color .25s,border-color .25s,background .25s}
+  .mini-logo,.nav-toggle span{transition:color .25s,background .25s}
+  body.kapak-ustunde nav a{color:#fff}
+  body.kapak-ustunde nav a.contact{border-color:rgba(255,255,255,.7)}
+  body.kapak-ustunde nav a.contact:hover{background:#fff;color:#0B0B0B}
+  body.kapak-ustunde .mini-logo{color:#fff}
+  body.kapak-ustunde .nav-toggle span{background:#fff}
+
   /* ---------- GERI LINKI ---------- */
   .geri{
     display:inline-block;text-decoration:none;
@@ -112,16 +122,15 @@
   /* ---------- PROJE KAPAK (editoryel spread) ---------- */
   .spread-ust{
     display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    padding:8.5rem var(--kenar) 1.2rem;
+    padding:1.4rem var(--kenar) 1.2rem;
     font-family:var(--font-mono);
     font-size:.66rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
   }
   .spread-ust .geri{margin:0}
-  .spread-syf{color:var(--metin-gri);letter-spacing:.1em}
   .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
-  .spread-gorsel img{width:100%;height:clamp(380px,68vh,760px);object-fit:cover;display:block}
+  .spread-gorsel img{width:100%;height:clamp(440px,78svh,940px);object-fit:cover;display:block}
   /* Kapak gorseli olmayan projelerde placeholder */
-  .spread-gorsel .ph{height:clamp(380px,68vh,760px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
+  .spread-gorsel .ph{height:clamp(440px,78svh,940px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
   .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#B9B6AF}
   .spread-alt{
     display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
@@ -129,8 +138,9 @@
     padding:2.8rem var(--kenar) 3.6rem;
   }
   .spread-h1{
-    font-size:clamp(2.4rem,5vw,4.2rem);font-weight:500;
+    font-size:clamp(2rem,5vw,4.2rem);font-weight:500;
     letter-spacing:-.02em;line-height:1.05;color:var(--siyah);
+    text-wrap:balance;overflow-wrap:break-word;min-width:0;
   }
   .spread-kolonlar{
     max-width:34rem;display:flex;flex-direction:column;
@@ -142,9 +152,8 @@
     .spread-alt{grid-template-columns:1fr;gap:1.4rem}
   }
   @media (max-width:560px){
-    .spread-ust{padding-top:3.4rem}
-    .spread-gorsel img{height:46vh}
-    .spread-gorsel .ph{height:46vh}
+    .spread-gorsel img{height:56svh}
+    .spread-gorsel .ph{height:56svh}
   }
 
   /* ---------- GORSEL BLOKLARI ---------- */
@@ -319,6 +328,11 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
+    /* Koyu kapak uzerinde nav bandi seffaf; menu acilinca krem panel doner */
+    body.kapak-ustunde nav:not(.open){background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+    body.kapak-ustunde nav.open .nav-links a{color:var(--siyah)}
+    body.kapak-ustunde nav.open .nav-toggle span{background:var(--siyah)}
+    body.kapak-ustunde:has(nav.open) .mini-logo{color:var(--siyah)}
     .kunye dl{grid-template-columns:1fr}
     .uclu{grid-template-columns:1fr}
     .ikili{grid-template-columns:1fr}
@@ -345,17 +359,17 @@
 
 <!-- ---------- PROJE KAPAK (editoryel spread) ---------- -->
 <header class="spread">
-  <div class="spread-ust">
-    <a class="geri" href="works.html" lang="en">&larr; All Works</a>
-    <span class="spread-syf">02 / 08</span>
-  </div>
-  <figure class="spread-gorsel reveal">
+  <figure class="spread-gorsel">
     <img src="images/paribuart-kapak-1.jpg" alt="Paribu 9. yıl — İstanbul'da bina cephesinde “PARİBU 9 YAŞINDA” piksel-art kutlaması">
   </figure>
+  <div class="spread-ust">
+    <a class="geri" href="works.html" lang="en">&larr; All Works</a>
+  </div>
   <div class="spread-alt reveal">
     <h1 class="spread-h1" lang="en">Paribuart<br>9th Anniversary</h1>
     <div class="spread-kolonlar">
-      <p>Paribu'nun 9. yaşı için İstanbul'da bina cephesine taşınan kutlama: piksel-art doğum günü sahnesi ve “PARİBU 9 YAŞINDA” LED gösterimi.</p>
+      <p>Paribu’nun 9. yılı için geliştirilen bu proje, markanın dokuz yıllık yolculuğunu izleyicinin katılımıyla dönüşen, etkileşimli bir dijital deneyime taşıyor.</p>
+      <p>Terminal’deki geniş ölçekli Paribu Art ekranları için tasarlanan çalışma; grafik tasarım, hareket, yazılım ve gerçek zamanlı insan algılama teknolojilerini bir araya getiriyor.</p>
     </div>
   </div>
 </header>
@@ -364,8 +378,8 @@
 <section class="metin-blok reveal">
   <h2 class="bolum-ad" lang="en">Overview</h2>
   <div class="govde">
-    <p>Bu projenin tanıtım metni hazırlanıyor. Yakında bu alanda işin kapsamı, yaklaşımı ve sonuçları yer alacak.</p>
-    
+    <p>Ekran karşısındaki ziyaretçilerin hareketleri sistem tarafından algılanıyor ve görsel kompozisyon bu hareketlere anlık olarak tepki veriyor. Böylece izleyici, yalnızca içeriği seyreden bir konumda kalmıyor; görsel anlatının biçimlenmesine doğrudan katılıyor. İnsanların yaklaşması, hareket etmesi ve ekranla kurduğu ilişki, deneyimin her seferinde farklı bir biçimde oluşmasını sağlıyor.</p>
+    <p>Ortaya çıkan çalışma, Paribu’nun geçmişini yalnızca kronolojik bir anlatıyla aktarmak yerine; değişim, büyüme, bağlantı ve birlikte hareket etme kavramları üzerinden yaşayan bir ekran deneyimine dönüştürüyor.</p>
   </div>
 </section>
 
@@ -385,7 +399,8 @@
 <section class="metin-blok reveal">
   <h2 class="bolum-ad" lang="en">Approach</h2>
   <div class="govde">
-    <p>Yaklaşım metni yakında eklenecek.</p>
+    <p>Projede yaratıcı konseptin geliştirilmesi, deneyim kurgusu, etkileşim prensiplerinin belirlenmesi ve sistemin genel kreatif yönlendirmesi Kaan Tanhan tarafından gerçekleştirildi.</p>
+    <p>Görsel üretim ve animasyonlar Paribu Studio ekibiyle iş birliği içinde geliştirildi; interaktif yapının çalışmasını sağlayan yazılım ve motion tracking sistemi ise projenin fiziksel mekânla bütünleşen teknolojik katmanını oluşturdu.</p>
   </div>
 </section>
 
@@ -399,11 +414,11 @@
 <section class="kunye reveal">
   <h2 class="bolum-ad" lang="en">Credits</h2>
   <dl lang="en">
-    <div><dt>Creative Direction</dt><dd>—</dd></div>
-    <div><dt>Design</dt><dd>—</dd></div>
-    <div><dt>Development</dt><dd>—</dd></div>
-    <div><dt>Motion</dt><dd>—</dd></div>
-    <div><dt>Photography</dt><dd>—</dd></div>
+    <div><dt>Creative Direction</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Experience &amp; Interaction Design</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Visual Production &amp; Animation</dt><dd>Paribu Studio &times; TAN Creative</dd></div>
+    <div><dt>Software &amp; Motion Tracking</dt><dd>TAN Creative</dd></div>
+    <div><dt>Client</dt><dd>Paribu</dd></div>
     <div><dt>Production</dt><dd>TAN Creative</dd></div>
   </dl>
 </section>
@@ -444,6 +459,46 @@
       linkler.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> ayarla(false)));
       document.addEventListener('keydown', e=>{ if(e.key==='Escape') ayarla(false); });
     }
+  })();
+
+  // Kapak koyu ise uzerindeyken nav/logo beyaz olsun (parlaklik olcumu)
+  (function(){
+    const kapak = document.querySelector('.spread-gorsel');
+    const medya = kapak ? kapak.querySelector('video, img') : null;
+    if(!kapak) return;
+    let koyu = false;
+    function guncelle(){
+      const r = kapak.getBoundingClientRect();
+      document.body.classList.toggle('kapak-ustunde', koyu && r.bottom > 28);
+    }
+    function olc(){
+      if(!medya) return;
+      try{
+        const mw = medya.videoWidth || medya.naturalWidth;
+        const mh = medya.videoHeight || medya.naturalHeight;
+        if(!mw || !mh) return;
+        const c = document.createElement('canvas');
+        c.width = 64; c.height = 24;
+        const ctx = c.getContext('2d', {willReadFrequently:true});
+        // nav'in dendigi ust bolge: medyanin ust %22'si
+        ctx.drawImage(medya, 0, 0, mw, mh*.22, 0, 0, 64, 24);
+        const d = ctx.getImageData(0, 0, 64, 24).data;
+        let L = 0;
+        for(let i = 0; i < d.length; i += 4) L += .2126*d[i] + .7152*d[i+1] + .0722*d[i+2];
+        L /= d.length/4;
+        koyu = L < 110;
+        guncelle();
+      }catch(e){}
+    }
+    if(medya){
+      if(medya.tagName === 'VIDEO'){
+        if(medya.readyState >= 2) olc(); else medya.addEventListener('loadeddata', olc);
+      }else{
+        if(medya.complete) olc(); else medya.addEventListener('load', olc);
+      }
+    }
+    window.addEventListener('scroll', guncelle, {passive:true});
+    window.addEventListener('resize', guncelle);
   })();
 
   // Ana sayfaya yumusak gecis: logo tiklaninca sicak zemin perdesi belirir, sonra gider

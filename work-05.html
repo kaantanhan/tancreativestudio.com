@@ -99,6 +99,16 @@
   nav.open .nav-toggle span:nth-child(2){opacity:0}
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
+  /* ---------- KAPAK USTUNDE NAV ----------
+     Kapak medyasi koyu ise (JS olcer) gorsel uzerindeyken nav/logo beyaz. */
+  nav a{transition:opacity .25s,color .25s,border-color .25s,background .25s}
+  .mini-logo,.nav-toggle span{transition:color .25s,background .25s}
+  body.kapak-ustunde nav a{color:#fff}
+  body.kapak-ustunde nav a.contact{border-color:rgba(255,255,255,.7)}
+  body.kapak-ustunde nav a.contact:hover{background:#fff;color:#0B0B0B}
+  body.kapak-ustunde .mini-logo{color:#fff}
+  body.kapak-ustunde .nav-toggle span{background:#fff}
+
   /* ---------- GERI LINKI ---------- */
   .geri{
     display:inline-block;text-decoration:none;
@@ -112,16 +122,15 @@
   /* ---------- PROJE KAPAK (editoryel spread) ---------- */
   .spread-ust{
     display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    padding:8.5rem var(--kenar) 1.2rem;
+    padding:1.4rem var(--kenar) 1.2rem;
     font-family:var(--font-mono);
     font-size:.66rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;
   }
   .spread-ust .geri{margin:0}
-  .spread-syf{color:var(--metin-gri);letter-spacing:.1em}
   .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
-  .spread-gorsel img{width:100%;height:clamp(380px,68vh,760px);object-fit:cover;display:block}
+  .spread-gorsel img{width:100%;height:clamp(440px,78svh,940px);object-fit:cover;display:block}
   /* Kapak gorseli olmayan projelerde placeholder */
-  .spread-gorsel .ph{height:clamp(380px,68vh,760px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
+  .spread-gorsel .ph{height:clamp(440px,78svh,940px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
   .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#B9B6AF}
   .spread-alt{
     display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
@@ -129,8 +138,9 @@
     padding:2.8rem var(--kenar) 3.6rem;
   }
   .spread-h1{
-    font-size:clamp(2.4rem,5vw,4.2rem);font-weight:500;
+    font-size:clamp(2rem,5vw,4.2rem);font-weight:500;
     letter-spacing:-.02em;line-height:1.05;color:var(--siyah);
+    text-wrap:balance;overflow-wrap:break-word;min-width:0;
   }
   .spread-kolonlar{
     max-width:34rem;display:flex;flex-direction:column;
@@ -142,9 +152,8 @@
     .spread-alt{grid-template-columns:1fr;gap:1.4rem}
   }
   @media (max-width:560px){
-    .spread-ust{padding-top:3.4rem}
-    .spread-gorsel img{height:46vh}
-    .spread-gorsel .ph{height:46vh}
+    .spread-gorsel img{height:56svh}
+    .spread-gorsel .ph{height:56svh}
   }
 
   /* ---------- GORSEL BLOKLARI ---------- */
@@ -317,6 +326,11 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
+    /* Koyu kapak uzerinde nav bandi seffaf; menu acilinca krem panel doner */
+    body.kapak-ustunde nav:not(.open){background:transparent;border-bottom-color:transparent;-webkit-backdrop-filter:none;backdrop-filter:none}
+    body.kapak-ustunde nav.open .nav-links a{color:var(--siyah)}
+    body.kapak-ustunde nav.open .nav-toggle span{background:var(--siyah)}
+    body.kapak-ustunde:has(nav.open) .mini-logo{color:var(--siyah)}
     .kunye dl{grid-template-columns:1fr}
     .uclu{grid-template-columns:1fr}
     .ikili{grid-template-columns:1fr}
@@ -343,13 +357,12 @@
 
 <!-- ---------- PROJE KAPAK (editoryel spread) ---------- -->
 <header class="spread">
-  <div class="spread-ust">
-    <a class="geri" href="works.html" lang="en">&larr; All Works</a>
-    <span class="spread-syf">05 / 08</span>
-  </div>
-  <figure class="spread-gorsel reveal">
+  <figure class="spread-gorsel">
     <div class="ph"><span class="yakinda-cover">Görsel Yakında</span></div>
   </figure>
+  <div class="spread-ust">
+    <a class="geri" href="works.html" lang="en">&larr; All Works</a>
+  </div>
   <div class="spread-alt reveal">
     <h1 class="spread-h1"><span lang="tr">“Eşik”</span><br><span lang="en">Exhibition</span></h1>
     <div class="spread-kolonlar">
@@ -449,6 +462,46 @@
       linkler.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> ayarla(false)));
       document.addEventListener('keydown', e=>{ if(e.key==='Escape') ayarla(false); });
     }
+  })();
+
+  // Kapak koyu ise uzerindeyken nav/logo beyaz olsun (parlaklik olcumu)
+  (function(){
+    const kapak = document.querySelector('.spread-gorsel');
+    const medya = kapak ? kapak.querySelector('video, img') : null;
+    if(!kapak) return;
+    let koyu = false;
+    function guncelle(){
+      const r = kapak.getBoundingClientRect();
+      document.body.classList.toggle('kapak-ustunde', koyu && r.bottom > 28);
+    }
+    function olc(){
+      if(!medya) return;
+      try{
+        const mw = medya.videoWidth || medya.naturalWidth;
+        const mh = medya.videoHeight || medya.naturalHeight;
+        if(!mw || !mh) return;
+        const c = document.createElement('canvas');
+        c.width = 64; c.height = 24;
+        const ctx = c.getContext('2d', {willReadFrequently:true});
+        // nav'in dendigi ust bolge: medyanin ust %22'si
+        ctx.drawImage(medya, 0, 0, mw, mh*.22, 0, 0, 64, 24);
+        const d = ctx.getImageData(0, 0, 64, 24).data;
+        let L = 0;
+        for(let i = 0; i < d.length; i += 4) L += .2126*d[i] + .7152*d[i+1] + .0722*d[i+2];
+        L /= d.length/4;
+        koyu = L < 110;
+        guncelle();
+      }catch(e){}
+    }
+    if(medya){
+      if(medya.tagName === 'VIDEO'){
+        if(medya.readyState >= 2) olc(); else medya.addEventListener('loadeddata', olc);
+      }else{
+        if(medya.complete) olc(); else medya.addEventListener('load', olc);
+      }
+    }
+    window.addEventListener('scroll', guncelle, {passive:true});
+    window.addEventListener('resize', guncelle);
   })();
 
   // Ana sayfaya yumusak gecis: logo tiklaninca sicak zemin perdesi belirir, sonra gider
