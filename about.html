@@ -34,6 +34,9 @@
   img{display:block;max-width:100%}
   a{color:inherit}
   ::selection{background:var(--tan);color:var(--siyah)}
+  /* Erisilebilir, markaya uygun klavye odak halkasi (yalnizca klavye ile gorunur) */
+  :focus-visible{outline:2px solid var(--siyah);outline-offset:3px;border-radius:2px}
+  :focus:not(:focus-visible){outline:none}
 
   /* ---------- SABIT MINI LOGO + NAV ---------- */
   .mini-logo{

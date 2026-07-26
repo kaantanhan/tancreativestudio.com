@@ -36,6 +36,9 @@
   img{display:block;max-width:100%}
   a{color:inherit}
   ::selection{background:var(--tan);color:var(--siyah)}
+  /* Erisilebilir, markaya uygun klavye odak halkasi (yalnizca klavye ile gorunur) */
+  :focus-visible{outline:2px solid var(--siyah);outline-offset:3px;border-radius:2px}
+  :focus:not(:focus-visible){outline:none}
 
   /* ---------- SABIT MINI LOGO + NAV ---------- */
   .mini-logo{
@@ -131,7 +134,7 @@
   .spread-gorsel img{width:100%;height:clamp(420px,74svh,900px);object-fit:cover;display:block}
   /* Kapak gorseli olmayan projelerde placeholder */
   .spread-gorsel .ph{height:clamp(420px,74svh,900px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
-  .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#B9B6AF}
+  .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#666663}
   .spread-alt{
     display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
     gap:2rem clamp(2rem,5vw,5rem);align-items:start;
@@ -335,14 +338,14 @@
 
 <!-- ---------- VIDEO IKILI 1 ---------- -->
 <div class="gorsel-blok ikili reveal">
-  <figure><video src="images/paribuart-2.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
-  <figure><video src="images/paribuart-3.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+  <figure><video aria-hidden="true" src="images/paribuart-2.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+  <figure><video aria-hidden="true" src="images/paribuart-3.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
 </div>
 
 <!-- ---------- VIDEO IKILI 2 ---------- -->
 <div class="gorsel-blok ikili reveal">
-  <figure><video src="images/paribuart-4.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
-  <figure><video src="images/paribuart-5.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+  <figure><video aria-hidden="true" src="images/paribuart-4.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
+  <figure><video aria-hidden="true" src="images/paribuart-5.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
 </div>
 
 <!-- ---------- APPROACH ---------- -->
