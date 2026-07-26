@@ -181,9 +181,6 @@
     text-transform:uppercase;color:var(--metin-gri);
   }
 
-  /* video blogu: imlec PLAY yazar */
-  .video-blok .ph{position:relative;aspect-ratio:16/8}
-
   /* ---------- BOLUM BASLIKLARI (index dili: kucuk etiket + acik gri cizgi) ---------- */
   .bolum-ad{
     font-family:var(--font);
@@ -221,27 +218,6 @@
   }
   .kunye dd{font-size:.9rem;font-weight:500}
 
-  /* ---------- SONRAKI PROJE ---------- */
-  .sonraki{
-    display:block;text-decoration:none;
-    border-top:1px solid var(--cizgi);
-    padding:4.2rem var(--kenar) 4.6rem;
-    transition:background .35s;
-  }
-  .sonraki:hover{background:#FBF7F1}
-  .sonraki .ust{
-    font-family:var(--font-mono);
-    font-size:.7rem;font-weight:400;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--metin-gri);
-    margin-bottom:.9rem;
-  }
-  .sonraki .ad{
-    font-size:clamp(2rem, 4.6vw, 3.6rem);
-    font-weight:500;letter-spacing:-.02em;line-height:1.05;
-    transition:color .3s;
-  }
-  .sonraki:hover .ad{color:var(--tan)}
-
   /* ---------- FOOTER ---------- */
   footer{
     display:flex;flex-wrap:wrap;
@@ -257,32 +233,6 @@
   footer a:hover{color:var(--tan)}
   footer .telif{letter-spacing:.02em}
   footer .buyuk{text-transform:uppercase}
-
-  /* ---------- OZEL IMLEC ---------- */
-  @media (hover:hover) and (pointer:fine){
-    .video-blok .ph, .sonraki, .sonraki *{cursor:none}
-    #imlec{
-      position:fixed;top:0;left:0;z-index:999;
-      pointer-events:none;
-      transform:translate(-50%,-50%);
-      color:var(--siyah);
-      font-family:var(--font);font-weight:500;font-size:13px;line-height:1;
-      letter-spacing:.14em;white-space:nowrap;
-      opacity:0;transition:opacity .15s, color .18s;
-      will-change:transform;
-    }
-    #imlec.aktif{opacity:1}
-    #imlec #imlecMetin::after{
-      content:'';display:inline-block;
-      width:1px;height:.95em;background:currentColor;
-      margin-left:2px;vertical-align:-.12em;
-      animation:imlecYanip .7s steps(1) infinite;
-    }
-    @keyframes imlecYanip{50%{opacity:0}}
-  }
-  @media (prefers-reduced-motion: reduce){
-    #imlec #imlecMetin::after{animation:none}
-  }
 
   /* ---------- SCROLL REVEAL ---------- */
   .reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}
@@ -423,11 +373,6 @@
   </dl>
 </section>
 
-<!-- ---------- SONRAKI PROJE (imlec: EXPLORE) ---------- -->
-<a class="sonraki" href="work-03.html">
-  <div class="ust" lang="en">Next Project</div>
-  <div class="ad">Allianz - Point Cloud</div>
-</a>
 
 <!-- ---------- FOOTER ---------- -->
 <footer>
@@ -441,8 +386,6 @@
     <a href="https://www.instagram.com/tan.creative.studio/" target="_blank" rel="noopener" class="buyuk">Instagram</a>
   </div>
 </footer>
-
-<div id="imlec" aria-hidden="true"><span id="imlecMetin"></span></div>
 
 <script>
   // Mobil hamburger menu — ac/kapat, link tiklayinca ve ESC ile kapat
@@ -521,44 +464,6 @@
   },{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 
-  // Ozel imlec: video uzerinde PLAY, sonraki proje uzerinde EXPLORE
-  const imlec = document.getElementById('imlec');
-  const imlecMetin = document.getElementById('imlecMetin');
-  const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if(matchMedia('(hover:hover) and (pointer:fine)').matches){
-    document.addEventListener('mousemove', e=>{
-      imlec.style.transform = `translate(${e.clientX}px, ${e.clientY}px) translate(-50%,-50%)`;
-    }, {passive:true});
-
-    let yazTimer = null;
-    function yaz(kelime){
-      clearInterval(yazTimer);
-      imlec.classList.add('aktif');
-      if(azMotion){ imlecMetin.textContent = kelime; return; }
-      imlecMetin.textContent = '';
-      let i = 0;
-      yazTimer = setInterval(()=>{
-        imlecMetin.textContent = kelime.slice(0, ++i);
-        if(i >= kelime.length) clearInterval(yazTimer);
-      }, 45);
-    }
-    function gizle(){
-      clearInterval(yazTimer);
-      imlec.classList.remove('aktif');
-      imlecMetin.textContent = '';
-    }
-    const bolgeler = [
-      [document.querySelectorAll('.video-blok .ph'), 'PLAY'],
-      [document.querySelectorAll('.sonraki'),        'EXPLORE'],
-    ];
-    bolgeler.forEach(([eller, kelime])=>{
-      eller.forEach(el=>{
-        el.addEventListener('mouseenter', ()=>yaz(kelime));
-        el.addEventListener('mouseleave', gizle);
-      });
-    });
-    document.documentElement.addEventListener('mouseleave', gizle);
-  }
 </script>
 
 </body>
