@@ -102,8 +102,9 @@
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
   /* ---------- SAYFA BASLIGI (index/proje sayfalari dili) ---------- */
+  /* Ust bant olabildigince dar: nav'in hemen altinda baslar, isler yukari cikar */
   .works-bas{
-    padding:8.5rem var(--kenar) 2.4rem;
+    padding:5.4rem var(--kenar) 1.1rem;
     border-bottom:1px solid var(--cizgi);
   }
   .works-bas h1{
@@ -113,7 +114,7 @@
   }
 
   /* ---------- IS GRID ---------- */
-  .works-govde{padding:2.4rem var(--kenar) 4.5rem}
+  .works-govde{padding:1.1rem var(--kenar) 4.5rem}
   .is-grid{
     display:grid;
     grid-template-columns:repeat(4, minmax(0,1fr));
@@ -212,7 +213,7 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
-    .works-bas{padding-top:8rem}
+    .works-bas{padding-top:5rem}
     .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
     .is.kare{grid-column:span 2}
     .is.kucuk{grid-column:span 1}
@@ -247,7 +248,7 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
-    .works-bas{padding-top:6.5rem}
+    .works-bas{padding-top:4.2rem}
     .is-grid{grid-template-columns:1fr}
     .is.kare,.is.kucuk{grid-column:1/-1}
   }

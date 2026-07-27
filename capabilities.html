@@ -19,7 +19,6 @@
     --cizgi:#DEDDD9;
     --metin-gri:#6B6B68;
     --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
-    --font-display:'Space Grotesk','Helvetica Neue',Arial,sans-serif;
     --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
     --ritim:clamp(4rem, 7vw, 6.5rem);
@@ -70,11 +69,12 @@
     padding:1.35rem var(--kenar);
   }
   nav a{
-    text-decoration:none;font-family:var(--font-mono);font-size:.72rem;font-weight:500;
+    text-decoration:none;font-family:var(--font-mono);font-size:.74rem;font-weight:500;
     letter-spacing:.02em;color:var(--siyah);
     transition:opacity .25s;
   }
   nav a:hover{opacity:.55}
+  nav a.aktif{opacity:.45}
   nav a.contact{
     border:1px solid var(--siyah);border-radius:999px;
     padding:.42rem 1.15rem;letter-spacing:.04em;
@@ -103,25 +103,20 @@
   nav.open .nav-toggle span:nth-child(2){opacity:0}
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
-  /* ---------- SAYFA BASLIGI (brutalist) ---------- */
+  /* ---------- SAYFA BASLIGI (index/proje sayfalari dili) ---------- */
+  /* Ust bant olabildigince dar: nav'in hemen altinda baslar, icerik yukari cikar */
   .works-bas{
-    padding:9.5rem var(--kenar) 2.6rem;
-    border-bottom:1.5px solid var(--siyah);
-  }
-  .works-bas .ust{
-    display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-    font-family:var(--font-mono);font-size:.66rem;font-weight:400;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--metin-gri);
-    margin-bottom:1.6rem;
+    padding:5.4rem var(--kenar) 1.1rem;
+    border-bottom:1px solid var(--cizgi);
   }
   .works-bas h1{
-    font-family:var(--font-display);font-weight:700;
-    font-size:clamp(4rem,10vw,7.5rem);line-height:.9;
-    letter-spacing:-.02em;text-transform:uppercase;
+    font-weight:500;
+    font-size:clamp(1.5rem,2.2vw,1.9rem);line-height:1.1;
+    letter-spacing:-.01em;
   }
 
   /* ---------- IS GRID ---------- */
-  .works-govde{padding:2.4rem var(--kenar) 4.5rem}
+  .works-govde{padding:1.1rem var(--kenar) 4.5rem}
   .is-grid{
     display:grid;
     grid-template-columns:repeat(4, minmax(0,1fr));
@@ -177,8 +172,8 @@
     justify-content:space-between;align-items:center;
     gap:1.2rem 2.5rem;
     padding:1.6rem var(--kenar) 2rem;
-    border-top:1.5px solid var(--siyah);
-    font-family:var(--font-mono);font-size:.68rem;font-weight:500;letter-spacing:.04em;
+    border-top:1px solid var(--cizgi);
+    font-family:var(--font-mono);font-size:.7rem;font-weight:400;letter-spacing:.04em;
   }
   footer .sol, footer .sag{display:flex;flex-wrap:wrap;gap:2.4rem;align-items:center}
   footer a{text-decoration:none;transition:color .25s}
@@ -220,7 +215,7 @@
 
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
-    .works-bas{padding-top:8rem}
+    .works-bas{padding-top:5rem}
     .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
     .is.kare{grid-column:span 2}
     .is.kucuk{grid-column:span 1}
@@ -255,7 +250,7 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
-    .works-bas{padding-top:6.5rem}
+    .works-bas{padding-top:4.2rem}
     .is-grid{grid-template-columns:1fr}
     .is.kare,.is.kucuk{grid-column:1/-1}
   }
@@ -293,8 +288,8 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="navLinks">
-    <a href="works.html" aria-current="page">Works</a>
-    <a href="index.html#capabilities">Capabilities</a>
+    <a href="works.html">Works</a>
+    <a href="index.html#capabilities" class="aktif" aria-current="page">Capabilities</a>
     <a href="index.html#news">Press</a>
     <a href="about.html">About</a>
     <a class="contact" href="mailto:info@tancreativestudio.com">Contact</a>
@@ -303,7 +298,6 @@
 
 <!-- ---------- BASLIK ---------- -->
 <header class="works-bas">
-  <div class="ust" lang="en"><span>(What We Do)</span><span>03 Disciplines</span></div>
   <h1 lang="en">Capabilities</h1>
 </header>
 
