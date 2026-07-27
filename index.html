@@ -988,10 +988,12 @@
 <!-- ---------- HERO ---------- -->
 <div class="perde">
 <header class="hero">
-  <video class="hero-medya" muted loop playsinline preload="auto" poster="images/akbank-kapak-poster.jpg"
+  <!-- preload=metadata: acilista tum dosya indirilmez, poster hemen gorunur,
+       video faststart ile akarak baslar -> ilk acilis hafif kalir. -->
+  <video class="hero-medya" muted loop playsinline preload="metadata" poster="images/akbank-hero-poster.jpg"
          aria-label="Akbank Sanat “Niyetler 2 / Intentions 2” — İstiklal'de sergi görünümü">
-    <source src="images/akbank-kapak.mp4" type="video/mp4">
-    <img src="images/akbank-kapak-poster.jpg" alt="Akbank Sanat “Niyetler 2 / Intentions 2” — İstiklal'de sergi görünümü">
+    <source src="images/akbank-hero.mp4" type="video/mp4">
+    <img src="images/akbank-hero-poster.jpg" alt="Akbank Sanat “Niyetler 2 / Intentions 2” — İstiklal'de sergi görünümü">
   </video>
 </header>
 

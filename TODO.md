@@ -42,7 +42,8 @@
 - [ ] `sitemap.xml` + `robots.txt` (opsiyonel ama faydalı)
 
 ## 🟡 3. Performans
-- [ ] `images/akbank-kapak.mp4` **6.2 MB** — ana sayfa hero'su, ilk açılışı yavaşlatıyor. Daha agresif sıkıştır (hedef ~2–3 MB) veya daha kısa kes.
+- [x] Ana sayfa hero'su yenilendi: `akbank-hero.mp4` **3.2 MB** (1440×810, iki geçişli). Kaynak 81 MB'tı; 42.6 sn olmasına ragmen eski 21 sn'lik 6.2 MB'lik dosyanin yarisi. `preload=metadata` ile acilis bloklanmiyor.
+- [ ] `images/akbank-kapak.mp4` (6.2 MB) artik yalnizca work-01 kapaginda kullaniliyor — o da yeni dosyaya gecirilirse silinebilir.
 - [ ] Diğer büyük videolar: akbank-3 (2.3 MB), akbank-2 (1.9 MB), paribuart-4 (1.2 MB)
 - [ ] Kullanılmayan dosyaları sil: `images/hero.mp4` (936 KB), `images/hero.jpg` — artık hero videosu akbank-kapak
 - [ ] Videolarda `poster` + `preload` gözden geçir (mobil veri tüketimi)
