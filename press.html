@@ -60,6 +60,25 @@
     .harf{animation:none;font-variation-settings:'wght' 500}
   }
 
+  /* ---------- DIL BUTONU (yalniz dunya ikonu) ----------
+     Dil degisince dunya kendi ekseninde donuyor; yazi yok. */
+  .dil-btn{
+    display:inline-flex;align-items:center;
+    background:none;border:0;padding:0;margin:0;
+    color:inherit;cursor:pointer;line-height:1;
+    transition:opacity .25s;
+  }
+  .dil-btn svg{width:15px;height:15px;flex:none;display:block}
+  .dil-btn:hover{opacity:.6}
+  .dil-btn.donuyor svg{animation:dunyaDon .8s cubic-bezier(.3,.85,.3,1)}
+  @keyframes dunyaDon{ from{transform:rotateY(0)} to{transform:rotateY(360deg)} }
+  @media (prefers-reduced-motion: reduce){
+    .dil-btn.donuyor svg{animation:none}
+  }
+  /* dile gore goster/gizle (icerik cevrildikce devreye girer) */
+  html[lang="tr"] [data-en]{display:none !important}
+  html[lang="en"] [data-tr]{display:none !important}
+
   /* ---------- SABIT MINI LOGO + NAV ---------- */
   .mini-logo{
     position:fixed;top:16px;z-index:60;
@@ -69,7 +88,7 @@
   }
   .mini-logo:hover{color:var(--tan)}
   .mini-logo svg{width:124px;height:auto;display:block}
-  .mini-logo .g-slogan{display:none}
+  .mini-logo .g-slogan,.mini-logo .g-yan{display:none}   /* kucuk formda ® asla gorunmez */
 
   /* Ana sayfaya yumusak gecis: sicak zemin perdesi belirir, sonra gidilir */
   .cikis-perde{
@@ -272,6 +291,11 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:0;
     }
+    .nav-links .dil-btn{
+      align-self:center;
+      margin-top:1.1rem;padding:.5rem .75rem;
+    }
+    .nav-links .dil-btn svg{width:19px;height:19px}
     .works-bas{padding-top:6.5rem}
     .is-grid{grid-template-columns:1fr}
     .is.kare,.is.kucuk{grid-column:1/-1}
@@ -292,41 +316,6 @@
 </head>
 <body>
 <script>
-  // ---------- Degisken-agirlik dalgasi: metni harflere bol ----------
-  // --g (0..1) konum degeri CSS'te negatif animation-delay'e cevrilir.
-  // sabitle=true ise genislikler EN KALIN halde olculup kilitlenir; boylece
-  // dalga sirasinda harfler kaymaz, butonun eni oynamaz.
-  window.tanDalga = function(el, sabitle){
-    if(!el || el.dataset.bolundu) return;
-    const metin = el.textContent;
-    if(!metin.trim()) return;
-    el.dataset.bolundu = '1';
-    const harfler = Array.from(metin);
-    const n = harfler.length;
-    el.textContent = '';
-    harfler.forEach(function(h, i){
-      const s = document.createElement('span');
-      s.className = 'harf';
-      s.textContent = (h === ' ') ? '\u00A0' : h;
-      s.style.setProperty('--g', n ? (i / n) : 0);
-      el.appendChild(s);
-    });
-    if(sabitle && el.getBoundingClientRect().width > 0){
-      el.classList.add('olcum');
-      const enler = Array.from(el.children, function(s){ return s.getBoundingClientRect().width; });
-      el.classList.remove('olcum');
-      Array.from(el.children).forEach(function(s, i){ s.style.width = enler[i].toFixed(2) + 'px'; });
-    }
-  };
-  (function(){
-    function kur(){
-      document.querySelectorAll('nav a.contact').forEach(function(a){ window.tanDalga(a, true); });
-    }
-    const fontHazir = (document.fonts && document.fonts.ready)
-      ? Promise.race([document.fonts.ready, new Promise(function(r){ setTimeout(r, 1500); })])
-      : Promise.resolve();
-    fontHazir.then(kur).catch(function(){ try{ kur(); }catch(e){} });
-  })();
   // Sayfa hep en ustten acilsin: yenilemede tarayicinin eski scroll konumunu
   // geri getirmesini engelle. Cipa (#...) ile gelinmisse dokunma.
   if(!location.hash && 'scrollRestoration' in history){
@@ -336,6 +325,7 @@
       if(e.persisted) window.scrollTo({top:0, left:0, behavior:'instant'});
     });
   }
+
 </script>
 
 <div class="cikis-perde" aria-hidden="true"></div>
@@ -346,10 +336,17 @@
     <span></span><span></span><span></span>
   </button>
   <div class="nav-links" id="navLinks">
-    <a href="works.html" aria-current="page">Works</a>
-    <a href="index.html#capabilities">Capabilities</a>
-    <a href="index.html#news">Press</a>
+    <a href="works.html">Works</a>
+    <a href="capabilities.html">Capabilities</a>
+    <a href="press.html" class="aktif" aria-current="page">Press</a>
     <a href="about.html">About</a>
+    <button type="button" class="dil-btn" id="dilBtn" aria-label="Dil / Language" title="Türkçe / English">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M3 12h18"/>
+        <path d="M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18"/>
+      </svg>
+    </button>
     <a class="contact" href="mailto:info@tancreativestudio.com">Contact</a>
   </div>
 </nav>
@@ -476,6 +473,69 @@
     });
     document.documentElement.addEventListener('mouseleave', gizle);
   }
+  // ---------- Dil butonu (dunya ikonu): TR <-> EN ----------
+  // <html lang> degisir; [data-tr]/[data-en] esleri CSS ile gosterilir/gizlenir.
+  // Tercih 'tan-dil' anahtarinda tutulur -> sayfalar arasi korunur.
+  (function(){
+    const btn = document.getElementById('dilBtn');
+    if(!btn) return;
+    const kok = document.documentElement;
+    function uygula(dil, donsun){
+      kok.setAttribute('lang', dil);
+      btn.setAttribute('aria-label', dil === 'tr'
+        ? 'Dil: Türkçe — İngilizceye geç'
+        : 'Language: English — switch to Turkish');
+      try{ localStorage.setItem('tan-dil', dil); }catch(e){}
+      if(donsun){                      // dunya bir tur atsin
+        btn.classList.remove('donuyor');
+        void btn.offsetWidth;          // animasyonu yeniden tetikle
+        btn.classList.add('donuyor');
+      }
+    }
+    let baslangic = 'tr';
+    try{ const k = localStorage.getItem('tan-dil'); if(k === 'tr' || k === 'en') baslangic = k; }catch(e){}
+    uygula(baslangic, false);
+    btn.addEventListener('click', ()=>{
+      uygula(kok.getAttribute('lang') === 'tr' ? 'en' : 'tr', true);
+    });
+  })();
+
+  // ---------- Degisken-agirlik dalgasi: metni harflere bol ----------
+  // --g (0..1) konum degeri CSS'te negatif animation-delay'e cevrilir.
+  // sabitle=true ise genislikler EN KALIN halde olculup kilitlenir; boylece
+  // dalga sirasinda harfler kaymaz, butonun eni oynamaz.
+  window.tanDalga = function(el, sabitle){
+    if(!el || el.dataset.bolundu) return;
+    const metin = el.textContent;
+    if(!metin.trim()) return;
+    el.dataset.bolundu = '1';
+    const harfler = Array.from(metin);
+    const n = harfler.length;
+    el.textContent = '';
+    harfler.forEach(function(h, i){
+      const s = document.createElement('span');
+      s.className = 'harf';
+      s.textContent = (h === ' ') ? '\u00A0' : h;
+      s.style.setProperty('--g', n ? (i / n) : 0);
+      el.appendChild(s);
+    });
+    if(sabitle && el.getBoundingClientRect().width > 0){
+      el.classList.add('olcum');
+      const enler = Array.from(el.children, function(s){ return s.getBoundingClientRect().width; });
+      el.classList.remove('olcum');
+      Array.from(el.children).forEach(function(s, i){ s.style.width = enler[i].toFixed(2) + 'px'; });
+    }
+  };
+  (function(){
+    function kur(){
+      document.querySelectorAll('nav a.contact').forEach(function(a){ window.tanDalga(a, true); });
+    }
+    const fontHazir = (document.fonts && document.fonts.ready)
+      ? Promise.race([document.fonts.ready, new Promise(function(r){ setTimeout(r, 1500); })])
+      : Promise.resolve();
+    fontHazir.then(kur).catch(function(){ try{ kur(); }catch(e){} });
+  })();
+
 </script>
 
 </body>
