@@ -281,14 +281,37 @@
   }
   .bolum-bas .bolum-ad{flex:1;min-width:0}
   /* "hepsini gor" — kucuk pill buton (TAN buton dili), hover'da tan dolar */
+  /* Kosegen kutu + cercevede donen ince tan iz: buton beklerken de kendini
+     belli eder. Cerceve CSS border, hareketli parca SVG (pathLength=100 ile
+     buton genisligi ne olursa olsun ayni hizda doner). */
   .bolum-link{
-    display:inline-flex;align-items:center;gap:.5rem;
+    position:relative;
+    display:inline-flex;align-items:center;gap:.55rem;
     font-family:var(--font-mono);
     font-size:.66rem;font-weight:400;letter-spacing:.12em;text-transform:uppercase;
     color:var(--siyah);text-decoration:none;white-space:nowrap;
-    border:1px solid var(--siyah);border-radius:999px;
-    padding:.6rem 1.25rem;
+    border:1px solid var(--siyah);border-radius:0;
+    padding:.62rem 1.3rem;
     transition:background .3s cubic-bezier(.2,.7,.2,1),border-color .3s,color .3s;
+  }
+  .bolum-link > span{position:relative}
+  .bolum-link .iz{
+    position:absolute;left:-1px;top:-1px;
+    width:calc(100% + 2px);height:calc(100% + 2px);
+    overflow:visible;pointer-events:none;
+  }
+  .bolum-link .iz rect{
+    fill:none;stroke:var(--tan);stroke-width:1.6;
+    vector-effect:non-scaling-stroke;
+    stroke-dasharray:13 87;
+    animation:izDolan 6s linear infinite;
+  }
+  @keyframes izDolan{ from{stroke-dashoffset:0} to{stroke-dashoffset:-100} }
+  /* Uzerine gelince zaten fark edildi — iz durur, dolgu devralir */
+  .bolum-link:hover .iz{opacity:0}
+  .bolum-link .iz{transition:opacity .25s}
+  @media (prefers-reduced-motion: reduce){
+    .bolum-link .iz rect{animation:none;stroke-dasharray:none;opacity:.5}
   }
   .bolum-link .ok{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
   .bolum-link:hover{background:var(--tan);border-color:var(--tan);color:var(--siyah)}
@@ -942,7 +965,7 @@
 <!-- ---------- SECILMIS ISLER ---------- -->
 <section class="works reveal" id="works">
   <div class="bolum-bas">
-    <h2 class="bolum-ad" data-no="02" lang="en">Selected Works</h2>    <a class="bolum-link" href="works.html" lang="en">View All <span class="ok" aria-hidden="true">&rarr;</span></a>
+    <h2 class="bolum-ad" data-no="02" lang="en">Selected Works</h2>    <a class="bolum-link" href="works.html" lang="en"><svg class="iz" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 40"><rect x="0" y="0" width="100" height="40" pathLength="100"/></svg><span>View All</span> <span class="ok" aria-hidden="true">&rarr;</span></a>
   </div>
 
   <div class="is-grid">
@@ -961,7 +984,7 @@
 <!-- ---------- SERVICES ---------- -->
 <section class="services reveal" id="capabilities">
   <div class="bolum-bas">
-    <h2 class="bolum-ad" data-no="03" lang="en">Capabilities</h2>    <a class="bolum-link" href="capabilities.html" lang="en">More Detail <span class="ok" aria-hidden="true">&rarr;</span></a>
+    <h2 class="bolum-ad" data-no="03" lang="en">Capabilities</h2>    <a class="bolum-link" href="capabilities.html" lang="en"><svg class="iz" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 40"><rect x="0" y="0" width="100" height="40" pathLength="100"/></svg><span>More Detail</span> <span class="ok" aria-hidden="true">&rarr;</span></a>
   </div>
   <ul class="hizmetler">
     <li class="hizmet">
@@ -994,7 +1017,7 @@
 <!-- ---------- BASIN / PRESS ---------- -->
 <section class="press reveal" id="news">
   <div class="bolum-bas">
-    <h2 class="bolum-ad" data-no="04" lang="en">Press</h2>    <a class="bolum-link" href="press.html" lang="en">Read All <span class="ok" aria-hidden="true">&rarr;</span></a>
+    <h2 class="bolum-ad" data-no="04" lang="en">Press</h2>    <a class="bolum-link" href="press.html" lang="en"><svg class="iz" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 100 40"><rect x="0" y="0" width="100" height="40" pathLength="100"/></svg><span>Read All</span> <span class="ok" aria-hidden="true">&rarr;</span></a>
   </div>
   <div class="press-grid">
     <a class="haber" href="press-01.html">
