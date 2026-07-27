@@ -38,6 +38,23 @@
   :focus-visible{outline:2px solid var(--siyah);outline-offset:3px;border-radius:2px}
   :focus:not(:focus-visible){outline:none}
 
+  /* ---------- DEGISKEN-AGIRLIK DALGASI (butonlar + imlec) ----------
+     Gecikme TAM bir dongu boyunca yayilir -> kalin tepe soldan saga iler. */
+  .harf{
+    display:inline-block;
+    font-variation-settings:'wght' 700;
+    animation:harfDalga 3s ease-in-out infinite;
+    animation-delay:calc(var(--g) * -3s);
+  }
+  @keyframes harfDalga{
+    0%,100%{font-variation-settings:'wght' 700}
+    50%    {font-variation-settings:'wght' 400}
+  }
+  .olcum .harf{animation:none;width:auto}
+  @media (prefers-reduced-motion: reduce){
+    .harf{animation:none;font-variation-settings:'wght' 500}
+  }
+
   /* ---------- SABIT MINI LOGO + NAV ---------- */
   .mini-logo{
     position:fixed;top:16px;z-index:60;
@@ -74,7 +91,7 @@
   nav a:hover{opacity:.55}
   nav a.aktif{opacity:.45}
   nav a.contact{
-    border:1px solid var(--siyah);border-radius:999px;
+    border:1px solid var(--siyah);border-radius:0;
     padding:.42rem 1.15rem;
     transition:background .25s,color .25s;
   }
@@ -220,7 +237,7 @@
     display:inline-flex;align-items:center;gap:.7rem;text-decoration:none;
     background:var(--siyah);color:var(--beyaz);
     font-size:1.08rem;font-weight:500;letter-spacing:.01em;
-    padding:1.2rem 3rem;border-radius:999px;white-space:nowrap;
+    padding:1.2rem 3rem;border-radius:0;white-space:nowrap;
     transition:transform .3s cubic-bezier(.2,.7,.2,1),background .3s;
   }
   .alt-cta a.btn .ok{display:inline-block;color:var(--tan);animation:ctaOk 1.9s ease-in-out infinite}
@@ -228,7 +245,7 @@
   .alt-cta a.btn::before,
   .alt-cta a.btn::after{
     content:"";position:absolute;inset:0;z-index:-1;
-    border-radius:999px;border:1.5px solid var(--tan);
+    border-radius:0;border:1.5px solid var(--tan);
     animation:ctaNabiz 2.6s cubic-bezier(.2,.6,.3,1) infinite;
     pointer-events:none;
   }
@@ -369,7 +386,7 @@
     }
     .nav-links a.contact{
       margin-top:.9rem;text-align:center;
-      padding:.85rem 1.15rem;border-radius:999px;
+      padding:.85rem 1.15rem;border-radius:0;
     }
     /* Dil secici: panelde ust satirda ortali */
     .nav-links .dil{
@@ -393,6 +410,44 @@
 </head>
 <body>
 <script>
+  // ---------- Degisken-agirlik dalgasi: metni harflere bol ----------
+  // --g (0..1) konum degeri CSS'te negatif animation-delay'e cevrilir.
+  // sabitle=true ise genislikler EN KALIN halde olculup kilitlenir; boylece
+  // dalga sirasinda harfler kaymaz, butonun eni oynamaz.
+  window.tanDalga = function(el, sabitle){
+    if(!el || el.dataset.bolundu) return;
+    const metin = el.textContent;
+    if(!metin.trim()) return;
+    el.dataset.bolundu = '1';
+    const harfler = Array.from(metin);
+    const n = harfler.length;
+    el.textContent = '';
+    harfler.forEach(function(h, i){
+      const s = document.createElement('span');
+      s.className = 'harf';
+      s.textContent = (h === ' ') ? '\u00A0' : h;
+      s.style.setProperty('--g', n ? (i / n) : 0);
+      el.appendChild(s);
+    });
+    if(sabitle && el.getBoundingClientRect().width > 0){
+      el.classList.add('olcum');
+      const enler = Array.from(el.children, function(s){ return s.getBoundingClientRect().width; });
+      el.classList.remove('olcum');
+      Array.from(el.children).forEach(function(s, i){ s.style.width = enler[i].toFixed(2) + 'px'; });
+    }
+  };
+  (function(){
+    function kur(){
+      document.querySelectorAll('nav a.contact').forEach(function(a){ window.tanDalga(a, true); });
+      // CTA: iki dil varyanti da bolunur; gizli olan olculemedigi icin
+      // genislik kilidi gorundugunde uygulanir (dil degisiminde tekrar denenir).
+      document.querySelectorAll('.alt-cta a.btn > span:not(.ok)').forEach(function(s){ window.tanDalga(s, true); });
+    }
+    const fontHazir = (document.fonts && document.fonts.ready)
+      ? Promise.race([document.fonts.ready, new Promise(function(r){ setTimeout(r, 1500); })])
+      : Promise.resolve();
+    fontHazir.then(kur).catch(function(){ try{ kur(); }catch(e){} });
+  })();
   // Sayfa hep en ustten acilsin: yenilemede tarayicinin eski scroll konumunu
   // geri getirmesini engelle. Cipa (#...) ile gelinmisse dokunma.
   if(!location.hash && 'scrollRestoration' in history){
