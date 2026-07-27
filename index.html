@@ -38,6 +38,7 @@
     --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
     --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
+    --logo-en:150px;   /* kuculmus TAN — ic sayfalardaki .mini-logo ile ayni */
     --ritim:clamp(4rem, 7vw, 6.5rem);   /* bolumler arasi tutarli dikey nefes */
 
     /* Tip olcegi — dagInIk font-size'lar tek bir sisteme oturtuldu */
@@ -1358,9 +1359,16 @@
   const yer  = document.getElementById('logoYer');
   const sloganG = logo.querySelector('.g-slogan');
   const yanG = [...logo.querySelectorAll('.g-yan')]; // CREATIVE + © (kuculurken solar)
-  const HEDEF_OLCEK = matchMedia('(max-width:560px)').matches ? .42 : .20;
   const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let px0=0, py0=0, hx=0, hy=16, s0=0, s1=1;
+  // Kucuk halin hedefi ic sayfalardaki .mini-logo ile birebir ayni olsun:
+  // sol = var(--kenar), ust = 20px, gorunen svg genisligi = var(--logo-en).
+  // Degerler token'lardan olculur; token degisirse hiza kendiliginden uyar.
+  const olcuc = document.createElement('div');
+  olcuc.style.cssText = 'position:absolute;top:-9999px;left:0;height:0;visibility:hidden';
+  document.body.appendChild(olcuc);
+  function tokenPx(deger){ olcuc.style.width = deger; return olcuc.getBoundingClientRect().width; }
+  let hedefOlcek = .20;
+  let px0=0, py0=0, hx=0, hy=20, s0=0, s1=1;
   let sp = 0;        // yumusatilmis gecis ilerlemesi (0..1)
   let ilk = true;
 
@@ -1368,7 +1376,10 @@
     const r = yer.getBoundingClientRect();
     px0 = r.left + window.scrollX;
     py0 = r.top  + window.scrollY;
-    hx = Math.max(16, window.innerWidth * .015);
+    hx = tokenPx('var(--kenar)');
+    hy = matchMedia('(max-width:560px)').matches ? 16 : 20;
+    const svgEn = yer.querySelector('svg').getBoundingClientRect().width;
+    hedefOlcek = svgEn ? tokenPx('var(--logo-en)') / svgEn : .20;
     const baslik = document.querySelector('.clients h2');
     const baslikTop = baslik.getBoundingClientRect().top + window.scrollY;
     // Kuculme, logonun ustu viewport ustune (y=0) dayandigi an baslar.
@@ -1391,7 +1402,7 @@
     const ax = px0, ay = py0 - Math.min(y, s0); // gecis baslangicinda sabitlenen nokta
     const dx = ax + (hx - ax)*sp;
     const dy = ay + (hy - ay)*sp;
-    const ds = 1 + (HEDEF_OLCEK - 1)*sp;
+    const ds = 1 + (hedefOlcek - 1)*sp;
     logo.style.transform = `translate(${dx}px, ${dy}px) scale(${ds})`;
     // Intro tamamlanana kadar CREATIVE/©/tagline gizli; sonra ~450ms'de yumusakca belir
     const ok = window.__introOK;
