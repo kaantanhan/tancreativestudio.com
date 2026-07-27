@@ -209,9 +209,19 @@
   .is:hover .gorsel::after{opacity:.05}
   /* Gorseli henuz gelmemis isler: dolu gri kutu yerine hatla cizilmis alan.
      Boylece bos kutular sayfayi bastirmaz, zemin isin arasindan akar. */
-  .is.bos .gorsel{background:var(--zemin);box-shadow:inset 0 0 0 1px var(--cizgi)}
-  .is.bos:hover .gorsel{box-shadow:inset 0 0 0 1px var(--siyah)}
+  .is.bos .gorsel{box-shadow:inset 0 0 0 1px rgba(11,11,11,.05)}
+  .is.bos:hover .gorsel{box-shadow:inset 0 0 0 1px rgba(11,11,11,.18)}
   .is.bos .gorsel::after{display:none}
+  /* Gorsel gelene kadar her is kendi sessiz tonunu tasir */
+  .y3 .gorsel{background:#C9B8A3}   /* Emaar — kum */
+  .y4 .gorsel{background:#A6472F}   /* YKKS — Koc kirmizisinin tozlusu */
+  .y5 .gorsel{background:#3E3A33}   /* Les Benjamins — koyu haki */
+  .y6 .gorsel{background:#8A93A6}   /* Borusan Sanat — puslu mavi */
+  .y7 .gorsel{background:#5C6660}   /* Borusan Contemporary — cam yesili */
+  .y8 .gorsel{background:#2E2C29}   /* Burtynsky — komur */
+  .y9 .gorsel{background:#B98F63}   /* IRHM — tarcin */
+  .y5 .yakinda,.y7 .yakinda,.y8 .yakinda{color:rgba(255,255,255,.55)}
+  .y4 .yakinda,.y6 .yakinda{color:rgba(255,255,255,.7)}
   .yakinda{
     font-family:var(--font-mono);font-size:.6rem;font-weight:400;
     letter-spacing:.14em;text-transform:uppercase;color:var(--metin-gri);
