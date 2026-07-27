@@ -294,21 +294,24 @@
     padding:.62rem 1.3rem;
     transition:background .3s cubic-bezier(.2,.7,.2,1),border-color .3s,color .3s;
   }
-  .bolum-link .harf{
+  /* ---------- DEGISKEN-AGIRLIK DALGASI (butonlar + imlec) ----------
+     Gecikme TAM bir dongu boyunca yayilir: boylece kalin tepe surekli
+     soldan saga iler (yarim dongude yon degistirip nefes alir gibi olurdu). */
+  .harf{
     display:inline-block;
     font-variation-settings:'wght' 700;
     animation:harfDalga 3s ease-in-out infinite;
-    animation-delay:calc(var(--g) * -1.5s);
+    animation-delay:calc(var(--g) * -3s);
   }
   @keyframes harfDalga{
     0%,100%{font-variation-settings:'wght' 700}
     50%    {font-variation-settings:'wght' 400}
   }
   /* Olcum ani: en kalin halde genislikler alinir, sonra sabitlenir ->
-     dalga sirasinda harfler yerinden oynamaz, buton eni sabit kalir. */
-  .bolum-link .yazi.olcum .harf{animation:none;width:auto}
+     dalga sirasinda harfler yerinden oynamaz, butonun eni sabit kalir. */
+  .olcum .harf{animation:none;width:auto}
   @media (prefers-reduced-motion: reduce){
-    .bolum-link .harf{animation:none;font-variation-settings:'wght' 500}
+    .harf{animation:none;font-variation-settings:'wght' 500}
   }
   .bolum-link .ok{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
   .bolum-link:hover{background:var(--tan);border-color:var(--tan);color:var(--siyah)}
@@ -1657,7 +1660,7 @@
           const s = document.createElement('span');
           s.className = 'harf';
           s.textContent = (h === ' ') ? ' ' : h;
-          s.style.setProperty('--g', n > 1 ? (i / (n - 1)) : 0);
+          s.style.setProperty('--g', n ? (i / n) : 0);
           etiket.appendChild(s);
         });
         // olcum: animasyon kapali + en kalin durum
