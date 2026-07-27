@@ -237,7 +237,11 @@
     transition:color .3s;
   }
   .is .baslik::after{
-    content:"↗";font-size:.72em;
+    content:"";
+    width:.6em;height:.6em;flex:none;align-self:center;
+    background:currentColor;
+    -webkit-mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%203H21V17H17V9.83L5.83%2021L3%2018.17L14.17%207H7Z%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
+            mask:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M7%203H21V17H17V9.83L5.83%2021L3%2018.17L14.17%207H7Z%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat;
     opacity:0;transform:translateX(-.3rem);
     transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1);
   }
