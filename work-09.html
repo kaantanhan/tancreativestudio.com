@@ -21,7 +21,7 @@
     --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
     --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
     --kenar:2.2vw;
-    --logo-en:124px;   /* mini logo svg kutusu */
+    --logo-en:150px;   /* mini logo svg kutusu */
     --fs-label:.74rem; /* bolum basliklari — index ile ayni */
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -79,8 +79,8 @@
 
   /* ---------- SABIT MINI LOGO + NAV ---------- */
   .mini-logo{
-    position:fixed;top:23.5px;z-index:60;
-    left:max(16px, 1.5vw);
+    position:fixed;top:20px;z-index:60;
+    left:var(--kenar);
     display:block;line-height:0;color:var(--siyah);
     transition:color .25s;
   }
@@ -94,10 +94,10 @@
      hiza bozulmaz. */
   .sayfa-adi{
     position:fixed;z-index:60;
-    top:calc(23.5px + .62rem);
-    left:calc(max(16px, 1.5vw) + var(--logo-en) * .645 + .16rem);
+    top:calc(20px + var(--logo-en) * .08);
+    left:calc(var(--kenar) + var(--logo-en) * .645 + .16rem);
     font-family:var(--font-mono);
-    font-size:1.26rem;font-weight:400;letter-spacing:.01em;line-height:1;
+    font-size:1.55rem;font-weight:400;letter-spacing:.01em;line-height:1;
     color:var(--siyah);white-space:nowrap;pointer-events:none;
     transition:color .25s;
   }
@@ -120,7 +120,7 @@
   nav a{
     text-decoration:none;font-family:var(--font-mono);
     font-size:.74rem;font-weight:500;
-    letter-spacing:.02em;color:var(--siyah);
+    letter-spacing:.05em;text-transform:uppercase;color:var(--siyah);
     transition:opacity .25s;
   }
   nav a:hover{opacity:.55}
