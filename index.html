@@ -503,7 +503,7 @@
     position:relative;
     display:grid;
     grid-template-columns:repeat(6, minmax(0,1fr));
-    row-gap:clamp(4.5rem,7vw,8rem);
+    row-gap:clamp(3rem,4.4vw,5rem);   /* giriste isler daha yakin; works.html'de genis kalir */
     --oluk:clamp(.8rem,1.1vw,1.3rem);
   }
   /* Dikey hatlar — works sayfasiyla ayni dil; grid alanina kilitli */
@@ -586,7 +586,7 @@
     margin-top:.3rem;max-width:36rem;min-height:3em; /* 2 satir: cift kartlarda meta yuksekligi esit kalsin */
     font-size:clamp(.88rem,1vw,.98rem);line-height:1.5;color:var(--metin-gri);
   }
-  .is .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.85rem}
+  .is .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.5rem}
   .is .rozet{
     font-family:var(--font-mono);font-size:.6rem;font-weight:400;
     letter-spacing:.1em;text-transform:uppercase;
