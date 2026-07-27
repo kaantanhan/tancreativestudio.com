@@ -165,12 +165,29 @@
   }
 
   /* ---------- IS GRID ---------- */
-  .works-govde{padding:1.1rem var(--kenar) 7rem}
+  .works-govde{position:relative;padding:1.1rem var(--kenar) 7rem}
+
+  /* ---------- DIKEY HATLAR ----------
+     Ic alan ucte bire bolunur: kolon sinirlarinda duz, ara noktalarda
+     kesik hatlar. Kartlar bu hatlara kilitlenir; hat, kartin ustunde ve
+     altindaki boslukta gorunur kalir. */
+  .hatlar{
+    position:absolute;top:0;bottom:0;left:var(--kenar);right:var(--kenar);
+    pointer-events:none;z-index:0;
+  }
+  .hatlar i{position:absolute;top:0;bottom:0;width:1px;background:rgba(11,11,11,.08)}
+  .hatlar i.kesik{
+    background:repeating-linear-gradient(180deg,
+      rgba(11,11,11,.11) 0 3px, transparent 3px 9px);
+  }
+  .h-0{left:0}.h-33{left:33.333%}.h-66{left:66.667%}.h-100{left:auto;right:0}
+  .h-16{left:16.667%}.h-50{left:50%}.h-83{left:83.333%}
+
   .is-grid{
+    position:relative;z-index:1;
     display:grid;
-    grid-template-columns:repeat(12, minmax(0,1fr));
-    column-gap:clamp(1.3rem,2.1vw,2.6rem);
-    row-gap:clamp(3rem,5.5vw,6.5rem);
+    grid-template-columns:repeat(6, minmax(0,1fr));
+    row-gap:clamp(4.5rem,7vw,8rem);
     align-items:start;
   }
   .is{text-decoration:none;color:inherit;display:block}
@@ -192,7 +209,7 @@
   .is:hover .gorsel::after{opacity:.05}
   /* Gorseli henuz gelmemis isler: dolu gri kutu yerine hatla cizilmis alan.
      Boylece bos kutular sayfayi bastirmaz, zemin isin arasindan akar. */
-  .is.bos .gorsel{background:transparent;box-shadow:inset 0 0 0 1px var(--cizgi)}
+  .is.bos .gorsel{background:var(--zemin);box-shadow:inset 0 0 0 1px var(--cizgi)}
   .is.bos:hover .gorsel{box-shadow:inset 0 0 0 1px var(--siyah)}
   .is.bos .gorsel::after{display:none}
   .yakinda{
@@ -201,57 +218,51 @@
     opacity:.55;transition:opacity .3s;
   }
   .is.bos:hover .yakinda{opacity:.9}
-  .is .etiket{
+  .is .baslik{
     position:relative;
-    display:flex;align-items:center;gap:.4rem;
-    margin-top:.7rem;
-    font-family:var(--font-mono);font-size:var(--fs-label);font-weight:500;
-    letter-spacing:.1em;text-transform:uppercase;
-    transition:color .3s,transform .3s cubic-bezier(.2,.7,.2,1);
+    display:flex;align-items:baseline;gap:.45rem;
+    margin-top:1rem;
+    font-size:clamp(1.1rem,1.45vw,1.5rem);font-weight:500;
+    letter-spacing:-.015em;line-height:1.2;
+    transition:color .3s;
   }
-  .is .etiket::after{
-    content:"↗";font-size:.8em;
+  .is .baslik::after{
+    content:"↗";font-size:.72em;
     opacity:0;transform:translateX(-.3rem);
     transition:opacity .3s,transform .3s cubic-bezier(.2,.7,.2,1);
   }
-  .is:hover .etiket{color:var(--tan);transform:translateX(.15rem)}
-  .is:hover .etiket::after{opacity:1;transform:translateX(0)}
-  /* ---------- YERLESIM ----------
-     Her is kendi sutun araligini ve dusey kaymasini tasir. Bos birakilan
-     sutunlar tesaduf degil: agirlik sirayla sola-saga kayiyor, aradaki
-     bosluk isleri birbirinden ayiran nefes oluyor. */
-  .y1{grid-column:1/8}                    .y1 .gorsel{aspect-ratio:16/10}
-  .y2{grid-column:9/13;margin-top:12vw}   .y2 .gorsel{aspect-ratio:3/4}
-  .y3{grid-column:3/13}                   .y3 .gorsel{aspect-ratio:21/9}
-  .y4{grid-column:1/6}                    .y4 .gorsel{aspect-ratio:4/5}
-  .y5{grid-column:7/11;margin-top:9vw}    .y5 .gorsel{aspect-ratio:1/1}
-  .y6{grid-column:2/7;margin-top:5vw}     .y6 .gorsel{aspect-ratio:4/3}
-  .y7{grid-column:8/13}                   .y7 .gorsel{aspect-ratio:4/3}
-  .y8{grid-column:1/9}                    .y8 .gorsel{aspect-ratio:16/9}
-  .y9{grid-column:10/13;margin-top:7vw}   .y9 .gorsel{aspect-ratio:3/4}
-
-  /* Orta genislik: 6 sutuna iner, kayma korunur */
-  @media (max-width:1100px){
-    .is-grid{grid-template-columns:repeat(6,minmax(0,1fr));row-gap:clamp(2.4rem,5vw,4.2rem)}
-    .y1{grid-column:1/5}
-    .y2{grid-column:5/7;margin-top:11vw}
-    .y3{grid-column:2/7}
-    .y4{grid-column:1/4}
-    .y5{grid-column:4/7;margin-top:8vw}
-    .y6{grid-column:1/4;margin-top:0}
-    .y7{grid-column:4/7}
-    .y8{grid-column:1/5}
-    .y9{grid-column:5/7;margin-top:7vw}
+  .is:hover .baslik{color:var(--tan)}
+  .is:hover .baslik::after{opacity:1;transform:translateX(0)}
+  .is .ozet{
+    margin-top:.3rem;max-width:36rem;
+    font-size:clamp(.88rem,1vw,.98rem);line-height:1.5;
+    color:var(--metin-gri);
   }
-  /* Dar ekran: tek sutun, kayma yok — bosluk dusey ritme doner */
-  @media (max-width:700px){
-    .is-grid{grid-template-columns:1fr;row-gap:2.3rem}
-    .is-grid > .is{grid-column:1/-1;margin-top:0}
-    .y1 .gorsel,.y6 .gorsel,.y7 .gorsel,.y8 .gorsel{aspect-ratio:4/3}
-    .y3 .gorsel{aspect-ratio:16/9}
-    .y2 .gorsel,.y9 .gorsel{aspect-ratio:3/4}
-    .y4 .gorsel{aspect-ratio:4/5}
-    .y5 .gorsel{aspect-ratio:1/1}
+  .is .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.85rem}
+  .is .rozet{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:400;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:.32rem .6rem;border:1px solid var(--cizgi);
+    color:var(--metin-gri);
+  }
+  /* ---------- YERLESIM ----------
+     Her is kendi satirinda; genislik ya tam ya ucte iki. Ucte ikilikler
+     sirayla sola, ortaya, saga oturur — kenarlar dikey hatlarla cakisir. */
+  .is .gorsel{aspect-ratio:16/9}
+  .y1{grid-column:1/-1}
+  .y2{grid-column:3/7}
+  .y3{grid-column:1/-1}
+  .y4{grid-column:1/5}
+  .y5{grid-column:2/6}
+  .y6{grid-column:3/7}
+  .y7{grid-column:1/5}
+  .y8{grid-column:1/-1}
+  .y9{grid-column:2/6}
+
+  @media (max-width:900px){
+    .is-grid{row-gap:3.2rem}
+    .is-grid > .is{grid-column:1/-1}
+    .hatlar i.kesik{display:none}
   }
 
   /* ---------- FOOTER ---------- */
@@ -389,19 +400,74 @@
 
 <!-- ---------- TUM ISLER ---------- -->
 <main class="works-govde">
+  <div class="hatlar" aria-hidden="true">
+    <i class="h-0"></i><i class="h-33"></i><i class="h-66"></i><i class="h-100"></i>
+    <i class="kesik h-16"></i><i class="kesik h-50"></i><i class="kesik h-83"></i>
+  </div>
   <div class="is-grid">
-    <a class="is y1 reveal" href="work-01.html"><div class="gorsel"><video src="images/akbank-kapak-loop.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div><div class="etiket" lang="tr">Akbank Sanat - Niyetler 2</div></a>
-    <a class="is y2 reveal" href="work-02.html"><div class="gorsel"><img src="images/paribuart-kapak-1.jpg" alt="Paribuart — 9th Anniversary"></div><div class="etiket" lang="en">Paribuart - 9th Anniversary</div></a>
-
-    <a class="is bos y3 reveal" href="work-03.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Emaar - Artbox</div></a>
-
-    <a class="is bos y4 reveal" href="work-04.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr">YKKS - Koç 100. Yıl</div></a>
-    <a class="is bos y5 reveal" href="work-05.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Les Benjamins - Vitrin</div></a>
-    <a class="is bos y6 reveal" href="work-06.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Sanat - Visual</div></a>
-    <a class="is bos y7 reveal" href="work-07.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Contemporary - Visual</div></a>
-
-    <a class="is bos y8 reveal" href="work-08.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Contemporary - Edward Burtynsky</div></a>
-    <a class="is bos y9 reveal" href="work-09.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr">İRHM - Temsil ve Hafıza</div></a>
+    <a class="is y1 reveal" href="work-01.html">
+      <div class="gorsel"><video src="images/akbank-kapak-loop.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div>
+      <div class="baslik" lang="tr">Akbank Sanat - Niyetler 2</div>
+      <p class="ozet" data-tr>Niyetler 2 / Intentions 2 sergisi için İstiklal’de hareketli mekân grafikleri.</p>
+      <p class="ozet" data-en lang="en">Motion graphics for the Intentions 2 exhibition on İstiklal.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Exhibition</span><span class="rozet" lang="en">Istanbul</span></div>
+    </a>
+    <a class="is y2 reveal" href="work-02.html">
+      <div class="gorsel"><img src="images/paribuart-kapak-1.jpg" alt="Paribuart — 9th Anniversary"></div>
+      <div class="baslik" lang="en">Paribuart - 9th Anniversary</div>
+      <p class="ozet" data-tr>Paribu’nun 9. yılı için interaktif ekran deneyimi.</p>
+      <p class="ozet" data-en lang="en">An interactive screen experience for Paribu’s 9th anniversary.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Interactive</span><span class="rozet" lang="en">Istanbul</span></div>
+    </a>
+    <a class="is bos y3 reveal" href="work-03.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="en">Emaar - Artbox</div>
+      <p class="ozet" data-tr>Artbox için dijital sanat içeriği.</p>
+      <p class="ozet" data-en lang="en">Digital art content for Artbox.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Digital Art</span></div>
+    </a>
+    <a class="is bos y4 reveal" href="work-04.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="tr">YKKS - Koç 100. Yıl</div>
+      <p class="ozet" data-tr>Koç Topluluğu’nun 100. yılı için sergi medyası.</p>
+      <p class="ozet" data-en lang="en">Exhibition media for the Koç Group centennial.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Exhibition</span></div>
+    </a>
+    <a class="is bos y5 reveal" href="work-05.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="en">Les Benjamins - Vitrin</div>
+      <p class="ozet" data-tr>Mağaza vitrini için hareketli görüntüler.</p>
+      <p class="ozet" data-en lang="en">Moving imagery for the store window.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Retail</span></div>
+    </a>
+    <a class="is bos y6 reveal" href="work-06.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="en">Borusan Sanat - Visual</div>
+      <p class="ozet" data-tr>Borusan Sanat için görsel içerik üretimi.</p>
+      <p class="ozet" data-en lang="en">Visual content production for Borusan Sanat.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Motion</span></div>
+    </a>
+    <a class="is bos y7 reveal" href="work-07.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="en">Borusan Contemporary - Visual</div>
+      <p class="ozet" data-tr>Borusan Contemporary için görsel içerik üretimi.</p>
+      <p class="ozet" data-en lang="en">Visual content production for Borusan Contemporary.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Motion</span></div>
+    </a>
+    <a class="is bos y8 reveal" href="work-08.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="en">Borusan Contemporary - Edward Burtynsky</div>
+      <p class="ozet" data-tr>Edward Burtynsky sergisi için medya tasarımı.</p>
+      <p class="ozet" data-en lang="en">Media design for the Edward Burtynsky exhibition.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Exhibition</span></div>
+    </a>
+    <a class="is bos y9 reveal" href="work-09.html">
+      <div class="gorsel"><span class="yakinda">Görsel Yakında</span></div>
+      <div class="baslik" lang="tr">İRHM - Temsil ve Hafıza</div>
+      <p class="ozet" data-tr>Temsil ve Hafıza sergisi için mekânsal medya.</p>
+      <p class="ozet" data-en lang="en">Spatial media for the Temsil ve Hafıza exhibition.</p>
+      <div class="rozetler"><span class="rozet" lang="en">Exhibition</span><span class="rozet" lang="en">Spatial</span></div>
+    </a>
   </div>
 </main>
 
