@@ -58,7 +58,7 @@
 
   /* ---------- SABIT MINI LOGO + NAV ---------- */
   .mini-logo{
-    position:fixed;top:16px;z-index:60;
+    position:fixed;top:23.5px;z-index:60;
     left:max(16px, 1.5vw);
     display:block;line-height:0;color:var(--siyah);
     transition:color .25s;
@@ -73,7 +73,7 @@
      hiza bozulmaz. */
   .sayfa-adi{
     position:fixed;z-index:60;
-    top:calc(16px + .62rem);
+    top:calc(23.5px + .62rem);
     left:calc(max(16px, 1.5vw) + var(--logo-en) * .645 + .16rem);
     font-family:var(--font-mono);
     font-size:1.26rem;font-weight:400;letter-spacing:.01em;line-height:1;
@@ -197,7 +197,7 @@
 
   /* ---------- BASLIK ---------- */
   .ust-bant{
-    padding:4.5rem var(--kenar) 0;
+    padding:2rem var(--kenar) 0;
     display:flex;justify-content:space-between;align-items:flex-end;
     gap:2rem;flex-wrap:wrap;
   }
@@ -289,6 +289,8 @@
     border-top:1px solid var(--cizgi);
     align-items:start;
   }
+  /* Bandin hemen altindaki ilk bolum: ust cizgi yok, gorsele daha yakin */
+  .ust-bant + .bolum{border-top:0;padding-top:3.2rem}
   .bolum > .b-etiket{
     font-family:var(--font-mono);
     font-size:.7rem;font-weight:400;letter-spacing:.16em;
@@ -373,10 +375,11 @@
   }
   @media (max-width: 560px){
     /* Mobil header: TAN solda + hamburger sagda; linkler acilir panelde */
-    .mini-logo{display:block;z-index:70}
+    .mini-logo{display:block;z-index:70;top:16px}
+    .sayfa-adi{top:calc(16px + .62rem)}
     nav{
       z-index:60;justify-content:flex-end;
-      padding:.55rem 2.2vw;
+      padding:0 2.2vw;min-height:62px;
       background:rgba(239,237,233,.82);
       -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
     }
@@ -405,7 +408,7 @@
       align-self:center;margin-top:1.1rem;padding:.5rem .75rem;
     }
     .nav-links .dil-btn svg{width:19px;height:19px}
-    .ust-bant{padding-top:3.5rem}
+    .ust-bant{padding-top:1.6rem}
     footer{flex-direction:column;align-items:flex-start}
     .kapak,.kapak-bosluk{height:100vh;height:100svh}
     .kapak-metin{bottom:3.4rem}
