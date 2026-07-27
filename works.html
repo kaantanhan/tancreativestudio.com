@@ -104,6 +104,7 @@
   /* ---------- SAYFA BASLIGI (index/proje sayfalari dili) ---------- */
   /* Ust bant olabildigince dar: nav'in hemen altinda baslar, isler yukari cikar */
   .works-bas{
+    position:relative;
     padding:5.4rem var(--kenar) 1.1rem;
     border-bottom:1px solid var(--cizgi);
   }
@@ -112,6 +113,15 @@
     font-size:clamp(1.5rem,2.2vw,1.9rem);line-height:1.1;
     letter-spacing:-.01em;
   }
+  /* Sabit TAN logosunun altindan inip basligi isaret eden ok.
+     Akista yer kaplamaz; logo ile h1 arasindaki bosluga oturur. */
+  .works-ok{
+    position:absolute;
+    left:calc(max(16px, 1.5vw) + .95rem);   /* logonun sol kenari + harf ici pay */
+    top:2.3rem;height:2.5rem;
+    color:var(--siyah);pointer-events:none;
+  }
+  .works-ok svg{height:100%;width:auto;display:block;overflow:visible}
 
   /* ---------- IS GRID ---------- */
   .works-govde{padding:1.1rem var(--kenar) 4.5rem}
@@ -214,6 +224,7 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
     .works-bas{padding-top:5rem}
+    .works-ok{top:2.1rem;height:2.3rem}
     .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
     .is.kare{grid-column:span 2}
     .is.kucuk{grid-column:span 1}
@@ -248,7 +259,8 @@
       margin-top:.9rem;text-align:center;
       padding:.85rem 1.15rem;border-radius:999px;
     }
-    .works-bas{padding-top:4.2rem}
+    .works-bas{padding-top:5.2rem}
+    .works-ok{top:3.05rem;height:1.7rem}
     .is-grid{grid-template-columns:1fr}
     .is.kare,.is.kucuk{grid-column:1/-1}
   }
@@ -285,6 +297,13 @@
 
 <!-- ---------- BASLIK ---------- -->
 <header class="works-bas">
+  <span class="works-ok" aria-hidden="true">
+    <svg viewBox="0 0 14 48" fill="none" stroke="currentColor" stroke-width="1.6"
+         stroke-linecap="round" stroke-linejoin="round" vector-effect="non-scaling-stroke">
+      <path d="M7 1 V40" vector-effect="non-scaling-stroke"/>
+      <path d="M2 34 L7 41 L12 34" vector-effect="non-scaling-stroke"/>
+    </svg>
+  </span>
   <h1 lang="en">Works</h1>
 </header>
 
