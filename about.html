@@ -19,7 +19,7 @@
     --metin-gri:#6B6B68;
     --font:'Space Grotesk','Helvetica Neue',Helvetica,Arial,sans-serif;
     --font-mono:'Space Mono',ui-monospace,'SFMono-Regular',Menlo,monospace;
-    --kenar:4.5vw;
+    --kenar:2.2vw;
     --logo-en:150px;   /* mini logo svg kutusu */
   }
   *{margin:0;padding:0;box-sizing:border-box}
@@ -96,7 +96,7 @@
     position:absolute;top:0;left:0;right:0;z-index:20;
     display:flex;justify-content:flex-end;align-items:center;
     gap:2.1rem;
-    padding:1.35rem 2.2vw;
+    padding:1.35rem var(--kenar);
   }
   nav a{
     text-decoration:none;font-family:var(--font-mono);font-size:.74rem;font-weight:500;
@@ -379,7 +379,7 @@
     .sayfa-adi{top:calc(16px + .62rem);z-index:70}
     nav{
       z-index:60;justify-content:flex-end;
-      padding:0 2.2vw;min-height:62px;
+      padding:0 var(--kenar);min-height:62px;
       background:rgba(239,237,233,.82);
       -webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
     }
