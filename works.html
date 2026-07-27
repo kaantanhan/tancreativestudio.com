@@ -165,11 +165,13 @@
   }
 
   /* ---------- IS GRID ---------- */
-  .works-govde{padding:1.1rem var(--kenar) 4.5rem}
+  .works-govde{padding:1.1rem var(--kenar) 7rem}
   .is-grid{
     display:grid;
-    grid-template-columns:repeat(4, minmax(0,1fr));
-    gap:1.4rem 1.6rem;
+    grid-template-columns:repeat(12, minmax(0,1fr));
+    column-gap:clamp(1.3rem,2.1vw,2.6rem);
+    row-gap:clamp(3rem,5.5vw,6.5rem);
+    align-items:start;
   }
   .is{text-decoration:none;color:inherit;display:block}
   .is .gorsel{
@@ -188,10 +190,17 @@
   }
   .is:hover .gorsel img,.is:hover .gorsel video{transform:scale(1.04)}
   .is:hover .gorsel::after{opacity:.05}
+  /* Gorseli henuz gelmemis isler: dolu gri kutu yerine hatla cizilmis alan.
+     Boylece bos kutular sayfayi bastirmaz, zemin isin arasindan akar. */
+  .is.bos .gorsel{background:transparent;box-shadow:inset 0 0 0 1px var(--cizgi)}
+  .is.bos:hover .gorsel{box-shadow:inset 0 0 0 1px var(--siyah)}
+  .is.bos .gorsel::after{display:none}
   .yakinda{
-    font-family:var(--font-mono);font-size:.64rem;font-weight:400;
-    letter-spacing:.08em;text-transform:uppercase;color:#666663;
+    font-family:var(--font-mono);font-size:.6rem;font-weight:400;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--metin-gri);
+    opacity:.55;transition:opacity .3s;
   }
+  .is.bos:hover .yakinda{opacity:.9}
   .is .etiket{
     position:relative;
     display:flex;align-items:center;gap:.4rem;
@@ -207,12 +216,43 @@
   }
   .is:hover .etiket{color:var(--tan);transform:translateX(.15rem)}
   .is:hover .etiket::after{opacity:1;transform:translateX(0)}
-  .is.kare{grid-column:span 2}
-  .is.kare .gorsel{aspect-ratio:1/1}
-  .is.genis{grid-column:1 / -1}
-  .is.genis .gorsel{aspect-ratio:16/5}
-  .is.kucuk{grid-column:span 1}
-  .is.kucuk .gorsel{aspect-ratio:1/1}
+  /* ---------- YERLESIM ----------
+     Her is kendi sutun araligini ve dusey kaymasini tasir. Bos birakilan
+     sutunlar tesaduf degil: agirlik sirayla sola-saga kayiyor, aradaki
+     bosluk isleri birbirinden ayiran nefes oluyor. */
+  .y1{grid-column:1/8}                    .y1 .gorsel{aspect-ratio:16/10}
+  .y2{grid-column:9/13;margin-top:12vw}   .y2 .gorsel{aspect-ratio:3/4}
+  .y3{grid-column:3/13}                   .y3 .gorsel{aspect-ratio:21/9}
+  .y4{grid-column:1/6}                    .y4 .gorsel{aspect-ratio:4/5}
+  .y5{grid-column:7/11;margin-top:9vw}    .y5 .gorsel{aspect-ratio:1/1}
+  .y6{grid-column:2/7;margin-top:5vw}     .y6 .gorsel{aspect-ratio:4/3}
+  .y7{grid-column:8/13}                   .y7 .gorsel{aspect-ratio:4/3}
+  .y8{grid-column:1/9}                    .y8 .gorsel{aspect-ratio:16/9}
+  .y9{grid-column:10/13;margin-top:7vw}   .y9 .gorsel{aspect-ratio:3/4}
+
+  /* Orta genislik: 6 sutuna iner, kayma korunur */
+  @media (max-width:1100px){
+    .is-grid{grid-template-columns:repeat(6,minmax(0,1fr));row-gap:clamp(2.4rem,5vw,4.2rem)}
+    .y1{grid-column:1/5}
+    .y2{grid-column:5/7;margin-top:11vw}
+    .y3{grid-column:2/7}
+    .y4{grid-column:1/4}
+    .y5{grid-column:4/7;margin-top:8vw}
+    .y6{grid-column:1/4;margin-top:0}
+    .y7{grid-column:4/7}
+    .y8{grid-column:1/5}
+    .y9{grid-column:5/7;margin-top:7vw}
+  }
+  /* Dar ekran: tek sutun, kayma yok — bosluk dusey ritme doner */
+  @media (max-width:700px){
+    .is-grid{grid-template-columns:1fr;row-gap:2.3rem}
+    .is-grid > .is{grid-column:1/-1;margin-top:0}
+    .y1 .gorsel,.y6 .gorsel,.y7 .gorsel,.y8 .gorsel{aspect-ratio:4/3}
+    .y3 .gorsel{aspect-ratio:16/9}
+    .y2 .gorsel,.y9 .gorsel{aspect-ratio:3/4}
+    .y4 .gorsel{aspect-ratio:4/5}
+    .y5 .gorsel{aspect-ratio:1/1}
+  }
 
   /* ---------- FOOTER ---------- */
   footer{
@@ -265,14 +305,11 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
     .works-bas{padding-top:5rem}
-    .is-grid{grid-template-columns:repeat(2, minmax(0,1fr))}
-    .is.kare{grid-column:span 2}
-    .is.kucuk{grid-column:span 1}
   }
   @media (max-width: 560px){
     /* Mobil header: TAN solda + hamburger sagda; linkler acilir panelde */
     .mini-logo{display:block;z-index:70;top:16px}
-    .sayfa-adi{top:calc(16px + .62rem)}
+    .sayfa-adi{top:calc(16px + .62rem);z-index:70}
     nav{
       z-index:60;justify-content:flex-end;
       padding:0 var(--kenar);min-height:62px;
@@ -305,8 +342,6 @@
     }
     .nav-links .dil-btn svg{width:19px;height:19px}
     .works-bas{padding-top:4.2rem}
-    .is-grid{grid-template-columns:1fr}
-    .is.kare,.is.kucuk{grid-column:1/-1}
   }
 </style>
 </head>
@@ -355,18 +390,18 @@
 <!-- ---------- TUM ISLER ---------- -->
 <main class="works-govde">
   <div class="is-grid">
-    <a class="is kare reveal" href="work-01.html"><div class="gorsel"><video src="images/akbank-kapak-loop.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div><div class="etiket" lang="tr">Akbank Sanat - Niyetler 2</div></a>
-    <a class="is kare reveal" href="work-02.html"><div class="gorsel"><img src="images/paribuart-kapak-1.jpg" alt="Paribuart — 9th Anniversary"></div><div class="etiket" lang="en">Paribuart - 9th Anniversary</div></a>
+    <a class="is y1 reveal" href="work-01.html"><div class="gorsel"><video src="images/akbank-kapak-loop.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div><div class="etiket" lang="tr">Akbank Sanat - Niyetler 2</div></a>
+    <a class="is y2 reveal" href="work-02.html"><div class="gorsel"><img src="images/paribuart-kapak-1.jpg" alt="Paribuart — 9th Anniversary"></div><div class="etiket" lang="en">Paribuart - 9th Anniversary</div></a>
 
-    <a class="is genis reveal" href="work-03.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Emaar - Artbox</div></a>
+    <a class="is bos y3 reveal" href="work-03.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Emaar - Artbox</div></a>
 
-    <a class="is kucuk reveal" href="work-04.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr">YKKS - Koç 100. Yıl</div></a>
-    <a class="is kucuk reveal" href="work-05.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Les Benjamins - Vitrin</div></a>
-    <a class="is kucuk reveal" href="work-06.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Sanat - Visual</div></a>
-    <a class="is kucuk reveal" href="work-07.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Contemporary - Visual</div></a>
+    <a class="is bos y4 reveal" href="work-04.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr">YKKS - Koç 100. Yıl</div></a>
+    <a class="is bos y5 reveal" href="work-05.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Les Benjamins - Vitrin</div></a>
+    <a class="is bos y6 reveal" href="work-06.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Sanat - Visual</div></a>
+    <a class="is bos y7 reveal" href="work-07.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Contemporary - Visual</div></a>
 
-    <a class="is kare reveal" href="work-08.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Contemporary - Edward Burtynsky</div></a>
-    <a class="is kare reveal" href="work-09.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr">İRHM - Temsil ve Hafıza</div></a>
+    <a class="is bos y8 reveal" href="work-08.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="en">Borusan Contemporary - Edward Burtynsky</div></a>
+    <a class="is bos y9 reveal" href="work-09.html"><div class="gorsel"><span class="yakinda">Görsel Yakında</span></div><div class="etiket" lang="tr">İRHM - Temsil ve Hafıza</div></a>
   </div>
 </main>
 
