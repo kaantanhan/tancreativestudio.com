@@ -329,26 +329,22 @@
     .ikili{grid-template-columns:1fr}
   }
   /* ---------- NEGATIF KARISIM (difference) ----------
-     Beyaz metin + difference => koyu zeminde beyaz, acik zeminde siyah,
-     renkli zeminde tamamlayici ton. Karisim TEK KATMAN olarak uygulanmali:
-     bu yuzden mix-blend-mode kapsayiciya, renk cocuklara verilir.
-     Parlaklik olcup renk degistiren eski mantik gereksizlesti; bu blok
-     stil sonunda oldugu icin onlari ezer. */
+     Beyaz metin + difference => koyu zeminde beyaz, acik zeminde siyah.
+     ONEMLI: karisim NAV'IN KENDISINE verilir. nav (position+z-index) kendi
+     yigin baglamini olusturur; karisimi icerideki .nav-links'e vermek onu BOS
+     bir zeminle karistirir -> yazi beyaz kalir ve acik bantta kaybolur.
+     .mini-logo / .sayfa-adi / #imlec body'nin dogrudan cocugu oldugu icin
+     kendi ustlerinde dogru calisir. */
+  nav,
   .mini-logo,
   .sayfa-adi,
-  .nav-links,
   #logoSabit,
   #imlec{
     mix-blend-mode:difference;
   }
-  .mini-logo,
-  .sayfa-adi,
-  #logoSabit,
+  .mini-logo, .sayfa-adi, #logoSabit,
   #imlec, #imlec.acik,
-  .nav-links a,
-  .nav-links a.aktif,
-  .nav-links a.contact,
-  .nav-links .dil-btn,
+  nav a, nav a.aktif, nav a.contact, nav .dil-btn,
   body.kapak-ustunde .mini-logo,
   body.kapak-ustunde .sayfa-adi,
   body.kapak-ustunde nav a,
@@ -358,23 +354,25 @@
   nav.koyu-zemin .nav-links .dil-btn{
     color:#fff;
   }
-  .nav-links a.contact,
+  nav a.contact,
   body.kapak-ustunde nav a.contact{border-color:#fff}
-  .nav-links a.contact:hover,
+  nav a.contact:hover,
   body.kapak-ustunde nav a.contact:hover{background:#fff;color:#000}
-  .nav-links a.aktif{opacity:.45}
+  nav a.aktif{opacity:.45}
   .nav-toggle span{background:#fff}
-  .nav-toggle{mix-blend-mode:difference}
 
-  /* Mobil menu acikken panelin kendi zemini var — orada karisim kapanir,
-     yoksa panel arkasindaki gorselle karisip okunmaz hale gelir. */
   @media (max-width:560px){
-    nav.open .nav-links{mix-blend-mode:normal}
-    nav.open .nav-links a,
-    nav.open .nav-links a.contact,
-    nav.open .nav-links .dil-btn{color:var(--siyah)}
-    nav.open .nav-links a.contact{border-color:var(--siyah)}
-    nav.open .nav-links a.contact:hover{background:var(--siyah);color:var(--beyaz)}
+    /* Karisim okunurlugu zaten garanti ediyor; bandin kendi zeminine gerek yok */
+    nav:not(.open){
+      background:transparent;border-bottom-color:transparent;
+      -webkit-backdrop-filter:none;backdrop-filter:none;
+    }
+    /* Menu ACIKKEN panelin kendi zemini var -> karisim kapanir */
+    nav.open{mix-blend-mode:normal}
+    nav.open a, nav.open a.contact, nav.open .dil-btn{color:var(--siyah)}
+    nav.open a.contact{border-color:var(--siyah)}
+    nav.open a.contact:hover{background:var(--siyah);color:var(--beyaz)}
+    nav.open .nav-toggle span{background:var(--siyah)}
   }
 
 </style>
