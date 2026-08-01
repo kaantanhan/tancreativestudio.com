@@ -183,7 +183,7 @@
   }
   .spread-ust .geri{margin:0}
   .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
-  .spread-gorsel img{width:100%;height:clamp(420px,74svh,900px);object-fit:cover;display:block}
+  .spread-gorsel img,.spread-gorsel video{width:100%;height:clamp(420px,74svh,900px);object-fit:cover;display:block}
   /* Kapak gorseli olmayan projelerde placeholder */
   .spread-gorsel .ph{height:clamp(420px,74svh,900px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
   .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#666663}
@@ -207,7 +207,7 @@
     .spread-alt{grid-template-columns:1fr;gap:1.4rem}
   }
   @media (max-width:560px){
-    .spread-gorsel img{height:56svh}
+    .spread-gorsel img,.spread-gorsel video{height:56svh}
     .spread-gorsel .ph{height:56svh}
   }
 

@@ -183,7 +183,7 @@
   }
   .spread-ust .geri{margin:0}
   .spread-gorsel{margin:0;background:var(--tgri);overflow:hidden}
-  .spread-gorsel img{width:100%;height:clamp(420px,74svh,900px);object-fit:cover;display:block}
+  .spread-gorsel img,.spread-gorsel video{width:100%;height:clamp(420px,74svh,900px);object-fit:cover;display:block}
   /* Kapak gorseli olmayan projelerde placeholder */
   .spread-gorsel .ph{height:clamp(420px,74svh,900px);background:var(--tgri);display:flex;align-items:center;justify-content:center}
   .spread-gorsel .yakinda-cover{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:#666663}
@@ -207,7 +207,7 @@
     .spread-alt{grid-template-columns:1fr;gap:1.4rem}
   }
   @media (max-width:560px){
-    .spread-gorsel img{height:56svh}
+    .spread-gorsel img,.spread-gorsel video{height:56svh}
     .spread-gorsel .ph{height:56svh}
   }
 
@@ -390,7 +390,7 @@
 <!-- ---------- PROJE KAPAK (editoryel spread) ---------- -->
 <header class="spread">
   <figure class="spread-gorsel">
-    <img src="images/paribuart-kapak-1.jpg" alt="Paribu 9. yıl — İstanbul'da bina cephesinde “PARİBU 9 YAŞINDA” piksel-art kutlaması">
+    <video src="images/paribuart-kapak.mp4" poster="images/paribuart-kapak-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Paribu 9. yıl — İstanbul'da bina cephesinde “PARİBU 9 YAŞINDA” piksel-art kutlaması"></video>
   </figure>
   <div class="spread-ust">
     <a class="geri" href="works.html" lang="en">&larr; All Works</a>
