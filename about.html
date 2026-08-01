@@ -186,14 +186,18 @@
   .kapak-metin .vurgu{color:rgba(255,255,255,.62)}
 
   /* Kapak gorselinin uzerindeyken ust ogeler beyaza doner */
-  nav a,.mini-logo,.dil-btn,.nav-toggle span{transition:color .25s,border-color .25s,background .25s}
-  body.kapak-ustunde nav a{color:#fff}
-  body.kapak-ustunde nav a.contact{border-color:rgba(255,255,255,.7)}
-  body.kapak-ustunde nav a.contact:hover{background:#fff;color:#0B0B0B}
-  body.kapak-ustunde .mini-logo,
-  body.kapak-ustunde .sayfa-adi{color:#fff}
-  body.kapak-ustunde .dil-btn{color:#fff}
-  body.kapak-ustunde .nav-toggle span{background:#fff}
+  /* ---------- UST BAR RENK UYUMU ----------
+     Kapagin tamami degil, her ogenin TAM ALTINDAKI parlaklik olculur (JS).
+     Ayni kapakta koyu ve acik bolgeler yan yanaysa her oge ayri karar verir. */
+  nav a{transition:opacity .25s,color .25s,border-color .25s,background .25s}
+  .mini-logo,.sayfa-adi,.dil-btn,.nav-toggle span{transition:color .25s,background .25s}
+  nav a.uzeri-koyu,
+  nav .dil-btn.uzeri-koyu,
+  .mini-logo.uzeri-koyu,
+  .sayfa-adi.uzeri-koyu{color:#fff}
+  nav a.contact.uzeri-koyu{border-color:rgba(255,255,255,.7)}
+  nav a.contact.uzeri-koyu:hover{background:#fff;color:#0B0B0B}
+  .nav-toggle.uzeri-koyu span{background:#fff}
 
   /* ---------- BASLIK ---------- */
   .ust-bant{
@@ -559,6 +563,131 @@
     window.addEventListener('scroll', guncelle, {passive:true});
     window.addEventListener('resize', guncelle);
     window.addEventListener('orientationchange', guncelle);
+  })();
+
+
+  // ---------- UST BAR RENK UYUMU ----------
+  // Her ust-bar ogesi KENDI ALTINDAKI parlakligi olcer: altinda kapak medyasi
+  // varsa o noktadan ornek alinir, yoksa etkin arka plan rengi kullanilir.
+  // Kapagin ortalamasina bakan eski yontem, koyu ve acik bolgeleri yan yana
+  // olan kapaklarda (or. iki panelli video) ogeleri okunmaz birakiyordu.
+  // index.html'deki logo olcumunun ust barin tamamina genellenmis hali.
+  (function(){
+    const navEl  = document.querySelector('nav');
+    const logo   = document.querySelector('.mini-logo');
+    const ad     = document.querySelector('.sayfa-adi');
+    const toggle = document.querySelector('.nav-toggle');
+    const kapak  = document.querySelector('.spread-gorsel, .kapak');
+    if(!navEl) return;
+
+    const tuval = document.createElement('canvas');
+    tuval.width = 2; tuval.height = 2;
+    const tctx = tuval.getContext('2d', {willReadFrequently:true});
+    // WCAG bagil parlaklik (0..1); kanal basina gama cozulur.
+    const kanal = v => { v /= 255; return v <= .04045 ? v/12.92 : Math.pow((v+.055)/1.055, 2.4); };
+    const bagilParlaklik = (r,g,b) => .2126*kanal(r) + .7152*kanal(g) + .0722*kanal(b);
+
+    function lMedya(el, cx, cy){
+      if(!el) return null;
+      let m = (el.matches && el.matches('video,img')) ? el : null;
+      if(!m){ const g = el.closest && el.closest('.spread-gorsel,.kapak,.gorsel'); if(g) m = g.querySelector('video, img'); }
+      if(!m) return null;
+      const mw = m.videoWidth || m.naturalWidth, mh = m.videoHeight || m.naturalHeight;
+      if(!mw || !mh) return null;
+      const r = m.getBoundingClientRect();
+      if(cx < r.left || cx > r.right || cy < r.top || cy > r.bottom) return null;
+      const s = Math.max(r.width / mw, r.height / mh);          // object-fit:cover eslemesi
+      const ox = (r.width - mw*s)/2, oy = (r.height - mh*s)/2;
+      const sx = Math.min(mw-2, Math.max(0, (cx - r.left - ox)/s));
+      const sy = Math.min(mh-2, Math.max(0, (cy - r.top  - oy)/s));
+      try{
+        tctx.drawImage(m, sx, sy, 2, 2, 0, 0, 2, 2);
+        const d = tctx.getImageData(0, 0, 2, 2).data;
+        let L = 0; for(let i = 0; i < d.length; i += 4) L += bagilParlaklik(d[i], d[i+1], d[i+2]);
+        return L / (d.length / 4);
+      }catch(e){ return null; }
+    }
+    function lArkaPlan(el){
+      let n = el;
+      while(n && n.nodeType === 1){
+        const bg = getComputedStyle(n).backgroundColor;
+        const m = bg && bg.match(/rgba?\(([^)]+)\)/);
+        if(m){
+          const p = m[1].split(',').map(parseFloat);
+          const a = (p[3] == null) ? 1 : p[3];
+          if(a > 0.15) return bagilParlaklik(p[0], p[1], p[2]);
+        }
+        n = n.parentElement;
+      }
+      return .83;                                   // varsayilan: acik krem zemin
+    }
+
+    const koyuMu = new WeakMap();
+    // Logo ile sayfa adi tek bir kilitlemedir: ayri karar verirlerse biri beyaz
+    // biri siyah kalir. Bu yuzden ikisi TEK grup olarak, ortak kutudan olculur.
+    function gruplar(){
+      const g = [];
+      const kilit = [logo, ad].filter(Boolean);
+      if(kilit.length) g.push(kilit);
+      if(toggle) g.push([toggle]);
+      navEl.querySelectorAll('.nav-links a, .nav-links .dil-btn').forEach(el=> g.push([el]));
+      return g;
+    }
+    function grupOlc(grup){
+      let sol = Infinity, sag = -Infinity, ust = Infinity, alt = -Infinity;
+      for(const el of grup){
+        const b = el.getBoundingClientRect();
+        if(b.width < 2 || b.height < 2) continue;
+        sol = Math.min(sol, b.left); sag = Math.max(sag, b.right);
+        ust = Math.min(ust, b.top);  alt = Math.max(alt, b.bottom);
+      }
+      if(!isFinite(sol)) return null;
+      const en = sag - sol, y = (ust + alt)/2;
+      let toplam = 0, n = 0;
+      for(const x of [sol + en*.12, sol + en*.5, sol + en*.88]){
+        const uzeri = document.elementFromPoint(x, y);
+        if(!uzeri) continue;
+        let L = lMedya(uzeri, x, y);
+        if(L == null) L = lArkaPlan(uzeri);
+        toplam += L; n++;
+      }
+      return n ? toplam/n : null;
+    }
+    function renkGuncelle(){
+      if(document.hidden) return;
+      const liste = gruplar();
+      // Mobil menu acikken panel krem: olcum yapmadan hepsi koyu metne doner
+      if(navEl.classList.contains('open')){
+        liste.forEach(g=> g.forEach(el=>{ el.classList.remove('uzeri-koyu'); koyuMu.set(el, false); }));
+        return;
+      }
+      const eskiNav  = navEl.style.pointerEvents;
+      const eskiLogo = logo ? logo.style.pointerEvents : '';
+      navEl.style.pointerEvents = 'none';           // olcumde ust bar gorunmez sayilir
+      if(logo) logo.style.pointerEvents = 'none';
+      for(const grup of liste){
+        const L = grupOlc(grup);
+        if(L == null) continue;
+        const oncekiKoyu = koyuMu.get(grup[0]) === true;
+        // Beyaz/siyah kontrastin esitlendigi nokta L=.179; band bunun iki yaninda
+        // dar tutuldu: hem titreme onlenir hem en kotu durumda kontrast ~4.3 kalir.
+        const koyu = oncekiKoyu ? (L < .195) : (L < .165);
+        grup.forEach(el=>{ koyuMu.set(el, koyu); el.classList.toggle('uzeri-koyu', koyu); });
+      }
+      navEl.style.pointerEvents = eskiNav;
+      if(logo) logo.style.pointerEvents = eskiLogo;
+    }
+
+    renkGuncelle();
+    setInterval(renkGuncelle, 200);                 // video karesi degistikce yeniden olc
+    window.addEventListener('scroll', renkGuncelle, {passive:true});
+    window.addEventListener('resize', renkGuncelle);
+    window.addEventListener('orientationchange', renkGuncelle);
+    const medya = kapak ? kapak.querySelector('video, img') : null;
+    if(medya){
+      medya.addEventListener('loadeddata', renkGuncelle);
+      medya.addEventListener('load', renkGuncelle);
+    }
   })();
 
   // Mobil hamburger menu — ac/kapat, link tiklayinca ve ESC ile kapat
