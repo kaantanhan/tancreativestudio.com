@@ -291,21 +291,12 @@
   }
   /* Bandin hemen altindaki ilk bolum: ust cizgi yok, gorsele daha yakin */
   .ust-bant + .bolum{border-top:0;padding-top:3.2rem}
-  .bolum .b-etiket{
+  .bolum > .b-etiket{
     font-family:var(--font-mono);
     font-size:.7rem;font-weight:400;letter-spacing:.16em;
     text-transform:uppercase;color:var(--metin-gri);
     position:sticky;top:1.4rem;
   }
-  /* Etiket + yan not birlikte sabitlenir; etiketin kendi sticky'si burada gereksiz */
-  .b-yan{position:sticky;top:1.4rem;display:flex;flex-direction:column;gap:1.15rem}
-  .b-yan .b-etiket{position:static;top:auto}
-  .b-yan .b-not{
-    max-width:30ch;
-    font-size:clamp(.88rem,1.02vw,.97rem);line-height:1.6;
-    color:var(--metin-gri);
-  }
-  .b-yan .b-not + .b-not{margin-top:-.25rem}
   .bolum .paragraflar{
     max-width:44rem;display:flex;flex-direction:column;gap:1.5rem;
     font-size:clamp(1rem,1.3vw,1.12rem);line-height:1.65;
@@ -378,10 +369,7 @@
     .govde{grid-template-columns:1fr;gap:1rem}
     .govde .etiket{margin-bottom:.4rem}
     .bolum{grid-template-columns:1fr;gap:.9rem}
-    .bolum .b-etiket{position:static;top:auto;margin-bottom:.3rem}
-    .b-yan{position:static;gap:.55rem}
-    .b-yan .b-etiket{margin-bottom:0}
-    .b-yan .b-not{max-width:none}
+    .bolum > .b-etiket{position:static;top:auto;margin-bottom:.3rem}
     .musteri-liste{grid-template-columns:1fr;gap:0}
     .iletisim .satir{grid-template-columns:1fr;gap:.25rem}
   }
@@ -489,13 +477,8 @@
 
 <!-- YAKLASIM / APPROACH -->
 <section class="bolum">
-    <div class="b-yan">
-      <span class="b-etiket" data-tr>Yaklaşım</span>
-      <span class="b-etiket" data-en lang="en">Approach</span>
-      <!-- Yer tutucu: gercek metin gelince degistirilecek -->
-      <p class="b-not" lang="la">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-      <p class="b-not" lang="la">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit.</p>
-    </div>
+    <span class="b-etiket" data-tr>Yaklaşım</span>
+    <span class="b-etiket" data-en lang="en">Approach</span>
 
     <!-- TR govde -->
     <div class="paragraflar" data-tr>
