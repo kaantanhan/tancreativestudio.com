@@ -1,0 +1,32 @@
+# ---------- TEMIZ ADRESLER ----------
+# Amac: tancreativestudio.com/paribuart
+# Dosyalar diskte .html olarak durur (yerelde file:// ile gezinmek bozulmasin),
+# sunucu hem uzantisiz adresi acar hem de .html ile gelen istegi temiz adrese
+# 301 ile yonlendirir. Kural sirasi onemli: ozelden genele.
+
+Options -MultiViews
+RewriteEngine On
+
+# 1) Eski proje adresleri -> yeni slug adresleri (kalici)
+RewriteRule ^work-01(\.html)?$  /akbank-sanat-niyetler-2  [R=301,L]
+RewriteRule ^work-02(\.html)?$  /paribuart                [R=301,L]
+RewriteRule ^work-03(\.html)?$  /emaar-artbox             [R=301,L]
+RewriteRule ^work-04(\.html)?$  /ykks-koc-100-yil         [R=301,L]
+RewriteRule ^work-05(\.html)?$  /les-benjamins-vitrin     [R=301,L]
+RewriteRule ^work-06(\.html)?$  /borusan-sanat            [R=301,L]
+RewriteRule ^work-07(\.html)?$  /borusan-contemporary     [R=301,L]
+RewriteRule ^work-08(\.html)?$  /edward-burtynsky         [R=301,L]
+RewriteRule ^work-09(\.html)?$  /irhm-temsil-ve-hafiza    [R=301,L]
+
+# 2) index -> site koku (genel .html kuralindan ONCE olmali)
+RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?] [NC]
+RewriteRule ^ / [R=301,L]
+
+# 3) /sayfa.html ile gelen istegi /sayfa adresine tasi
+RewriteCond %{THE_REQUEST} \s/+(.+?)\.html[\s?] [NC]
+RewriteRule ^ /%1 [R=301,L]
+
+# 4) Uzantisiz adresi ilgili .html dosyasindan sun
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.html -f
+RewriteRule ^(.+?)/?$ $1.html [L]
