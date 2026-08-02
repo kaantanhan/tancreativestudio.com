@@ -211,6 +211,12 @@
     width:100vw;height:100vh;height:100svh;
     object-fit:cover;object-position:center;
     z-index:0;display:block;
+    opacity:0;transition:opacity .7s ease;
+  }
+  /* Etkin klip ustte ve gorunur; gecerken yenisi eskinin uzerine acilir */
+  .hero video.etkin{opacity:1;z-index:1}
+  @media (prefers-reduced-motion: reduce){
+    .hero video{transition:none}
   }
   /* Icerik katmani (bant/arka-plan YOK; video clip-path maskesi ile kirpilir).
      Sayfa govdesi zaten beyaz; alt bolumlerde video gorunmez cunku maske keser. */
@@ -1022,7 +1028,7 @@
 <header class="hero">
   <!-- preload=metadata: acilista tum dosya indirilmez, poster hemen gorunur,
        video faststart ile akarak baslar -> ilk acilis hafif kalir. -->
-  <video class="hero-medya" muted loop playsinline preload="metadata" poster="images/akbank-hero-poster.jpg"
+  <video class="hero-medya etkin" muted playsinline preload="metadata" poster="images/akbank-hero-poster.jpg"
          aria-label="Akbank Sanat “Niyetler 2 / Intentions 2” — İstiklal'de sergi görünümü">
     <!-- AV1 once: ayni kalitede ~%25 daha az bayt. Cozemeyen tarayici
          (eski Safari/donanim) otomatik olarak H.264'e duser. -->
@@ -1030,6 +1036,11 @@
     <source src="images/akbank-hero.mp4" type="video/mp4">
     <img src="images/akbank-hero-poster.jpg" alt="Akbank Sanat “Niyetler 2 / Intentions 2” — İstiklal'de sergi görünümü">
   </video>
+  <!-- Sekansin 2. klibi. src YOK: kaynak yalnizca JS ile, birinci klip
+       tamponlandiktan sonra atanir -> acilista tek video indirilir. -->
+  <video class="hero-medya" muted playsinline preload="none"
+         data-kaynak="images/paribuart-kapak.mp4"
+         aria-label="Paribuart — 9. yıl, Paribu Art cephesinde interaktif yerleştirme"></video>
 </header>
 
 <!-- ---------- TANITIM ---------- -->
@@ -1261,24 +1272,95 @@
     }
   })();
 
-  // Hero videosu: hareket azaltma kapaliysa otomatik oynat (muted gerekli); aciksa poster kalir
+  // ---------- HERO SEKANSI ----------
+  // Iki klip sirayla oynar: 1 -> 2 -> 1 ... Aralarinda capraz gecis (opacity)
+  // oldugu icin kaynak degisirken siyah kare / bosluk olusmaz.
+  //
+  // YUKLEME SIRASI (istenen davranis): acilista SADECE birinci klip inisin.
+  // Ikinci klibin <video> etiketinde src YOK ve preload="none"; kaynak ancak
+  // birinci klip "canplaythrough" verdikten (yani kendi indirmesi doymus)
+  // sonra atanir. Boylece iki istek acilista bant genisligi icin yarismaz.
+  // Atama requestIdleCallback icinde yapilir: tarayici bos kaldigi ilk anda
+  // baslar, sayfanin diger varliklarini da geciktirmez.
+  //
+  // Neden iki ayri dosya (birlestirilmis tek video degil): tek dosya da
+  // progressive stream ile ayni sirayi verirdi ama (a) 3 sn'de kayip giden
+  // ziyaretcinin da tum baytlari indirmesi gerekirdi, (b) veri tasarrufu /
+  // yavas baglantida ikinci klibi hic indirmemeyi secemezdik, (c) 1. klibin
+  // AV1 varyanti korunamazdi. Kademeli yukleme bu ucunu de kazandiriyor.
+  window.heroAktif = ()=> document.querySelector('.hero video.etkin')
+                       || document.querySelector('.hero video');
   (function(){
-    const v = document.querySelector('.hero video');
-    if(!v) return;
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const oynat = ()=> v.play().catch(()=>{});
-    if(v.readyState >= 2) oynat(); else v.addEventListener('loadeddata', oynat, {once:true});
+    const klipler = Array.prototype.slice.call(document.querySelectorAll('.hero video'));
+    if(!klipler.length) return;
+    const azMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let i = 0, gorunur = true;
+
+    const etkin = ()=> klipler[i];
+    const oynat = v => { if(v && !azMotion && gorunur) v.play().catch(()=>{}); };
+    window.heroAktif = etkin;
+
+    // --- Ikinci klibin kaynagini gecikmeli ata ---
+    let ikinciAtandi = false;
+    function ikinciyiYukle(){
+      const v = klipler[1];
+      if(ikinciAtandi || !v || !v.dataset.kaynak) return;
+      // Veri tasarrufu acikken ya da cok yavas baglantida ikinci klibi hic indirme;
+      // sekans tek klibe duser, sayfa yine calisir.
+      const b = navigator.connection;
+      if(b && (b.saveData || /(^|-)2g$/.test(b.effectiveType || ''))) return;
+      ikinciAtandi = true;
+      v.preload = 'auto';
+      v.src = v.dataset.kaynak;
+      v.load();
+    }
+    function yuklemeyiPlanla(){
+      if('requestIdleCallback' in window) requestIdleCallback(ikinciyiYukle, {timeout:3000});
+      else setTimeout(ikinciyiYukle, 1200);
+    }
+    const bir = klipler[0];
+    if(bir.readyState >= 4) yuklemeyiPlanla();
+    else bir.addEventListener('canplaythrough', yuklemeyiPlanla, {once:true});
+    // Guvenlik agi: bazi tarayicilar preload="metadata"da canplaythrough vermez.
+    bir.addEventListener('playing', ()=> setTimeout(yuklemeyiPlanla, 4000), {once:true});
+
+    // --- Klipler arasi gecis ---
+    function gec(hedef){
+      if(hedef === i || !klipler[hedef]) return;
+      const eski = klipler[i], yeni = klipler[hedef];
+      // Hedef klip henuz hazir degilse gecme: mevcut klip basa donsun (dongu)
+      if(yeni.readyState < 2){ try{ eski.currentTime = 0; }catch(e){} oynat(eski); return; }
+      i = hedef;
+      try{ yeni.currentTime = 0; }catch(e){}
+      oynat(yeni);
+      yeni.classList.add('etkin');
+      eski.classList.remove('etkin');
+      // Gecis bitince eski klip bosuna kod cozmesin
+      setTimeout(()=>{ if(klipler[i] !== eski) eski.pause(); }, 800);
+    }
+    klipler.forEach((v, n)=> v.addEventListener('ended', ()=> gec(n === 0 ? 1 : 0)));
+
+    // --- Ilk oynatma ---
+    if(bir.readyState >= 2) oynat(bir);
+    else bir.addEventListener('loadeddata', ()=> oynat(bir), {once:true});
+
     // Sabit video icerikle tamamen ortulunce duraklat (perf), geri gelince devam et
     const perde = document.querySelector('.perde');
     if(perde && 'IntersectionObserver' in window){
-      new IntersectionObserver(es=>{ es.forEach(e=> e.isIntersecting ? oynat() : v.pause()); }, {threshold:0}).observe(perde);
+      new IntersectionObserver(es=>{
+        es.forEach(e=>{
+          gorunur = e.isIntersecting;
+          if(gorunur) oynat(etkin()); else klipler.forEach(v=> v.pause());
+        });
+      }, {threshold:0}).observe(perde);
     }
   })();
 
   // Hero videosu maske: TAN/icerik ust sinirindan asagisi clip-path ile kirpilir.
   // Scroll'da bu sinir yukseldikce video alttan kisilir ve kapanir (bant/arka-plan gerekmez).
   (function(){
-    const video = document.querySelector('.hero video');
+    const videolar = document.querySelectorAll('.hero video');   // maske iki klibe de uygulanir
+    const video = videolar[0];
     const intro = document.querySelector('.intro');
     const bant  = document.getElementById('logoSabit');
     const mq = matchMedia('(max-width:560px)');
@@ -1296,7 +1378,8 @@
         ? bant.getBoundingClientRect().top          // band ust kenari (viewport)
         : introY - window.scrollY;                  // icerik ust kenari (viewport)
       const kes = Math.max(0, Math.min(videoH, kesVP));
-      video.style.clipPath = 'inset(0px 0px ' + Math.round(videoH - kes) + 'px 0px)';
+      const mask = 'inset(0px 0px ' + Math.round(videoH - kes) + 'px 0px)';
+      videolar.forEach(v=> v.style.clipPath = mask);
       requestAnimationFrame(kare);
     }
     window.addEventListener('resize', olc, {passive:true});
@@ -1414,7 +1497,8 @@
   function lMedya(el, cx, cy){
     if(!el) return null;
     let m = (el.matches && el.matches('video,img')) ? el : null;
-    if(!m){ const g = el.closest && el.closest('.gorsel, .hero'); if(g) m = g.querySelector('video, img'); }
+    if(!m){ const g = el.closest && el.closest('.gorsel, .hero');
+            if(g) m = g.querySelector('video.etkin') || g.querySelector('video, img'); }
     if(!m) return null;
     const mw = m.videoWidth || m.naturalWidth, mh = m.videoHeight || m.naturalHeight;
     if(!mw || !mh) return null;
@@ -1519,10 +1603,11 @@
   // DOKUNMATIK cihazlarda hic calismiyor, nav videonun koyulugundan bagimsiz siyah
   // kaliyordu. Artik imlecten BAGIMSIZ, her cihazda calisir.
   (function(){
-    const heroImg  = document.querySelector('.hero video');
+    // Hangi klip oynuyorsa ondan ornekle (hero sekansi klip degistirebilir)
+    const heroImg  = ()=> (window.heroAktif ? window.heroAktif() : document.querySelector('.hero video'));
     const navEl    = document.querySelector('nav');
     const navLinks = document.querySelector('.nav-links');
-    if(!heroImg || !navEl || !navLinks) return;
+    if(!heroImg() || !navEl || !navLinks) return;
 
     // Nav yalnizca videonun USTUNDE dururken renk degistirmeli. <=560px'te nav,
     // videonun altindaki acik zemin bandinda oturur; orada olcum yapilirsa nav
@@ -1531,19 +1616,21 @@
 
     const tuval = document.createElement('canvas');
     let tctx = null;
-    function cerceveCiz(){ if(tctx){ try{ tctx.drawImage(heroImg, 0, 0, tuval.width, tuval.height); }catch(e){} } }
+    function cerceveCiz(){ const h = heroImg(); if(tctx && h && h.videoWidth){ try{ tctx.drawImage(h, 0, 0, tuval.width, tuval.height); }catch(e){} } }
     function tuvalKur(){
-      if(!heroImg.videoWidth) return;
-      const olcek = 480 / heroImg.videoWidth;
+      const h = heroImg();
+      if(!h || !h.videoWidth) return;
+      const olcek = 480 / h.videoWidth;
       tuval.width = 480;
-      tuval.height = Math.round(heroImg.videoHeight * olcek);
+      tuval.height = Math.round(h.videoHeight * olcek);
       tctx = tuval.getContext('2d', {willReadFrequently:true});
       cerceveCiz(); navGuncelle();
     }
     // Bir viewport dikdortgeninin altindaki video bolgesinin ortalama parlakligi (0-255)
     function bolgeParlaklik(rect){
       if(!tctx) return null;
-      const r = heroImg.getBoundingClientRect();
+      const h = heroImg(); if(!h) return null;
+      const r = h.getBoundingClientRect();
       const s = Math.max(r.width / tuval.width, r.height / tuval.height);
       const ox = (r.width - tuval.width * s) / 2, oy = (r.height - tuval.height * s) / 2;
       const cl = v => Math.max(0, Math.min(tuval.width,  (v - r.left - ox) / s));
@@ -1564,9 +1651,16 @@
       if(navKoyu){ if(L > 135) navKoyu = false; } else { if(L < 105) navKoyu = true; }
       navEl.classList.toggle('koyu-zemin', navKoyu);
     }
-    if(heroImg.readyState >= 2) tuvalKur(); else heroImg.addEventListener('loadeddata', tuvalKur);
-    // Video oynarken parlaklik haritasini ve nav rengini dusuk frekansla tazele
-    setInterval(()=>{ if(!heroImg.paused){ cerceveCiz(); navGuncelle(); } }, 300);
+    // Iki klip de hazir olunca tuvali kurabilsin (hangisi once yuklenirse)
+    document.querySelectorAll('.hero video').forEach(v=>{
+      if(v.readyState >= 2) tuvalKur(); else v.addEventListener('loadeddata', tuvalKur);
+    });
+    // Video oynarken parlaklik haritasini ve nav rengini dusuk frekansla tazele.
+    // Klip degistiyse tuval olculeri yeniden kurulur.
+    setInterval(()=>{
+      const h = heroImg();
+      if(h && !h.paused){ if(!tctx) tuvalKur(); cerceveCiz(); navGuncelle(); }
+    }, 300);
     window.addEventListener('resize', navGuncelle);
     window.addEventListener('orientationchange', navGuncelle);  // iPad cevirme
   })();
@@ -1588,7 +1682,8 @@
     function medyaAltinda(el, cx, cy){
       if(!el) return null;
       let m = (el.matches && el.matches('video,img')) ? el : null;
-      if(!m){ const g = el.closest && el.closest('.gorsel, .hero'); if(g) m = g.querySelector('video, img'); }
+      if(!m){ const g = el.closest && el.closest('.gorsel, .hero');
+            if(g) m = g.querySelector('video.etkin') || g.querySelector('video, img'); }
       if(!m) return null;
       const mw = m.videoWidth || m.naturalWidth, mh = m.videoHeight || m.naturalHeight;
       if(!mw || !mh) return null;
@@ -1894,8 +1989,9 @@
   // oynatici ve tiklayarak atlama calismaya devam eder.
   (function(){
     const kutu   = document.getElementById('oynatici');
-    const hero   = document.querySelector('.hero video');
-    if(!kutu || !hero) return;
+    const heroLar = document.querySelectorAll('.hero video');
+    const hero   = ()=> (window.heroAktif ? window.heroAktif() : heroLar[0]);
+    if(!kutu || !heroLar.length) return;
     const video  = document.getElementById('opVideo');
     const kapat  = document.getElementById('opKapat');
     const oynatB = document.getElementById('opOynat');
@@ -1906,7 +2002,12 @@
     const kafa   = document.getElementById('opKafa');
     const yukEl  = document.getElementById('opYuk');
 
-    const kaynak = (hero.querySelector('source') || {}).src || hero.currentSrc || hero.src;
+    // Kaynak sabit degil: hero sekansinda o an hangi klip oynuyorsa o acilir.
+    function aktifKaynak(){
+      const h = hero(); if(!h) return '';
+      return h.currentSrc || (h.querySelector('source') || {}).src || h.src || h.dataset.kaynak || '';
+    }
+    let kaynak = '';
     let acik = false, uykuSaat = null, seritHazir = false;
 
     const dk = s => {
@@ -1972,10 +2073,15 @@
       document.body.style.overflow = 'hidden';     // arkadaki sayfa kaymasin
       const im = document.getElementById('imlec');
       if(im) im.classList.remove('aktif');
-      if(!video.src){
+      // Klip degistiyse kaynagi ve serit karelerini yenile
+      const yeni = aktifKaynak();
+      if(yeni && yeni !== kaynak){
+        kaynak = yeni;
         video.src = kaynak;
-        video.currentTime = hero.currentTime || 0;  // hero nerede kaldiysa oradan
+        seritHazir = false;
+        serit.querySelectorAll('img').forEach(im=> im.remove());
       }
+      try{ video.currentTime = hero().currentTime || 0; }catch(e){}  // hero nerede kaldiysa oradan
       video.play().catch(()=>{});
       oynatB.textContent = 'Pause';
       uykuSifirla();
@@ -1995,7 +2101,7 @@
     }
 
     // --- Baglantilar ---
-    hero.addEventListener('click', ac);
+    heroLar.forEach(v=> v.addEventListener('click', ac));
     kapat.addEventListener('click', kapa);
     document.addEventListener('keydown', e=>{
       if(!acik) return;
