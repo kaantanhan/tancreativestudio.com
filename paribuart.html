@@ -263,6 +263,14 @@
   }
   .metin-blok .govde{display:flex;flex-direction:column;gap:1.1rem}
   .metin-blok p{font-size:var(--fs-govde);line-height:1.62;color:var(--siyah)}
+  /* Etiketler: kart rozetleriyle ayni dil (works/index ile bire bir) */
+  .metin-blok .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.6rem}
+  .metin-blok .rozet{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:400;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:.32rem .6rem;border:1px solid var(--cizgi);
+    color:var(--metin-gri);
+  }
 
   /* ---------- KUNYE ---------- */
   /* Details blogu ile ayni hiza: etiket sol kolonda, kunye sag kolonda */
@@ -488,8 +496,15 @@
 <section class="metin-blok reveal">
   <h2 class="bolum-ad" lang="en">Details</h2>
   <div class="govde">
-    <p>Yerleştirme, Paribu’nun mevcut görsel içeriklerinin mekânsal ve interaktif bir sisteme uyarlanmasıyla geliştirildi. Yapının önünde algılanan ziyaretçiler kompozisyonun bir parçasına dönüşerek cephedeki karakterleri ve görsel öğeleri harekete geçiriyor.</p>
-    <p>Proje kapsamında kreatif yönlendirme, etkileşim tasarımı, teknik prototipleme ve saha uygulaması yürütüldü. Bilgisayarlı görü tabanlı takip sistemi, canlı kamera görüntüsünü görsel yazılımla buluşturarak deneyimin ziyaretçi hareketlerine gerçek zamanlı tepki vermesini sağlıyor.</p>
+    <p data-tr>Yerleştirme, Paribu’nun mevcut görsel içeriklerinin mekânsal ve interaktif bir sisteme uyarlanmasıyla geliştirildi. Yapının önünde algılanan ziyaretçiler, kompozisyonun bir parçasına dönüşerek cephedeki karakterleri ve görsel öğeleri harekete geçiriyor.</p>
+    <p data-tr>Proje kapsamında kreatif yönlendirme, etkileşim tasarımı, teknik prototipleme ve saha uygulaması yürütüldü. Gerçek zamanlı hareket algılama sistemi, canlı kamera görüntüsünü görsel yazılımla buluşturarak deneyimin ziyaretçilerin hareketlerine anlık olarak tepki vermesini sağlıyor.</p>
+    <p data-en lang="en">The installation was developed by adapting Paribu’s existing visual content into a spatial and interactive system. Visitors detected in front of the building become part of the composition, activating the characters and visual elements displayed across the outdoor screen.</p>
+    <p data-en lang="en">The project included creative direction, interaction design, technical prototyping and on-site implementation. A real-time motion detection system connects the live camera feed with the visual software, enabling the experience to respond instantly to visitors’ movements.</p>
+    <div class="rozetler">
+      <span class="rozet" data-tr>İnteraktif</span><span class="rozet" data-en lang="en">Interactive</span>
+      <span class="rozet" data-tr>Açık Hava Yerleştirmesi</span><span class="rozet" data-en lang="en">Outdoor Installation</span>
+      <span class="rozet" data-tr>İstanbul</span><span class="rozet" data-en lang="en">Istanbul</span>
+    </div>
   </div>
 </section>
 
@@ -504,13 +519,20 @@
 <!-- ---------- KUNYE ---------- -->
 <section class="kunye reveal">
   <h2 class="bolum-ad" lang="en">Credits</h2>
-  <dl lang="tr">
+  <!-- lang, buyuk harf donusumu icin onemli: TR'de noktali I korunur -->
+  <dl data-tr lang="tr">
     <div><dt>Müşteri</dt><dd>Paribu</dd></div>
     <div><dt>Mekân</dt><dd>Paribu Art</dd></div>
-    <div><dt>Kreatif Yönlendirme ve Etkileşim Tasarımı</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Kreatif Direktör ve Etkileşim Tasarımı</dt><dd>Kaan Tanhan</dd></div>
     <div><dt>Görsel İçerikler ve İllüstrasyonlar</dt><dd>Paribu Studio</dd></div>
     <div><dt>Teknik Geliştirme ve Uygulama</dt><dd>Kaan Tanhan ve Paribu Studio</dd></div>
-    <div><dt>Yıl</dt><dd>2026</dd></div>
+  </dl>
+  <dl data-en lang="en">
+    <div><dt>Client</dt><dd>Paribu</dd></div>
+    <div><dt>Venue</dt><dd>Paribu Art</dd></div>
+    <div><dt>Creative Director and Interaction Design</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Visual Content and Illustrations</dt><dd>Paribu Studio</dd></div>
+    <div><dt>Technical Development and Implementation</dt><dd>Kaan Tanhan and Paribu Studio</dd></div>
   </dl>
 </section>
 
