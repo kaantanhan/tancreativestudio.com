@@ -23,6 +23,7 @@
     --kenar:2.2vw;
     --logo-en:150px;   /* mini logo svg kutusu */
     --fs-label:.74rem; /* bolum basliklari — index ile ayni */
+    --fs-govde:1.02rem; /* kapak alti giris + Details: ikisi ayni puntoda */
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
@@ -201,7 +202,7 @@
   .spread-kolonlar{
     max-width:34rem;display:flex;flex-direction:column;
     gap:1.1rem;
-    font-size:.95rem;font-weight:400;line-height:1.62;color:var(--metin-gri);
+    font-size:var(--fs-govde);font-weight:400;line-height:1.62;color:var(--metin-gri);
   }
   .spread-kolonlar p{margin:0}
   @media (max-width:900px){
@@ -244,7 +245,7 @@
     align-items:start;
   }
   .metin-blok .govde{display:flex;flex-direction:column;gap:1.1rem}
-  .metin-blok p{font-size:1.02rem;line-height:1.62;color:var(--siyah)}
+  .metin-blok p{font-size:var(--fs-govde);line-height:1.62;color:var(--siyah)}
 
   /* ---------- KUNYE ---------- */
   /* Details blogu ile ayni hiza: etiket sol kolonda, kunye sag kolonda */
