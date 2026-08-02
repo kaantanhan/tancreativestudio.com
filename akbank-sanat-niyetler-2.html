@@ -255,6 +255,12 @@
     padding:3.2rem var(--kenar) 4.5rem;
     align-items:start;
   }
+  /* CREDITS etiketinin cizgisi, kunye ogelerinin ust cizgisiyle ayni hatta
+     otursun: etiket kendi yuksekliginin yarisi kadar yukari kayar, boylece
+     ortasindaki hat grid'in ust kenarina denk gelir. Cizgi kolon araligini
+     da doldurur; hepsi tek surekli hat gibi okunur. */
+  .kunye .bolum-ad{transform:translateY(-50%)}
+  .kunye .bolum-ad::after{margin-right:calc(-1 * clamp(2rem,6vw,6rem))}
   .kunye dl{
     display:grid;grid-template-columns:repeat(3, minmax(0,1fr));
     gap:1.4rem 1.6rem;
@@ -293,6 +299,9 @@
   /* ---------- RESPONSIVE ---------- */
   @media (max-width: 900px){
     .metin-blok,.kunye{grid-template-columns:1fr;gap:1.1rem}
+    /* Tek kolonda etiket listenin ustunde: kaydirma ve tasma geri alinir */
+    .kunye .bolum-ad{transform:none}
+    .kunye .bolum-ad::after{margin-right:0}
     .kunye dl{grid-template-columns:repeat(2, minmax(0,1fr))}
     .ikili{grid-template-columns:1fr}
   }
