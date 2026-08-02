@@ -573,15 +573,29 @@
     if(!form) return;
     const giris = form.querySelector('input');
     if(document.documentElement.classList.contains('kilitli')) giris.focus();
+    // Parola kaynakta ACIK YAZILMAZ: girilen deger tuzlanip SHA-256 ile
+    // ozetlenir ve asagidaki ozetle karsilastirilir.
+    const OZET = '40292bab9200c624dd9e95b536e5227a331cdad619ceed9b6cde173157769bb2';
+    async function ozetle(deger){
+      const veri = new TextEncoder().encode('tan-kilit::' + deger);
+      const h = await crypto.subtle.digest('SHA-256', veri);
+      return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    }
     form.addEventListener('submit', e=>{
       e.preventDefault();
-      if(giris.value.trim() === '1342'){
-        try{ sessionStorage.setItem('tanKilit', 'acik'); }catch(err){}
-        document.documentElement.classList.remove('kilitli');
-      }else{
+      ozetle(giris.value.trim()).then(h=>{
+        if(h === OZET){
+          try{ sessionStorage.setItem('tanKilit', 'acik'); }catch(err){}
+          document.documentElement.classList.remove('kilitli');
+        }else{
+          form.classList.remove('salla'); void form.offsetWidth; form.classList.add('salla');
+          giris.value = ''; giris.focus();
+        }
+      }).catch(()=>{
+        // crypto.subtle yoksa (guvensiz baglam) kilit kapali kalir
         form.classList.remove('salla'); void form.offsetWidth; form.classList.add('salla');
         giris.value = ''; giris.focus();
-      }
+      });
     });
   })();
 
