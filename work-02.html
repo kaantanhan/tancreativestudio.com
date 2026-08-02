@@ -251,13 +251,16 @@
   .bolum-ad::after{content:"";flex:1;height:1px;background:var(--cizgi)}
 
   /* ---------- METIN BLOKLARI ---------- */
+  /* Etiket sol kenarda (gorsel bloklariyla ayni hizada), govde saga dogru
+     acilir. Oran about.html'deki .bolum ile ayni. */
   .metin-blok{
     display:grid;
-    grid-template-columns:minmax(0,1fr) minmax(0,2fr);
-    gap:2rem;
+    grid-template-columns:minmax(0,1fr) minmax(0,2.6fr);
+    gap:2rem clamp(2rem,6vw,6rem);
     padding:3.4rem var(--kenar);
+    align-items:start;
   }
-  .metin-blok .govde{max-width:38rem;display:flex;flex-direction:column;gap:1.1rem}
+  .metin-blok .govde{display:flex;flex-direction:column;gap:1.1rem}
   .metin-blok p{font-size:1.02rem;line-height:1.62;color:var(--siyah)}
 
   /* ---------- KUNYE ---------- */
