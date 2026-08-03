@@ -246,6 +246,16 @@
   }
   .metin-blok .govde{display:flex;flex-direction:column;gap:1.1rem}
   .metin-blok p{font-size:var(--fs-govde);line-height:1.62;color:var(--siyah)}
+  /* Etiketler: kart rozetleriyle ayni dil (works/index ile bire bir) */
+  .metin-blok .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.6rem}
+  .metin-blok .rozet{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:400;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:.32rem .6rem;border:1px solid var(--cizgi);
+    color:var(--metin-gri);
+  }
+  /* Gri giris metninde sergi adi one ciksin */
+  .spread-kolonlar strong{font-weight:500;color:var(--siyah)}
 
   /* ---------- KUNYE ---------- */
   /* Details blogu ile ayni hiza: etiket sol kolonda, kunye sag kolonda */
@@ -453,8 +463,8 @@
   <div class="spread-alt reveal">
     <h1 class="spread-h1" lang="tr">Akbank Sanat<br>Niyetler 2</h1>
     <div class="spread-kolonlar">
-      <!-- YER TUTUCU: gercek proje metni gelince degistirilecek (tek paragraf, en fazla 50 kelime) -->
-      <p lang="la">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+      <p data-tr>Akbank Sanat ve Açık Diyalog İstanbul iş birliğiyle gerçekleştirilen <strong>Niyetler 2</strong> sergisi için geliştirilen görsel kimlik, serginin dijital, mekânsal ve interaktif iletişim alanlarını ortak bir sistem altında bir araya getiriyor. Görsel dil, serginin küratöryel yaklaşımını ve sanatçılar ile eserler arasında kurulan ilişkileri görünür kılan esnek bir yapı olarak tasarlandı.</p>
+      <p data-en lang="en">Developed for the <strong>Niyetler 2</strong> exhibition, presented in collaboration between Akbank Sanat and Açık Diyalog İstanbul, the visual identity brings the exhibition’s digital, spatial and interactive communication into a unified system. The visual language was designed as a flexible structure that makes the curatorial approach and the relationships between the artists and their works visible.</p>
     </div>
   </div>
 </header>
@@ -470,17 +480,19 @@
 <section class="metin-blok reveal">
   <h2 class="bolum-ad" lang="en">Details</h2>
   <div class="govde">
-    <!-- YER TUTUCU: gercek proje metni gelince degistirilecek -->
-    <p lang="la">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-    <p lang="la">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+    <p data-tr>Proje kapsamında görsel kimlik, sergileme tasarımı, afişler, sosyal medya içerikleri ve farklı platformlara yönelik iletişim materyalleri hazırlandı. Tasarım sistemi; sergi künyesi, eser etiketleri, bilgi kartları, yönlendirmeler ve mekânsal grafik uygulamalar aracılığıyla sergi mekânının bütününe taşındı.</p>
+    <p data-tr>Akbank Sanat’ın dış cephesine uygulanan interaktif tasarım, serginin görsel dilini mekânın sınırlarının ötesine taşıyarak izleyiciyle yeni bir ilişki kurdu. Dijital ekranlardan sergi alanına ve dış cepheye uzanan sistem, farklı mecralar ve ölçekler arasında tutarlı bir görsel deneyim oluşturuyor.</p>
+    <p data-en lang="en">The project encompassed visual identity, exhibition design, posters, social media content and communication materials for different platforms. The design system extended throughout the exhibition space through exhibition credits, artwork labels, information cards, wayfinding and spatial graphic applications.</p>
+    <p data-en lang="en">An interactive design applied to the exterior of Akbank Sanat extended the exhibition’s visual language beyond the boundaries of the venue, creating a new relationship with its audience. Spanning digital screens, the exhibition space and the building’s exterior, the system creates a consistent visual experience across different media and scales.</p>
+    <div class="rozetler">
+      <span class="rozet" data-tr>Görsel Kimlik</span><span class="rozet" data-en lang="en">Visual Identity</span>
+      <span class="rozet" data-tr>Sergi Tasarımı</span><span class="rozet" data-en lang="en">Exhibition Design</span>
+      <span class="rozet" data-tr>İnteraktif</span><span class="rozet" data-en lang="en">Interactive</span>
+      <span class="rozet" data-tr>İstanbul</span><span class="rozet" data-en lang="en">Istanbul</span>
+    </div>
   </div>
 </section>
 
-<!-- ---------- VIDEO IKILI 2 ---------- -->
-<div class="gorsel-blok ikili reveal">
-  <figure><video aria-hidden="true" src="images/akbank-3.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
-  <figure><video aria-hidden="true" src="images/akbank-4.mp4" autoplay muted loop playsinline preload="metadata"></video></figure>
-</div>
 
 
 <!-- ---------- KAPANIS GORSELI ---------- -->
@@ -492,13 +504,22 @@
 <!-- ---------- KUNYE ---------- -->
 <section class="kunye reveal">
   <h2 class="bolum-ad" lang="en">Credits</h2>
-  <dl lang="tr">
-    <div><dt>Müşteri</dt><dd>-</dd></div>
-    <div><dt>Mekân</dt><dd>-</dd></div>
-    <div><dt>Kreatif Yönlendirme ve Etkileşim Tasarımı</dt><dd>-</dd></div>
-    <div><dt>Görsel İçerikler ve İllüstrasyonlar</dt><dd>-</dd></div>
-    <div><dt>Teknik Geliştirme ve Uygulama</dt><dd>-</dd></div>
-    <div><dt>Yıl</dt><dd>-</dd></div>
+  <!-- lang, buyuk harf donusumu icin onemli: TR'de noktali I korunur -->
+  <dl data-tr lang="tr">
+    <div><dt>Müşteri</dt><dd>Akbank Sanat</dd></div>
+    <div><dt>Sergi</dt><dd>Niyetler 2</dd></div>
+    <div><dt>İş Birliği</dt><dd>Açık Diyalog İstanbul</dd></div>
+    <div><dt>Mekân</dt><dd>Akbank Sanat, Beyoğlu</dd></div>
+    <div><dt>Görsel Kimlik</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Yıl</dt><dd>2024</dd></div>
+  </dl>
+  <dl data-en lang="en">
+    <div><dt>Client</dt><dd>Akbank Sanat</dd></div>
+    <div><dt>Exhibition</dt><dd>Niyetler 2</dd></div>
+    <div><dt>In Collaboration With</dt><dd>Açık Diyalog İstanbul</dd></div>
+    <div><dt>Venue</dt><dd>Akbank Sanat, Beyoğlu</dd></div>
+    <div><dt>Visual Identity</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Year</dt><dd>2024</dd></div>
   </dl>
 </section>
 
