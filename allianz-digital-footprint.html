@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Allianz - Digital Footprint — TAN Creative</title>
+<title>Allianz - Digital/Carbon Footprint — TAN Creative</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B0B'/%3E%3Ctext x='50' y='72' font-family='Arial,sans-serif' font-size='74' font-weight='800' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
-<meta name="description" content="Allianz - Digital Footprint — TAN Creative proje sayfası.">
+<meta name="description" content="Allianz - Digital/Carbon Footprint — TAN Creative proje sayfası.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -264,6 +264,14 @@
   }
   .metin-blok .govde{display:flex;flex-direction:column;gap:1.1rem}
   .metin-blok p{font-size:var(--fs-govde);line-height:1.62;color:var(--siyah)}
+  /* Etiketler: kart rozetleriyle ayni dil (works/index ile bire bir) */
+  .metin-blok .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.6rem}
+  .metin-blok .rozet{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:400;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:.32rem .6rem;border:1px solid var(--cizgi);
+    color:var(--metin-gri);
+  }
 
   /* ---------- KUNYE ---------- */
   /* Details blogu ile ayni hiza: etiket sol kolonda, kunye sag kolonda */
@@ -497,10 +505,11 @@
     <a class="geri" href="works.html" lang="en">&larr; All Works</a>
   </div>
   <div class="spread-alt reveal">
-    <h1 class="spread-h1" lang="en">Allianz<br>Digital Footprint</h1>
+    <h1 class="spread-h1" data-tr>Allianz<br>Dijital/Karbon Ayak İzi</h1>
+    <h1 class="spread-h1" data-en lang="en">Allianz<br>Digital/Carbon Footprint</h1>
     <div class="spread-kolonlar">
-      <!-- YER TUTUCU: gercek proje metni gelince degistirilecek (tek paragraf, en fazla 50 kelime) -->
-      <p lang="la">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+      <p data-tr>Allianz için geliştirilen bu interaktif yerleştirme, izleyicinin bedenini gerçek zamanlı olarak parçacıklardan oluşan dijital bir silüete dönüştürüyor. Hareketle birlikte oluşan ve zaman içinde kaybolan izler, dijital ayak izi ile karbon ayak izi kavramlarını görünür hâle getirirken markanın teknolojiyle kurduğu güçlü bağı deneyimin merkezine taşıyor.</p>
+      <p data-en lang="en">Developed for Allianz, this interactive installation transforms the viewer’s body into a real-time digital silhouette composed of particles. The traces created through movement gradually fade away, making digital and carbon footprints visible while placing the brand’s strong connection with technology at the center of the experience.</p>
     </div>
   </div>
 </header>
@@ -510,9 +519,18 @@
 <section class="metin-blok reveal">
   <h2 class="bolum-ad" lang="en">Details</h2>
   <div class="govde">
-    <!-- YER TUTUCU: gercek proje metni gelince degistirilecek -->
-    <p lang="la">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-    <p lang="la">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+    <p data-tr>Allianz’ın teknoloji odaklı yaklaşımını deneyim üzerinden aktarmayı amaçlayan etkinlik için geliştirilen yerleştirme, gerçek zamanlı hareket algılama ile point cloud tabanlı bir görsel sistemi bir araya getiriyor. İzleyici ekranın karşısına geçtiğinde bedeni, projeksiyonla duvara yansıtılan ve binlerce parçacıktan oluşan dijital bir silüete dönüşüyor.</p>
+    <p data-tr>İzleyici hareket ettikçe silüeti oluşturan parçacıklar onu gerçek zamanlı olarak takip ediyor. Konum değiştiğinde önceki noktalarında kalan parçacıklar yavaşça dağılarak kayboluyor ve yüzey üzerinde geçici izler bırakıyor. Karbon ayak izinin fiziksel dünyada geride bıraktığımız görünmez etkiyi ifade etmesi gibi, bu izler de dijital ortamlarda hareketlerimiz ve etkileşimlerimiz sonucunda oluşan dijital ayak izini temsil ediyor.</p>
+    <p data-tr>Yerleştirme, çoğunlukla fark edilmeyen bu izleri, izleyicinin kendi bedeni üzerinden deneyimleyebileceği fiziksel ve görsel bir karşılaşmaya dönüştürüyor. Teknoloji yalnızca etkileşimi mümkün kılan bir araç olarak değil, Allianz’ın yenilikçi yaklaşımını görünür kılan temel bir anlatım biçimi olarak kullanılıyor.</p>
+    <p data-en lang="en">Developed for an event designed to communicate Allianz’s technology-driven approach through experience, the installation combines real-time motion detection with a point-cloud-based visual system. As viewers step in front of the screen, their bodies are transformed into digital silhouettes composed of thousands of particles and projected onto the wall.</p>
+    <p data-en lang="en">As viewers move, the particles forming their silhouettes follow them in real time. When they change position, particles remaining in their previous locations gradually disperse and fade, leaving temporary traces across the surface. Just as a carbon footprint describes the invisible impact we leave on the physical world, these traces represent the digital footprint created through our movements and interactions in digital environments.</p>
+    <p data-en lang="en">The installation transforms these often unnoticed traces into a physical and visual encounter experienced through the viewer’s own body. Technology is used not only as a tool that enables the interaction but also as a central form of expression that makes Allianz’s innovative approach visible.</p>
+    <div class="rozetler">
+      <span class="rozet" data-tr>İnteraktif</span><span class="rozet" data-en lang="en">Interactive</span>
+      <span class="rozet" data-tr>Yaratıcı Teknoloji</span><span class="rozet" data-en lang="en">Creative Technology</span>
+      <span class="rozet" data-tr>Point Cloud</span><span class="rozet" data-en lang="en">Point Cloud</span>
+      <span class="rozet" data-tr>Dijital Ayak İzi</span><span class="rozet" data-en lang="en">Digital Footprint</span>
+    </div>
   </div>
 </section>
 
@@ -545,13 +563,18 @@
 <!-- ---------- KUNYE ---------- -->
 <section class="kunye reveal">
   <h2 class="bolum-ad" lang="en">Credits</h2>
-  <dl lang="tr">
-    <div><dt>Müşteri</dt><dd>-</dd></div>
-    <div><dt>Mekân</dt><dd>-</dd></div>
-    <div><dt>Kreatif Yönlendirme ve Etkileşim Tasarımı</dt><dd>-</dd></div>
-    <div><dt>Görsel İçerikler ve İllüstrasyonlar</dt><dd>-</dd></div>
-    <div><dt>Teknik Geliştirme ve Uygulama</dt><dd>-</dd></div>
-    <div><dt>Yıl</dt><dd>-</dd></div>
+  <!-- lang, buyuk harf donusumu icin onemli: TR'de noktali I korunur -->
+  <dl data-tr lang="tr">
+    <div><dt>Müşteri</dt><dd>Allianz</dd></div>
+    <div><dt>Kreatif Konsept ve Etkileşim Tasarımı</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Görsel Sistem ve Teknik Geliştirme</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>İş Birliği</dt><dd>ordek.co</dd></div>
+  </dl>
+  <dl data-en lang="en">
+    <div><dt>Client</dt><dd>Allianz</dd></div>
+    <div><dt>Creative Concept and Interaction Design</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>Visual System and Technical Development</dt><dd>Kaan Tanhan</dd></div>
+    <div><dt>In Collaboration With</dt><dd>ordek.co</dd></div>
   </dl>
 </section>
 
