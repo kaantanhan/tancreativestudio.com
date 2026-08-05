@@ -10,13 +10,16 @@ RewriteEngine On
 # 1) Eski proje adresleri -> yeni slug adresleri (kalici)
 RewriteRule ^work-01(\.html)?$  /akbank-sanat-niyetler-2  [R=301,L]
 RewriteRule ^work-02(\.html)?$  /paribuart                [R=301,L]
-RewriteRule ^work-03(\.html)?$  /emaar-artbox             [R=301,L]
+RewriteRule ^work-03(\.html)?$  /allianz-digital-footprint [R=301,L]
 RewriteRule ^work-04(\.html)?$  /ykks-koc-100-yil         [R=301,L]
 RewriteRule ^work-05(\.html)?$  /les-benjamins-vitrin     [R=301,L]
 RewriteRule ^work-06(\.html)?$  /borusan-sanat            [R=301,L]
 RewriteRule ^work-07(\.html)?$  /borusan-contemporary     [R=301,L]
 RewriteRule ^work-08(\.html)?$  /edward-burtynsky         [R=301,L]
 RewriteRule ^work-09(\.html)?$  /irhm-temsil-ve-hafiza    [R=301,L]
+
+# 1b) Proje adi degisti: eski slug -> yeni slug
+RewriteRule ^emaar-artbox(\.html)?$ /allianz-digital-footprint [R=301,L]
 
 # 2) index -> site koku (genel .html kuralindan ONCE olmali)
 RewriteCond %{THE_REQUEST} \s/+index(\.html)?[\s?] [NC]
