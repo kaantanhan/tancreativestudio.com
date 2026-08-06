@@ -402,62 +402,9 @@
     .ikili{grid-template-columns:1fr}
   }
 
-  /* ---------- PROJE KILIDI ----------
-     Proje sayfalari gecici olarak parola arkasinda. Kilit istemci tarafinda
-     (kaynakta gorulur) — amac gizlilik degil, rastgele ziyaretciyi durdurmak.
-     Dogru parola oturum boyunca tum proje sayfalarini acar. */
-  .kilit-perde{display:none}
-  html.kilitli{overflow:hidden}
-  html.kilitli body > :not(.kilit-perde){visibility:hidden}
-  html.kilitli .kilit-perde{
-    display:flex;visibility:visible;position:fixed;inset:0;z-index:10000;
-    background:var(--zemin);
-    align-items:center;justify-content:center;
-  }
-  .kilit-kutu{display:flex;flex-direction:column;align-items:flex-start;gap:1.1rem;padding:0 var(--kenar)}
-  .kilit-etiket{
-    font-family:var(--font-mono);font-size:.7rem;font-weight:400;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--metin-gri);
-  }
-  .kilit-baslik{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:500;letter-spacing:-.02em;line-height:1.1}
-  .kilit-satir{display:flex;align-items:center;gap:.9rem;margin-top:.4rem}
-  .kilit-satir input{
-    width:9ch;background:none;border:0;border-bottom:1px solid var(--siyah);
-    padding:.45rem 0;border-radius:0;
-    font-family:var(--font-mono);font-size:1.15rem;letter-spacing:.35em;color:var(--siyah);
-    outline:none;
-  }
-  .kilit-satir input::placeholder{color:#B9B7B2;letter-spacing:.35em}
-  .kilit-satir button{
-    background:none;border:1px solid var(--siyah);border-radius:0;cursor:pointer;
-    padding:.5rem 1.05rem;
-    font-family:var(--font-mono);font-size:.74rem;letter-spacing:.05em;text-transform:uppercase;
-    color:var(--siyah);transition:background .25s,color .25s;
-  }
-  .kilit-satir button:hover{background:var(--siyah);color:var(--beyaz)}
-  .kilit-kutu.salla{animation:kilitSalla .4s}
-  @keyframes kilitSalla{
-    20%{transform:translateX(-7px)}40%{transform:translateX(6px)}
-    60%{transform:translateX(-4px)}80%{transform:translateX(2px)}
-  }
 </style>
-<script>
-  // Parola dogrulanana kadar icerik boyanmadan gizlenir (asagida .kilit-perde)
-  try{ if(sessionStorage.getItem('tanKilit') !== 'acik') document.documentElement.classList.add('kilitli'); }
-  catch(e){ document.documentElement.classList.add('kilitli'); }
-</script>
 </head>
 <body>
-<div class="kilit-perde" role="dialog" aria-modal="true" aria-label="Parola / Password">
-  <form class="kilit-kutu" autocomplete="off">
-    <span class="kilit-etiket" lang="en">Private</span>
-    <span class="kilit-baslik" lang="en">Project Archive</span>
-    <div class="kilit-satir">
-      <input type="password" inputmode="numeric" maxlength="12" placeholder="&#8226;&#8226;&#8226;&#8226;" aria-label="Parola / Password">
-      <button type="submit" lang="en">Enter</button>
-    </div>
-  </form>
-</div>
 
 <script>
   // Sayfa hep en ustten acilsin: yenilemede tarayicinin eski scroll konumunu
@@ -602,37 +549,6 @@
 
 <script>
 
-  // ---------- PROJE KILIDI ----------
-  (function(){
-    const form = document.querySelector('.kilit-perde form');
-    if(!form) return;
-    const giris = form.querySelector('input');
-    if(document.documentElement.classList.contains('kilitli')) giris.focus();
-    // Parola kaynakta ACIK YAZILMAZ: girilen deger tuzlanip SHA-256 ile
-    // ozetlenir ve asagidaki ozetle karsilastirilir.
-    const OZET = '40292bab9200c624dd9e95b536e5227a331cdad619ceed9b6cde173157769bb2';
-    async function ozetle(deger){
-      const veri = new TextEncoder().encode('tan-kilit::' + deger);
-      const h = await crypto.subtle.digest('SHA-256', veri);
-      return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    }
-    form.addEventListener('submit', e=>{
-      e.preventDefault();
-      ozetle(giris.value.trim()).then(h=>{
-        if(h === OZET){
-          try{ sessionStorage.setItem('tanKilit', 'acik'); }catch(err){}
-          document.documentElement.classList.remove('kilitli');
-        }else{
-          form.classList.remove('salla'); void form.offsetWidth; form.classList.add('salla');
-          giris.value = ''; giris.focus();
-        }
-      }).catch(()=>{
-        // crypto.subtle yoksa (guvensiz baglam) kilit kapali kalir
-        form.classList.remove('salla'); void form.offsetWidth; form.classList.add('salla');
-        giris.value = ''; giris.focus();
-      });
-    });
-  })();
 
   // ---------- UST BAR RENK UYUMU ----------
   // Her ust-bar ogesi KENDI ALTINDAKI parlakligi olcer: altinda kapak medyasi
