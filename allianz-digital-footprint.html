@@ -464,7 +464,7 @@
 
 <!-- ---------- DENEYIM: VIDEO + FOTOGRAF (ikisi de 3:4) ---------- -->
 <div class="gorsel-blok ikili reveal">
-  <figure><video src="images/allianz-detay.mp4" poster="images/allianz-detay-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Allianz — parçacık silüeti yerleştirmesi, ziyaretçi etkileşimi"></video></figure>
+  <figure><video data-kaynak="images/allianz-detay.mp4" poster="images/allianz-detay-poster.jpg" muted loop playsinline preload="none" aria-label="Allianz — parçacık silüeti yerleştirmesi, ziyaretçi etkileşimi"></video></figure>
   <figure><img src="images/allianz-detay-2.jpg" alt="Allianz — duvara yansıtılan parçacık silüetleri" loading="lazy"></figure>
 </div>
 
@@ -858,5 +858,25 @@
 
 </script>
 
+<script>
+  // ---------- TEMBEL VIDEO YUKLEME ----------
+  // Acilista yalnizca kapak/hero videolari iner. Icerikteki videolarin src'si
+  // bilerek bos (data-kaynak'ta bekler); gorunume 600px kala yuklenip oynar,
+  // gorunumden cikinca durur. Boylece acilista tum videolar ayni anda inip
+  // kapak videosunun bant genisligini bogmasin.
+  (function(){
+    const adaylar = document.querySelectorAll('video[data-kaynak]');
+    if(!adaylar.length) return;
+    const baslat = v => {
+      if(!v.src){ v.src = v.dataset.kaynak; v.load(); }
+      v.play().catch(()=>{});
+    };
+    if(!('IntersectionObserver' in window)){ adaylar.forEach(baslat); return; }
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting) baslat(e.target); else e.target.pause(); });
+    }, {rootMargin:'600px 0px'});
+    adaylar.forEach(v=> io.observe(v));
+  })();
+</script>
 </body>
 </html>

@@ -435,7 +435,7 @@
   </div>
   <div class="is-grid">
     <a class="is y1 reveal" href="akbank-sanat-niyetler-2.html">
-      <div class="gorsel"><video src="images/akbank-kapak-loop.mp4" autoplay muted loop playsinline preload="metadata" aria-label="Akbank Sanat — Niyetler 2"></video></div>
+      <div class="gorsel"><video data-kaynak="images/akbank-kapak-loop.mp4" muted loop playsinline preload="none" aria-label="Akbank Sanat — Niyetler 2"></video></div>
       <div class="baslik" lang="tr">Akbank Sanat - Niyetler 2</div>
       <p class="ozet" data-tr>Küratöryel ilişkileri dijital, mekânsal ve interaktif bir görsel sistem içinde bir araya getiren sergi kimliği.</p>
       <p class="ozet" data-en lang="en">An exhibition identity bringing curatorial relationships together through a digital, spatial and interactive visual system.</p>
@@ -450,7 +450,7 @@
       <div class="rozetler"><span class="rozet" data-tr>İnteraktif</span><span class="rozet" data-en lang="en">Interactive</span><span class="rozet" data-tr>Açık Hava Yerleştirmesi</span><span class="rozet" data-en lang="en">Outdoor Installation</span><span class="rozet" data-tr>İstanbul</span><span class="rozet" data-en lang="en">Istanbul</span></div>
     </a>
     <a class="is y3 reveal" href="allianz-digital-footprint.html">
-      <div class="gorsel"><video src="images/allianz-kapak.mp4" poster="images/allianz-kapak-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Allianz — Digital Footprint"></video></div>
+      <div class="gorsel"><video data-kaynak="images/allianz-kapak.mp4" poster="images/allianz-kapak-poster.jpg" muted loop playsinline preload="none" aria-label="Allianz — Digital Footprint"></video></div>
       <div class="baslik" data-tr>Allianz - Dijital/Karbon Ayak İzi</div>
       <div class="baslik" data-en lang="en">Allianz - Digital/Carbon Footprint</div>
       <p class="ozet" data-tr>Dijital ve karbon ayak izini, izleyicinin hareketlerine tepki veren parçacık tabanlı bir silüet üzerinden görünür kılan interaktif yerleştirme.</p>
@@ -466,7 +466,7 @@
       <div class="rozetler"><span class="rozet" data-tr>Sergileme Tasarımı</span><span class="rozet" data-en lang="en">Exhibition Design</span><span class="rozet" data-tr>Kültür ve Sanat</span><span class="rozet" data-en lang="en">Culture and Arts</span><span class="rozet" data-tr>Hareketli Afiş</span><span class="rozet" data-en lang="en">Animated Poster</span><span class="rozet" data-tr>İstanbul</span><span class="rozet" data-en lang="en">Istanbul</span></div>
     </a>
     <a class="is y5 dar reveal" href="les-benjamins-vitrin.html">
-      <div class="gorsel"><video src="images/lesbenjamins-kapak.mp4" poster="images/lesbenjamins-kapak-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Les Benjamins Vitrin"></video></div>
+      <div class="gorsel"><video data-kaynak="images/lesbenjamins-kapak.mp4" poster="images/lesbenjamins-kapak-poster.jpg" muted loop playsinline preload="none" aria-label="Les Benjamins Vitrin"></video></div>
       <div class="baslik" lang="en">Les Benjamins - Vitrin</div>
       <p class="ozet" data-tr>-</p>
       <p class="ozet" data-en lang="en">-</p>
@@ -707,5 +707,25 @@
 
 </script>
 
+<script>
+  // ---------- TEMBEL VIDEO YUKLEME ----------
+  // Acilista yalnizca kapak/hero videolari iner. Icerikteki videolarin src'si
+  // bilerek bos (data-kaynak'ta bekler); gorunume 600px kala yuklenip oynar,
+  // gorunumden cikinca durur. Boylece acilista tum videolar ayni anda inip
+  // kapak videosunun bant genisligini bogmasin.
+  (function(){
+    const adaylar = document.querySelectorAll('video[data-kaynak]');
+    if(!adaylar.length) return;
+    const baslat = v => {
+      if(!v.src){ v.src = v.dataset.kaynak; v.load(); }
+      v.play().catch(()=>{});
+    };
+    if(!('IntersectionObserver' in window)){ adaylar.forEach(baslat); return; }
+    const io = new IntersectionObserver(es=>{
+      es.forEach(e=>{ if(e.isIntersecting) baslat(e.target); else e.target.pause(); });
+    }, {rootMargin:'600px 0px'});
+    adaylar.forEach(v=> io.observe(v));
+  })();
+</script>
 </body>
 </html>
