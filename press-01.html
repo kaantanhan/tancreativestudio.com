@@ -23,6 +23,8 @@
     --kenar:2.2vw;
     --logo-en:150px;   /* mini logo svg kutusu */
     --olcu:40rem;      /* okuma kolonu genisligi */
+    --fs-label:.74rem; /* bolum basliklari — proje sayfalariyla ayni */
+    --fs-govde:.95rem; /* govde metni — proje sayfalariyla ayni */
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
@@ -152,10 +154,16 @@
   nav.open .nav-toggle span:nth-child(2){opacity:0}
   nav.open .nav-toggle span:nth-child(3){transform:translateY(-.37rem) rotate(-45deg)}
 
-  /* ---------- MAKALE BASLIGI ---------- */
+  /* ---------- MAKALE BASLIGI ----------
+     Proje sayfalarinin kapak alti duzeniyle ayni kalip: baslik solda,
+     ozet sagda, dikeyde ortali (spread-alt / spread-h1 / spread-kolonlar). */
   .makale-bas{
-    max-width:52rem;margin:0 auto;
-    padding:9.5rem var(--kenar) 2.6rem;
+    padding:8.2rem var(--kenar) 1rem;
+  }
+  .bas-duzen{
+    display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);
+    gap:2rem clamp(2rem,5vw,5rem);align-items:center;
+    padding:1.5rem 0 2.4rem;
   }
   .geri{
     display:inline-block;text-decoration:none;
@@ -165,34 +173,15 @@
     margin-bottom:2.6rem;transition:color .25s;
   }
   .geri:hover{color:var(--tan)}
-  .kicker{
-    display:flex;align-items:center;gap:.85rem;
-    font-family:var(--font-mono);
-    font-size:.72rem;font-weight:700;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--siyah);
-    margin-bottom:1.5rem;
-  }
-  .kicker .nokta{width:6px;height:6px;border-radius:50%;background:var(--tan);flex:none}
-  .kicker .tur{color:var(--metin-gri);font-weight:600}
   .makale-bas h1{
-    font-size:clamp(2.5rem, 4.5vw, 3.5rem);
-    font-weight:700;letter-spacing:-.02em;line-height:1.06;
-    max-width:20ch;
+    font-size:clamp(2rem,5vw,4.2rem);font-weight:500;
+    letter-spacing:-.02em;line-height:1.05;color:var(--siyah);
+    text-wrap:balance;overflow-wrap:break-word;min-width:0;
   }
   .deck{
-    margin-top:1.5rem;
-    font-size:clamp(1.375rem, 1.9vw, 1.75rem);
-    font-weight:500;line-height:1.4;color:#2a2a27;max-width:34ch;
+    max-width:34rem;
+    font-size:var(--fs-govde);font-weight:400;line-height:1.62;color:var(--metin-gri);
   }
-  .kunye-satir{
-    display:flex;flex-wrap:wrap;gap:.5rem 1.6rem;align-items:baseline;
-    margin-top:2.4rem;padding-top:1.1rem;
-    border-top:1px solid var(--cizgi);
-    font-family:var(--font-mono);
-    font-size:.72rem;font-weight:400;color:var(--metin-gri);
-  }
-  .kunye-satir b{font-weight:700;color:var(--siyah)}
-  .kunye-satir .ayrac{color:var(--cizgi)}
 
   /* ---------- KAPAK GORSELI ---------- */
   .kapak{padding:0 var(--kenar);margin:.4rem 0 0}
@@ -212,8 +201,8 @@
   /* tum dogrudan cocuklar okuma olcusunde ortalanir */
   .makale > *{max-width:var(--olcu);margin-left:auto;margin-right:auto}
   .makale p{
-    font-size:1.04rem;line-height:1.78;
-    margin-bottom:1.45rem;color:#1b1b19;
+    font-size:var(--fs-govde);line-height:1.62;
+    margin-bottom:1.45rem;color:var(--siyah);
   }
   .makale p a{
     color:inherit;text-decoration:underline;
@@ -221,12 +210,6 @@
     text-decoration-thickness:1.5px;
   }
   .makale p a:hover{color:var(--metin-gri)}
-  /* giris paragrafi: drop-cap */
-  .makale .giris::first-letter{
-    float:left;font-size:3.9rem;line-height:.84;
-    font-weight:700;padding:.06em .12em 0 0;color:var(--siyah);
-  }
-  .makale .giris{font-size:1.08rem}
   /* ara baslik */
   .makale h2{
     font-size:clamp(1.375rem, 1.8vw, 1.75rem);font-weight:500;letter-spacing:-.01em;
@@ -291,6 +274,41 @@
     font-family:var(--font-mono);
     font-size:.72rem;font-weight:700;letter-spacing:.1em;
     text-transform:uppercase;white-space:nowrap;
+  }
+
+  /* ---------- BOLUM BASLIGI + KUNYE (proje sayfalariyla ayni dil) ---------- */
+  .bolum-ad{
+    font-family:var(--font);
+    font-size:var(--fs-label);font-weight:400;
+    letter-spacing:.18em;text-transform:uppercase;
+    color:var(--siyah);
+    display:flex;align-items:center;gap:1rem;
+  }
+  .bolum-ad::after{content:"";flex:1;height:1px;background:var(--cizgi)}
+  .kunye{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) minmax(0,2.6fr);
+    gap:2rem clamp(2rem,6vw,6rem);
+    padding:3.2rem var(--kenar) 1rem;
+    align-items:start;
+  }
+  .kunye .bolum-ad{transform:translateY(-50%)}
+  .kunye dl{
+    display:grid;grid-template-columns:repeat(3, minmax(0,1fr));
+    gap:1.4rem 1.6rem;
+  }
+  .kunye div{border-top:1px solid var(--cizgi);padding-top:.7rem}
+  .kunye dt{
+    font-family:var(--font-mono);
+    font-size:.64rem;font-weight:400;letter-spacing:.1em;
+    text-transform:uppercase;color:var(--metin-gri);margin-bottom:.3rem;
+  }
+  .kunye dd{font-size:.9rem;font-weight:500}
+  @media (max-width:900px){
+    .bas-duzen{grid-template-columns:1fr;gap:1.4rem}
+    .kunye{grid-template-columns:1fr;gap:1.1rem}
+    .kunye .bolum-ad{transform:none}
+    .kunye dl{grid-template-columns:repeat(2, minmax(0,1fr))}
   }
 
   /* ---------- SONRAKI YAZI ---------- */
@@ -451,17 +469,9 @@
 <!-- ========== MAKALE ICERIGI (BU BLOK SAYFAYA OZEL) ========== -->
 <header class="makale-bas">
   <a class="geri" href="press.html" lang="en">&larr; All Press</a>
-  <div class="kicker"><span class="nokta" aria-hidden="true"></span>Lorem<span class="tur">Lorem Ipsum</span></div>
-  <h1>Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam</h1>
-  <p class="deck">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna.</p>
-  <div class="kunye-satir" lang="en">
-    <span><b>Words</b> Lorem Ipsum</span>
-    <span class="ayrac">—</span>
-    <span><b>Photography</b> Dolor Sit</span>
-    <span class="ayrac">—</span>
-    <span>01.01.2026</span>
-    <span class="ayrac">—</span>
-    <span>5 dk okuma</span>
+  <div class="bas-duzen reveal">
+    <h1>Lorem ipsum dolor sit amet consectetuer adipiscing elit sed diam</h1>
+    <p class="deck" lang="la">Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna.</p>
   </div>
 </header>
 
@@ -511,6 +521,16 @@
     <div class="ok" lang="en">Read original &rarr;</div>
   </a>
 </div>
+
+<!-- ---------- KUNYE (proje sayfalariyla ayni kalip) ---------- -->
+<section class="kunye reveal">
+  <h2 class="bolum-ad" lang="en">Credits</h2>
+  <dl lang="en">
+    <div><dt>Words</dt><dd>Lorem Ipsum</dd></div>
+    <div><dt>Photography</dt><dd>Dolor Sit</dd></div>
+    <div><dt>Date</dt><dd>01.01.2026</dd></div>
+  </dl>
+</section>
 
 <!-- ========== /MAKALE ICERIGI ========== -->
 
