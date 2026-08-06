@@ -228,8 +228,6 @@
   }
   .tam .ph{aspect-ratio:16/8}
   .gorsel-blok img,.gorsel-blok video{width:100%;height:auto;display:block}
-  /* Dikey (3:4) video: tam genislik yerine ortada dar bir kolon */
-  .dikey-video{max-width:640px;margin-left:auto;margin-right:auto}
   .ikili{display:grid;grid-template-columns:1fr 1fr;gap:.9rem}
   .ikili .ph{aspect-ratio:4/5}
   .uclu{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.9rem}
@@ -517,10 +515,11 @@
 </header>
 
 
-<!-- ---------- DENEYIM VIDEOSU ---------- -->
-<figure class="gorsel-blok dikey-video reveal">
-  <video src="images/allianz-detay.mp4" poster="images/allianz-detay-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Allianz — parçacık silüeti yerleştirmesi, ziyaretçi etkileşimi"></video>
-</figure>
+<!-- ---------- DENEYIM: VIDEO + FOTOGRAF (ikisi de 3:4) ---------- -->
+<div class="gorsel-blok ikili reveal">
+  <figure><video src="images/allianz-detay.mp4" poster="images/allianz-detay-poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Allianz — parçacık silüeti yerleştirmesi, ziyaretçi etkileşimi"></video></figure>
+  <figure><img src="images/allianz-detay-2.jpg" alt="Allianz — duvara yansıtılan parçacık silüetleri" loading="lazy"></figure>
+</div>
 
 <!-- ---------- DETAILS ---------- -->
 <section class="metin-blok reveal">
