@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YKKS - Koç 100. Yıl — TAN Creative</title>
+<title>Yapı Kredi Kültür Sanat - Yüzyılın İzleri — TAN Creative</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230B0B0B'/%3E%3Ctext x='50' y='72' font-family='Arial,sans-serif' font-size='74' font-weight='800' text-anchor='middle' fill='%23fff'%3ET%3C/text%3E%3C/svg%3E">
-<meta name="description" content="YKKS - Koç 100. Yıl — TAN Creative proje sayfası.">
+<meta name="description" content="Yapı Kredi Kültür Sanat - Yüzyılın İzleri — TAN Creative proje sayfası.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -264,6 +264,14 @@
   }
   .metin-blok .govde{display:flex;flex-direction:column;gap:1.1rem}
   .metin-blok p{font-size:var(--fs-govde);line-height:1.62;color:var(--siyah)}
+  /* Etiketler: kart rozetleriyle ayni dil (works/index ile bire bir) */
+  .metin-blok .rozetler{display:flex;flex-wrap:wrap;gap:.45rem;margin-top:.6rem}
+  .metin-blok .rozet{
+    font-family:var(--font-mono);font-size:.6rem;font-weight:400;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:.32rem .6rem;border:1px solid var(--cizgi);
+    color:var(--metin-gri);
+  }
 
   /* ---------- KUNYE ---------- */
   /* Details blogu ile ayni hiza: etiket sol kolonda, kunye sag kolonda */
@@ -497,10 +505,11 @@
     <a class="geri" href="works.html" lang="en">&larr; All Works</a>
   </div>
   <div class="spread-alt reveal">
-    <h1 class="spread-h1" lang="tr">YKKS<br>Koç 100. Yıl</h1>
+    <h1 class="spread-h1" data-tr>Yapı Kredi Kültür Sanat<br>Yüzyılın İzleri</h1>
+    <h1 class="spread-h1" data-en lang="en">Yapı Kredi Culture and Arts<br>Imprints on the Century</h1>
     <div class="spread-kolonlar">
-      <!-- YER TUTUCU: gercek proje metni gelince degistirilecek (tek paragraf, en fazla 50 kelime) -->
-      <p lang="la">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse.</p>
+      <p data-tr>Koç Topluluğu’nun 100. yılı kapsamında Yapı Kredi Kültür Sanat’ta gerçekleştirilen Yüzyılın İzleri: Koç Topluluğu ve Sanat, topluluğun Türkiye’nin kültür ve sanat hayatına sunduğu uzun soluklu katkıları görünür kılıyor. Sergi, 1920’lerden günümüze uzanan eserler, objeler, fotoğraflar ve arşiv belgeleri aracılığıyla sanat, müzecilik, yayıncılık, mimarlık, arkeoloji ve kültürel üretim alanlarında kurulan çok katmanlı ilişkiyi ele alıyor.</p>
+      <p data-en lang="en">Presented at Yapı Kredi Culture and Arts as part of the Koç Group’s centenary, Imprints on the Century: Koç Group and the Arts highlights the Group’s long-standing contribution to cultural and artistic life in Türkiye. Through artworks, objects, photographs and archival documents spanning from the 1920s to the present, the exhibition explores its multilayered engagement with art, museology, publishing, architecture, archaeology and cultural production.</p>
     </div>
   </div>
 </header>
@@ -510,9 +519,18 @@
 <section class="metin-blok reveal">
   <h2 class="bolum-ad" lang="en">Details</h2>
   <div class="govde">
-    <!-- YER TUTUCU: gercek proje metni gelince degistirilecek -->
-    <p lang="la">At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident.</p>
-    <p lang="la">Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae.</p>
+    <p data-tr>Sergileme tasarımı, yüz yıla yayılan kapsamlı içeriği yalnızca kronolojik bir anlatı içinde sunmak yerine; kurumlar, sanatçılar, eserler ve kültürel girişimler arasında kurulan ilişkiler üzerinden okunabilir hâle getiriyor. Farklı dönemlere ve üretim alanlarına ait belgeler, sanat eserleri ve tarihsel kayıtlar, Koç Topluluğu’nun kültür ve sanata verdiği istikrarlı desteği bütünlüklü bir mekânsal anlatı içinde aktarıyor.</p>
+    <p data-tr>Proje kapsamında sergileme tasarımının geliştirme ve uygulama süreçlerinde tasarım asistanlığı yürütüldü. Mekânsal kararların geliştirilmesi ve uygulanması, sergi grafiklerinin farklı yüzey ve ölçeklere uyarlanması, üretim süreçlerinin takibi ve operasyonel koordinasyon tarafımızca gerçekleştirildi.</p>
+    <p data-tr>Serginin afiş tasarımı hareketli bir iletişim materyaline dönüştürülerek projenin görsel dili dijital ekranlara ve hareketli iletişim mecralarına taşındı. Sergileme, grafik tasarım, üretim ve operasyon süreçlerinin birlikte yürütülmesiyle farklı içerik türleri arasında tutarlı ve bütünlüklü bir ziyaretçi deneyimi oluşturuldu.</p>
+    <p data-en lang="en">Rather than presenting a century of material solely through a chronological narrative, the exhibition design reveals the relationships between institutions, artists, artworks and cultural initiatives. Documents, artworks and historical records from different periods and fields of production are brought together within a cohesive spatial narrative, reflecting the Koç Group’s sustained support for culture and the arts.</p>
+    <p data-en lang="en">Design assistance was provided throughout the development and implementation of the exhibition design. This included the development and application of spatial decisions, the adaptation of exhibition graphics across different surfaces and scales, production follow-up and operational coordination.</p>
+    <p data-en lang="en">The exhibition poster was adapted into an animated communication piece, extending the project’s visual language to digital screens and motion-based platforms. By developing the exhibition, graphic design, production and operational processes together, a coherent visitor experience was created across different formats and types of content.</p>
+    <div class="rozetler">
+      <span class="rozet" data-tr>Sergileme Tasarımı</span><span class="rozet" data-en lang="en">Exhibition Design</span>
+      <span class="rozet" data-tr>Kültür ve Sanat</span><span class="rozet" data-en lang="en">Culture and Arts</span>
+      <span class="rozet" data-tr>Hareketli Afiş</span><span class="rozet" data-en lang="en">Animated Poster</span>
+      <span class="rozet" data-tr>İstanbul</span><span class="rozet" data-en lang="en">Istanbul</span>
+    </div>
   </div>
 </section>
 
@@ -545,13 +563,24 @@
 <!-- ---------- KUNYE ---------- -->
 <section class="kunye reveal">
   <h2 class="bolum-ad" lang="en">Credits</h2>
-  <dl lang="tr">
-    <div><dt>Müşteri</dt><dd>-</dd></div>
-    <div><dt>Mekân</dt><dd>-</dd></div>
-    <div><dt>Kreatif Yönlendirme ve Etkileşim Tasarımı</dt><dd>-</dd></div>
-    <div><dt>Görsel İçerikler ve İllüstrasyonlar</dt><dd>-</dd></div>
-    <div><dt>Teknik Geliştirme ve Uygulama</dt><dd>-</dd></div>
-    <div><dt>Yıl</dt><dd>-</dd></div>
+  <!-- lang, buyuk harf donusumu icin onemli: TR'de noktali I korunur -->
+  <dl data-tr lang="tr">
+    <div><dt>Müşteri</dt><dd>Yapı Kredi Kültür Sanat</dd></div>
+    <div><dt>Sergi</dt><dd>Yüzyılın İzleri: Koç Topluluğu ve Sanat</dd></div>
+    <div><dt>Küratör</dt><dd>Didem Yazıcı</dd></div>
+    <div><dt>Yardımcı Küratör</dt><dd>Zehra Begüm Kışla</dd></div>
+    <div><dt>Sergi Danışmanı</dt><dd>Wendy Meryem Kural Shaw</dd></div>
+    <div><dt>Sergileme Tasarımı</dt><dd>Yeşim Demir Pröhl</dd></div>
+    <div><dt>Tasarım Asistanı</dt><dd>Kaan Tanhan</dd></div>
+  </dl>
+  <dl data-en lang="en">
+    <div><dt>Client</dt><dd>Yapı Kredi Culture and Arts</dd></div>
+    <div><dt>Exhibition</dt><dd>Imprints on the Century: Koç Group and the Arts</dd></div>
+    <div><dt>Curator</dt><dd>Didem Yazıcı</dd></div>
+    <div><dt>Assistant Curator</dt><dd>Zehra Begüm Kışla</dd></div>
+    <div><dt>Exhibition Advisor</dt><dd>Wendy Meryem Kural Shaw</dd></div>
+    <div><dt>Exhibition Design</dt><dd>Yeşim Demir Pröhl</dd></div>
+    <div><dt>Design Assistant</dt><dd>Kaan Tanhan</dd></div>
   </dl>
 </section>
 
